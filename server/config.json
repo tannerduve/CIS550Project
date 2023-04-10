@@ -1,0 +1,9 @@
+{
+  "rds_host": "database-550-proj.c9awswi2czql.us-east-1.rds.amazonaws.com",
+  "rds_port": "3306",
+  "rds_user": "PennSecrService",
+  "rds_password" : "$u$anDavi6son",
+  "rds_db": "Sdatabase-550-Proj",
+  "server_host": "localhost",
+  "server_port":"8080"
+}
