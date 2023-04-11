@@ -14,7 +14,7 @@ app.get('/home', routes.home);
 app.push('/signup', routes.signup);
 app.get('/signup/:login', routes.signup_login);
 app.get('/search', routes.search);
-app.get('/search/:recipeid', routes.search_rec);
+app.get('/search/:RecipeId', routes.search_rec);
 app.get('/likes/:username', routes.likes_user);
 app.push('/likes', routes.likes);
 
