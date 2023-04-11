@@ -21,6 +21,29 @@ const home = async function(req, res) {
   });
 }
 
+//can this be constant?? like no
+const signup = async function(req, res) {
+  connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data[0]);
+    }
+  });
+}
+
+//can this be constant?? like no
+const signup_login = async function(req, res) {
+  connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data[0]);
+    }
+  });
+}
 
 const search = async function(req, res) {
   connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}`, (err, data) => {
@@ -82,13 +105,6 @@ const search_rec = async function(req, res) {
   });
 }
 
-/*
-ND duration >= ${durationLow} AND duration <= ${durationHigh} AND 
-  plays >= ${playsLow} AND plays <= ${playsHigh} AND danceability >= ${danceabilityLow} AND danceability <= ${danceabilityHigh}
-  AND energy >= ${energyLow} AND energy <= ${energyHigh} AND valence >= ${valenceLow} AND valence <= ${valenceHigh} AND explicit <= ${explicit}
-  ORDER BY title ASC
-*/
-
 const likes_user = async function(req, res) {
   connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE l.Username = '${req.params.Username}`, (err, data) => {
     if (err || data.length === 0) {
@@ -111,8 +127,6 @@ const likes = async function(req, res) {
     }
   });
 }
-
-
 
 
 module.exports = {
