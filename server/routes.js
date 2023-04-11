@@ -84,7 +84,6 @@ const search_rec = async function(req, res) {
   const IngredientsCountLow = req.query.IngredientsCount_low ?? 0;
   const IngredientsCountHigh = req.query.IngredientsCount_high ?? 39;
 
-
   connection.query(`SELECT * FROM Recipes WHERE Name LIKE '%${Name}%' CookTime >= ${CookTimeLow} AND CookTime <= ${CookTimeHigh} 
   AND PrepTime >= ${PrepTimeLow} AND PrepTime <= ${PrepTimeHigh} AND TotalTime >= ${TotalTimeLow} AND TotalTime <= ${TotalTimeHigh}
   AND SaturatedFatContent >= ${SaturatedFatContentLow} AND SaturatedFatContent <= ${SaturatedFatContentHigh} 
