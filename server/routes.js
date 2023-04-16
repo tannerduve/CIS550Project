@@ -77,6 +77,8 @@ const search_rec = async function(req, res) {
   const FiberContentHigh = req.query.FiberContent_high ?? 835.7;
   const SugarContentLow = req.query.SugarContent_low ?? 0;
   const SugarContentHigh = req.query.SugarContent_high ?? 3623.9;
+  const ProteinContentLow = req.query.SugarContent_low ?? 0;
+  const ProteinContentHigh = req.query.SugarContent_high ?? 1803;
   const RecipeServingsLow = req.query.RecipeServings_low ?? 0;
   const RecipeServingsHigh = req.query.RecipeServings_high ?? 32767;
   const RecipeYieldLow = req.query.RecipeYield_low ?? 0;
@@ -92,6 +94,7 @@ const search_rec = async function(req, res) {
   AND CarbohydrateContent >= ${CarbohydrateContentLow} AND CarbohydrateContent <= ${CarbohydrateContentHigh}
   AND FiberContent >= ${FiberContentLow} AND FiberContent <= ${FiberContentHigh}
   AND SugarContent >= ${SugarContentLow} AND SugarContent <= ${SugarContentHigh}
+  AND ProteinContent >= ${ProteinContentLow} AND ProteinContent <= ${ProteinContentHigh}
   AND RecipeServings >= ${RecipeServingsLow} AND RecipeServings <= ${RecipeServingsHigh}
   AND RecipeYield >= ${RecipeYieldLow} AND RecipeYield <= ${RecipeYieldHigh}
   AND IngredientsCount >= ${IngredientsCountLow} AND IngredientsCount <= ${IngredientsCountHigh}`, (err, data) => {
