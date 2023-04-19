@@ -30,8 +30,12 @@ const random = async function(req, res) {
 }
 
 
+//Route : POST /newuser
 const newuser = async function(req, res) {
-  connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
+  connection.query(`
+    INSERT INTO User
+    VALUES ('${req.params.Username}', '${req.params.Password}')
+    `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
@@ -41,8 +45,15 @@ const newuser = async function(req, res) {
   });
 }
 
-const username = async function(req, res) {
-  connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
+
+//ROUTE: GET /user/:username
+const signup_login = async function(req, res) {
+  connection.query(`
+    SELECT *
+    FROM User
+    WHERE Username = '${req.params.Username}' AND Password = '${req.params.Password}'
+    `, (err, data) => {
+ (login)
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
