@@ -21,7 +21,7 @@ const random = async function(req, res) {
   });
 }
 
-//can this be constant?? like no
+
 const newuser = async function(req, res) {
   connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
     if (err || data.length === 0) {
@@ -35,29 +35,6 @@ const newuser = async function(req, res) {
 
 const username = async function(req, res) {
   connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
-    if (err || data.length === 0) {
-      console.log(err);
-      res.json({});
-    } else {
-      res.json(data[0]);
-    }
-  });
-}
-
-//can this be constant?? like no
-const signup_login = async function(req, res) {
-  connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
-    if (err || data.length === 0) {
-      console.log(err);
-      res.json({});
-    } else {
-      res.json(data[0]);
-    }
-  });
-}
-
-const search_rec = async function(req, res) {
-  connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
