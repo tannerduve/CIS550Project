@@ -24,4 +24,54 @@ export default function SearchPage() {
   const [RecipeServings, setRecipeServings] = useState([0, 32767]);
   const [RecipeYield, setRecipeYield] = useState([0, 100]);
   const [IngredientsCount, setIngredientsCount] = useState([0, 39]);
+
+  useEffect(() => {
+    fetch(`http://${config.server_host}:${config.server_port}/search`)
+      .then(res => res.json())
+      .then(resJson => {
+        const recipesWithId = resJson.map((recipe) => ({ id: recipe.recipeID, ...recipe}));
+        setData(recipesWithId);
+      });
+  }, []);
+
+  const search = () => {
+    fetch(`http://${config.server_host}:${config.server_port}/search?Name=${Name}` +
+      `Description=${Description}` +
+      `&CookTime_low=${CookTime[0]}&CookTime_high=${CookTime[11358720]}` +
+      `&PrepTime_low=${PrepTime[0]}&PrepTime_high=${PrepTime[525600]}` +
+      `&TotalTime_low=${TotalTime[0]}&TotalTime_high=${TotalTime[11394720]}` +
+      `&SaturatedFatContent_low=${SaturatedFatContent[0]}&SaturatedFatContent_high=${SaturatedFatContent[841.9]}` +
+      `&CholesterolContent_low=${CholesterolContent[0]}&CookTime_high=${CholesterolContent[9167.2]}` +
+      `&SodiumContent_low=${SodiumContent[0]}&SodiumContent_high=${SodiumContent[704129.6]}` +
+      `&CarbohydrateContent_low=${CarbohydrateContent[0]}&CarbohydrateContent_high=${CarbohydrateContent[4320.9]}` +
+      `&FiberContent_low=${FiberContent[0]}&FiberContent_high=${FiberContent[835.7]}` +
+      `&SugarContent_low=${SugarContent[0]}&SugarContent_high=${SugarContent[3623.9]}` +
+      `&ProteinContent_low=${ProteinContent[0]}&ProteinContent_high=${ProteinContent[1802.9]}` +
+      `&RecipeServings_low=${RecipeServings[0]}&RecipeServings_high=${RecipeServings[32767]}` +
+      `&RecipeYield_low=${RecipeYield[0]}&RecipeYield_high=${RecipeYield[100]}` +
+      `&IngredientsCount_low=${IngredientsCount[0]}&IngredientsCount_high=${IngredientsCount[39]}` 
+    )
+      .then(res => res.json())
+      .then(resJson => {
+        // DataGrid expects an array of objects with a unique id.
+        // To accomplish this, we use a map with spread syntax (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+        const recipesWithId = resJson.map((recipe) => ({ id: recipe.recipeID, ...recipe}));
+        setData(recipesWithId);
+      });
+  }
+
+  const columns = [
+    { field: 'title', headerName: 'Title', width: 300, renderCell: (params) => (
+        <Link onClick={() => setSelectedSongId(params.row.song_id)}>{params.value}</Link>
+    ) },
+    { field: 'duration', headerName: 'Duration' },
+    { field: 'plays', headerName: 'Plays' },
+    { field: 'danceability', headerName: 'Danceability' },
+    { field: 'energy', headerName: 'Energy' },
+    { field: 'valence', headerName: 'Valence' },
+    { field: 'tempo', headerName: 'Tempo' },
+    { field: 'key_mode', headerName: 'Key' },
+    { field: 'explicit', headerName: 'Explicit' },
+  ]
+  
 }
