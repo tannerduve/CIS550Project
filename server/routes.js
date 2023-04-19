@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
 });
 connection.connect((err) => err && console.log(err));
 
-const home = async function(req, res) {
+const random = async function(req, res) {
   connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -22,7 +22,18 @@ const home = async function(req, res) {
 }
 
 //can this be constant?? like no
-const signup = async function(req, res) {
+const newuser = async function(req, res) {
+  connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data[0]);
+    }
+  });
+}
+
+const username = async function(req, res) {
   connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -110,7 +121,7 @@ const search = async function(req, res) {
   });
 }
 
-const likes_user = async function(req, res) {
+const user_likes = async function(req, res) {
   connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE l.Username = '${req.params.Username}`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -121,8 +132,40 @@ const likes_user = async function(req, res) {
   });
 }
 
+const recipes = async function(req, res) {
+  connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE r.RecipeID = '${req.params.RecipeID}`, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data[0]);
+    }
+  });
+}
 
-const likes = async function(req, res) {
+const top_recipes = async function(req, res) {
+  connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE r.RecipeID = '${req.params.RecipeID}`, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data[0]);
+    }
+  });
+}
+
+const recipe_recid = async function(req, res) {
+  connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE r.RecipeID = '${req.params.RecipeID}`, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data[0]);
+    }
+  });
+}
+
+const top_authors = async function(req, res) {
   connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE r.RecipeID = '${req.params.RecipeID}`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -135,11 +178,14 @@ const likes = async function(req, res) {
 
 
 module.exports = {
-  home,
-  signup,
-  signup_login,
+  newuser,
+  username,
   search,
-  search_rec,
-  likes_user,
-  likes,
+  random,
+  recipes,
+  top_recipes,
+  user_likes,
+  recipe_recid,
+  user_likes,
+  top_authors,
 }
