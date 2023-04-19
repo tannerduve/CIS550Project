@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Checkbox, Container, FormControlLabel, Grid, Link, Slider, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import SongCard from '../components/SongCard';
+import RecipeCard from '../components/RecipeCard';
 import { formatDuration } from '../helpers/formatter';
 const config = require('../config.json');
 
