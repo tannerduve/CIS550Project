@@ -38,7 +38,7 @@ export default function SongCard({ songId, handleClose }) {
           .then(resJson => setAlbumData(resJson));
       })
 
-  }, [songId]);
+  }, [recipeId]);
 
   const chartData = [
     { name: 'Danceability', value: songData.danceability },
