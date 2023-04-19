@@ -45,7 +45,7 @@ const signup_login = async function(req, res) {
   });
 }
 
-const search = async function(req, res) {
+const search_rec = async function(req, res) {
   connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -56,7 +56,7 @@ const search = async function(req, res) {
   });
 }
 
-const search_rec = async function(req, res) {
+const search = async function(req, res) {
 
   const Name = req.query.Name ?? '';
   const Description = req.query.Description ?? '';
