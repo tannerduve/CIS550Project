@@ -34,11 +34,12 @@ export default function HomePage() {
     {
       field: 'RecipeName',
       headerName: 'Recipe Name',
-      renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.RecipeName}</NavLink> // A NavLink component is used to create a link to the album page
+      renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.RecipeName}</NavLink> // A NavLink component is used to create a link to the recipe page
     },
     {
       field: 'AuthorName',
-      headerName: 'Author Name'
+      headerName: 'Author Name',
+      renderCell: (row) => <NavLink to={`/author/${row.AuthorId}`}>{row.AuthorName}</NavLink> // A NavLink component is used to create a link to the author page
     },
     {
       field: 'RecipeCategory',
@@ -62,8 +63,8 @@ export default function HomePage() {
       headerName: 'Author ID',
     },
     {
-      field: 'AverageRecipeRating',
-      headerName: 'Average Recipe Rating'
+      field: 'AuthorName',
+      headerName: 'Author Name'
     },
     {
       field: 'AverageRecipeRating',
