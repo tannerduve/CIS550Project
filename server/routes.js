@@ -11,12 +11,20 @@ const connection = mysql.createConnection({
 connection.connect((err) => err && console.log(err));
 
 const random = async function(req, res) {
-  connection.query(`SELECT * FROM Recipes WHERE RecipeId = '${req.params.RecipeId}'`, (err, data) => {
+  connection.query(`
+  SELECT * 
+  FROM Recipes 
+  ORDER BY RAND()
+  LIMIT 1
+  `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
     } else {
-      res.json(data[0]);
+      res.json({
+        RecipeId: data[0].RecipeId,
+        Name: data[0].Name
+      });
     }
   });
 }
