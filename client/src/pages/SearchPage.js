@@ -86,10 +86,10 @@ export default function SearchPage() {
       <h2>Search Recipes</h2>
       <Grid container spacing={6}>
         <Grid item xs={8}>
-          <TextField label='Name' value={title} onChange={(e) => setName(e.target.value)} style={{ width: "100%" }}/>
+          <TextField label='Name' value={Name} onChange={(e) => setName(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
         <Grid item xs={8}>
-          <TextField label='Description' value={title} onChange={(e) => setDescription(e.target.value)} style={{ width: "100%" }}/>
+          <TextField label='Description' value={Description} onChange={(e) => setDescription(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
         <Grid item xs={3}>
           <p>CookTime</p>
@@ -120,11 +120,120 @@ export default function SearchPage() {
             min={0}
             max={11394720}
             step={100}
-            onChange={(e, newValue) => setPrepTime(newValue)}
+            onChange={(e, newValue) => setTotalTime(newValue)}
             valueLabelDisplay='auto'
           />
         </Grid>
-        
+        <Grid item xs={3}>
+          <p>SaturatedFatContent</p>
+          <Slider
+            value={SaturatedFatContent}
+            min={0}
+            max={841.9}
+            step={100}
+            onChange={(e, newValue) => setSaturatedFatContent(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>CholesterolContent</p>
+          <Slider
+            value={CholesterolContent}
+            min={0}
+            max={9167.2}
+            step={100}
+            onChange={(e, newValue) => setCholesterolContent(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>SodiumContent</p>
+          <Slider
+            value={SodiumContent}
+            min={0}
+            max={704129.6}
+            step={100}
+            onChange={(e, newValue) => setSodiumContent(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>CarbohydrateContent</p>
+          <Slider
+            value={CarbohydrateContent}
+            min={0}
+            max={4320.9}
+            step={100}
+            onChange={(e, newValue) => setCarbohydrateContent(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>FiberContent</p>
+          <Slider
+            value={FiberContent}
+            min={0}
+            max={835.7}
+            step={100}
+            onChange={(e, newValue) => setFiberContent(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>SugarContent</p>
+          <Slider
+            value={SugarContent}
+            min={0}
+            max={3623.9}
+            step={100}
+            onChange={(e, newValue) => setSugarContent(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>ProteinContent</p>
+          <Slider
+            value={ProteinContent}
+            min={0}
+            max={1802.9}
+            step={100}
+            onChange={(e, newValue) => setProteinContent(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>RecipeServings</p>
+          <Slider
+            value={RecipeServings}
+            min={0}
+            max={32767}
+            step={100}
+            onChange={(e, newValue) => setRecipeServings(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>RecipeYield</p>
+          <Slider
+            value={RecipeYield}
+            min={0}
+            max={100}
+            step={10}
+            onChange={(e, newValue) => setRecipeYield(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>IngredientsCount</p>
+          <Slider
+            value={IngredientsCount}
+            min={0}
+            max={39}
+            step={5}
+            onChange={(e, newValue) => setIngredientsCount(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
       </Grid>
       <Button onClick={() => search() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
         Search
