@@ -306,6 +306,5 @@ module.exports = {
   top_recipes,
   user_likes,
   recipe_recid,
-  user_likes,
   top_authors,
 }
