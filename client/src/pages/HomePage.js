@@ -34,11 +34,12 @@ export default function HomePage() {
     {
       field: 'RecipeName',
       headerName: 'Recipe Name',
-      renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.RecipeName}</NavLink> // A NavLink component is used to create a link to the album page
+      renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.RecipeName}</NavLink> // A NavLink component is used to create a link to the recipe page
     },
     {
       field: 'AuthorName',
-      headerName: 'Author Name'
+      headerName: 'Author Name',
+      renderCell: (row) => <NavLink to={`/author/${row.AuthorId}`}>{row.AuthorName}</NavLink> // A NavLink component is used to create a link to the author page
     },
     {
       field: 'RecipeCategory',
@@ -62,19 +63,23 @@ export default function HomePage() {
       headerName: 'Author ID',
     },
     {
-      field: 'AverageRecipeRating',
-      headerName: 'Average Recipe Rating'
+      field: 'AuthorName',
+      headerName: 'Author Name'
     },
     {
       field: 'AverageRecipeRating',
       headerName: 'Average Recipe Rating'
+    },
+    {
+      field: 'TotalRecipeLikes',
+      headerName: 'Total Recipe Likes'
     },
   ];
 
   return (
     <Container>
       {/* SongCard is a custom component that we made. selectedSongId && <SongCard .../> makes use of short-circuit logic to only render the SongCard if a non-null song is selected */}
-      {selectedRecipeId && <SongCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
+      {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
       <h2>Check out your recipe of the day:&nbsp;
         <Link onClick={() => setSelectedRecipeId(recipeOfTheDay.RecipeId)}>{recipeOfTheDay.Name}</Link>
       </h2>
