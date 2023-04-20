@@ -10,7 +10,7 @@ const NavText = ({ href, text, isMain }) => {
       noWrap
       style={{
         marginRight: '30px',
-        fontFamily: 'monospace',
+        fontFamily: 'didot',
         fontWeight: 700,
         letterSpacing: '.3rem',
       }}
@@ -38,6 +38,7 @@ export default function NavBar() {
         <Toolbar disableGutters>
           <NavText href='/' text='FlavorFinder' isMain />
           <NavText href='/search' text='SEARCH' />
+          <NavText href='/likes' text='LIKES' />
         </Toolbar>
       </Container>
     </AppBar>
