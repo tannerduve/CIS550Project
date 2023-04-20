@@ -11,8 +11,8 @@ const config = require('../config.json');
 // but in our implementation whether the Modal is open is handled by the parent component
 // (see HomePage.js for example), since it depends on the state (selectedSongId) of the parent
 export default function RecipeCard({ recipeId, handleClose }) {
-  const [songData, setSongData] = useState({});
-  const [albumData, setAlbumData] = useState({});
+  const [recipeData, setRecipeData] = useState({});
+  const [authorData, setAuthorData] = useState({});
 
   const [barRadar, setBarRadar] = useState(true);
 
@@ -29,13 +29,13 @@ export default function RecipeCard({ recipeId, handleClose }) {
     //       .then(res => res.json())
     //       .then(resJson => set state variable with album data)
     //     })
-    fetch(`http://${config.server_host}:${config.server_port}/song/${songId}`)
+    fetch(`http://${config.server_host}:${config.server_port}/recipe/${RecipeId}`)
       .then(res => res.json())
       .then(resJson => {
-        setSongData(resJson)
-        fetch(`http://${config.server_host}:${config.server_port}/album/${resJson.album_id}`)
+        setRecipeData(resJson)
+        fetch(`http://${config.server_host}:${config.server_port}/author/${resJson.AuthorId}`)
           .then(res => res.json())
-          .then(resJson => setAlbumData(resJson));
+          .then(resJson => setAuthorData(resJson));
       })
 
   }, [recipeId]);
