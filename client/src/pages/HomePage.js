@@ -3,7 +3,7 @@ import { Container, Divider, Link } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 import LazyTable from '../components/LazyTable';
-import SongCard from '../components/RecipeCard';
+import RecipeCard from '../components/RecipeCard';
 const config = require('../config.json');
 
 export default function HomePage() {
@@ -27,14 +27,10 @@ export default function HomePage() {
   // and an optional renderCell property which given a row returns a custom JSX element to display in the cell.
   const recipeColumns = [
     {
-      field: 'RecipeId',
-      headerName: 'Recipe ID',
-      renderCell: (row) => <Link onClick={() => setSelectedRecipeId(row.RecipeId)}>{row.RecipeId}</Link> // A Link component is used just for formatting purposes
-    },
-    {
-      field: 'RecipeName',
+      field: 'Name',
       headerName: 'Recipe Name',
-      renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.RecipeName}</NavLink> // A NavLink component is used to create a link to the recipe page
+      renderCell: (row) => <Link onClick={() => setSelectedRecipeId(row.RecipeId)}>{row.Name}</Link> // A Link component is used just for formatting purposes
+      //renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.RecipeName}</NavLink> // A NavLink component is used to create a link to the recipe page
     },
     {
       field: 'AuthorName',
