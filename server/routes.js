@@ -10,12 +10,28 @@ const connection = mysql.createConnection({
 });
 connection.connect((err) => err && console.log(err));
 
+// GET /user/:type
+const user = async function(req, res) {
+  // TODO (TASK 1): replace the values of name and pennKey with your own
+  const username = 'ryboyle';
+
+  // checks the value of type the request parameters
+  // note that parameters are required and are specified in server.js in the endpoint by a colon (e.g. /author/:type)
+  if (req.params.type === 'username') {
+    // res.send returns data back to the requester via an HTTP response
+    res.send(`Logged in as user: ${username}`);
+  } else {
+    // we can also send back an HTTP status code to indicate an improper request
+    res.status(400).send(`'${req.params.type}' is not a valid user type. Valid type is 'username'.`);
+  }
+}
+
 const random = async function(req, res) {
   connection.query(`
-  SELECT * 
-  FROM Recipes 
-  ORDER BY RAND()
-  LIMIT 1
+    SELECT * 
+    FROM Recipes 
+    ORDER BY RAND()
+    LIMIT 1
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -35,7 +51,7 @@ const newuser = async function(req, res) {
   connection.query(`
     INSERT INTO User
     VALUES ('${req.params.Username}', '${req.params.Password}')
-    `, (err, data) => {
+  `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
@@ -52,7 +68,7 @@ const signup_login = async function(req, res) {
     SELECT *
     FROM User
     WHERE Username = '${req.params.Username}' AND Password = '${req.params.Password}'
-    `, (err, data) => {
+  `, (err, data) => {
  (login)
     if (err || data.length === 0) {
       console.log(err);
@@ -118,7 +134,11 @@ const search = async function(req, res) {
 }
 
 const user_likes = async function(req, res) {
-  connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE l.Username = '${req.params.Username}`, (err, data) => {
+  connection.query(`SELECT * 
+    FROM Likes l 
+    JOIN Recipes r ON l.RecipeId = r.RecipeID 
+    WHERE l.Username = '${req.params.Username}
+  `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
@@ -129,40 +149,143 @@ const user_likes = async function(req, res) {
 }
 
 const recipes = async function(req, res) {
-  connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE r.RecipeID = '${req.params.RecipeID}`, (err, data) => {
+  connection.query(`
+    SELECT * 
+    FROM Likes l 
+    JOIN Recipes r ON l.RecipeId = r.RecipeID 
+    WHERE r.RecipeID = '${req.params.RecipeID}
+  `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
     } else {
-      res.json(data[0]);
+      res.json(data);
     }
   });
 }
 
+// Route: GET /top_recipes
 const top_recipes = async function(req, res) {
-  connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE r.RecipeID = '${req.params.RecipeID}`, (err, data) => {
-    if (err || data.length === 0) {
-      console.log(err);
-      res.json({});
-    } else {
-      res.json(data[0]);
-    }
-  });
+  const page = req.query.page;
+  const pageSize = req.query.page_size ?? 10;
+
+  if (!page) {
+    connection.query(`
+      WITH recipe_likes AS (
+        SELECT RecipeId, COUNT(Username) AS TotalLikes
+        FROM Likes
+        GROUP BY RecipeId
+      ), recipe_ratings AS (
+        SELECT RecipeId, AVG(Rating) AS AverageRating
+        FROM Reviews
+        GROUP BY RecipeId
+      )
+      SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, rr.AverageRating, rl.TotalLikes
+      FROM Recipes r
+      JOIN recipe_likes rl ON r.RecipeId = rl.RecipeId
+      JOIN recipe_ratings rr ON r.RecipeId = rr.RecipeId
+      ORDER BY rr.AverageRating DESC, rl.TotalLikes DESC
+    `, (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  } else {
+    // reimplement with pagination
+    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
+    const offset = pageSize * (page - 1);
+    connection.query(`
+      WITH recipe_likes AS (
+        SELECT RecipeId, COUNT(Username) AS TotalLikes
+        FROM Likes
+        GROUP BY RecipeId
+      ), recipe_ratings AS (
+        SELECT RecipeId, AVG(Rating) AS AverageRating
+        FROM Reviews
+        GROUP BY RecipeId
+      )
+      SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, rr.AverageRating, rl.TotalLikes
+      FROM Recipes r
+      JOIN recipe_likes rl ON r.RecipeId = rl.RecipeId
+      JOIN recipe_ratings rr ON r.RecipeId = rr.RecipeId
+      ORDER BY rr.AverageRating DESC, rl.TotalLikes DESC
+      LIMIT ${pageSize}
+      OFFSET ${offset}
+    `, (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  }
+}
+
+// Route: GET /top_authors
+const top_authors = async function(req, res) {
+  const page = req.query.page;
+  const pageSize = req.query.page_size ?? 10;
+
+  if (!page) {
+    connection.query(`
+      WITH recipe_likes AS (
+        SELECT RecipeId, COUNT(Username) AS TotalLikes
+        FROM Likes
+        GROUP BY RecipeId
+      )
+      SELECT a.AuthorId, a.AuthorName, AVG(r.Rating) AS AverageRecipeRating, SUM(l.TotalLikes) AS TotalRecipeLikes
+      FROM Recipes a
+      JOIN Reviews r ON a.RecipeId = r.RecipeId
+      JOIN recipe_likes l ON a.RecipeId = l.RecipeId
+      GROUP BY a.AuthorId, a.AuthorName
+      ORDER BY AVG(r.Rating) DESC, SUM(l.TotalLikes) DESC
+    `, (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  } else {
+    // reimplement with pagination
+    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
+    const offset = pageSize * (page - 1);
+    connection.query(`
+      WITH recipe_likes AS (
+        SELECT RecipeId, COUNT(Username) AS TotalLikes
+        FROM Likes
+        GROUP BY RecipeId
+      )
+      SELECT a.AuthorId, a.AuthorName, AVG(r.Rating) AS AverageRecipeRating, l.TotalLikes AS TotalRecipeLikes
+      FROM Recipes a
+      JOIN Reviews r ON a.RecipeId = r.RecipeId
+      JOIN recipe_likes l ON a.RecipeId = l.RecipeId
+      GROUP BY a.AuthorId, a.AuthorName, l.TotalLikes
+      ORDER BY AVG(r.Rating) DESC, l.TotalLikes DESC
+      LIMIT ${pageSize}
+      OFFSET ${offset}
+    `, (err, data) => {
+      if (err || data.length === 0) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  }
 }
 
 const recipe_recid = async function(req, res) {
-  connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE r.RecipeID = '${req.params.RecipeID}`, (err, data) => {
-    if (err || data.length === 0) {
-      console.log(err);
-      res.json({});
-    } else {
-      res.json(data[0]);
-    }
-  });
-}
-
-const top_authors = async function(req, res) {
-  connection.query(`SELECT * FROM Likes l JOIN Recipes r ON l.RecipeId = r.RecipeID WHERE r.RecipeID = '${req.params.RecipeID}`, (err, data) => {
+  connection.query(`SELECT * 
+    SELECT * 
+    FROM Recipes
+    WHERE RecipeID = '${req.params.RecipeID}
+  `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
@@ -174,8 +297,9 @@ const top_authors = async function(req, res) {
 
 
 module.exports = {
+  user,
   newuser,
-  username,
+  signup_login,
   search,
   random,
   recipes,
