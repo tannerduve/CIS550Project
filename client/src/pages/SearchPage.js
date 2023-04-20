@@ -82,7 +82,7 @@ export default function SearchPage() {
 
   return (
     <Container>
-      {selectedRecipeId && <SongCard recipeID={selectedRecipeId} handleClose={() => selectedRecipeId(null)} />}
+      {selectedRecipeId && <RecipeCard recipeID={selectedRecipeId} handleClose={() => selectedRecipeId(null)} />}
       <h2>Search Recipes</h2>
       <Grid container spacing={6}>
         <Grid item xs={8}>
