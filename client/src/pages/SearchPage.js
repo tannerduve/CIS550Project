@@ -24,4 +24,120 @@ export default function SearchPage() {
   const [RecipeServings, setRecipeServings] = useState([0, 32767]);
   const [RecipeYield, setRecipeYield] = useState([0, 100]);
   const [IngredientsCount, setIngredientsCount] = useState([0, 39]);
+
+  useEffect(() => {
+    fetch(`http://${config.server_host}:${config.server_port}/search`)
+      .then(res => res.json())
+      .then(resJson => {
+        const recipesWithId = resJson.map((recipe) => ({ id: recipe.recipeID, ...recipe}));
+        setData(recipesWithId);
+      });
+  }, []);
+
+  const search = () => {
+    fetch(`http://${config.server_host}:${config.server_port}/search?Name=${Name}` +
+      `Description=${Description}` +
+      `&CookTime_low=${CookTime[0]}&CookTime_high=${CookTime[11358720]}` +
+      `&PrepTime_low=${PrepTime[0]}&PrepTime_high=${PrepTime[525600]}` +
+      `&TotalTime_low=${TotalTime[0]}&TotalTime_high=${TotalTime[11394720]}` +
+      `&SaturatedFatContent_low=${SaturatedFatContent[0]}&SaturatedFatContent_high=${SaturatedFatContent[841.9]}` +
+      `&CholesterolContent_low=${CholesterolContent[0]}&CookTime_high=${CholesterolContent[9167.2]}` +
+      `&SodiumContent_low=${SodiumContent[0]}&SodiumContent_high=${SodiumContent[704129.6]}` +
+      `&CarbohydrateContent_low=${CarbohydrateContent[0]}&CarbohydrateContent_high=${CarbohydrateContent[4320.9]}` +
+      `&FiberContent_low=${FiberContent[0]}&FiberContent_high=${FiberContent[835.7]}` +
+      `&SugarContent_low=${SugarContent[0]}&SugarContent_high=${SugarContent[3623.9]}` +
+      `&ProteinContent_low=${ProteinContent[0]}&ProteinContent_high=${ProteinContent[1802.9]}` +
+      `&RecipeServings_low=${RecipeServings[0]}&RecipeServings_high=${RecipeServings[32767]}` +
+      `&RecipeYield_low=${RecipeYield[0]}&RecipeYield_high=${RecipeYield[100]}` +
+      `&IngredientsCount_low=${IngredientsCount[0]}&IngredientsCount_high=${IngredientsCount[39]}` 
+    )
+      .then(res => res.json())
+      .then(resJson => {
+        // DataGrid expects an array of objects with a unique id.
+        // To accomplish this, we use a map with spread syntax (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+        const recipesWithId = resJson.map((recipe) => ({ id: recipe.recipeID, ...recipe}));
+        setData(recipesWithId);
+      });
+  }
+
+  const columns = [
+    { field: 'Name', headerName: 'Name', width: 300, renderCell: (params) => (
+        <Link onClick={() => setSelectedRecipeId(params.row.recipeID)}>{params.value}</Link>
+    ) },
+    { field: 'Description', headerName: 'Description' },
+    { field: 'CookTime', headerName: 'CookTime' },
+    { field: 'PrepTime', headerName: 'PrepTime' },
+    { field: 'TotalTime', headerName: 'TotalTime' },
+    { field: 'SaturatedFatContent', headerName: 'SaturatedFatContent' },
+    { field: 'CholesterolContent', headerName: 'CholesterolContent' },
+    { field: 'SodiumContent', headerName: 'SodiumContent' },
+    { field: 'CarbohydrateContent', headerName: 'CarbohydrateContent' },
+    { field: 'FiberContent', headerName: 'FiberContent' },
+    { field: 'SugarContent', headerName: 'SugarContent' },
+    { field: 'ProteinContent', headerName: 'ProteinContent' },
+    { field: 'RecipeServings', headerName: 'RecipeServings' },
+    { field: 'RecipeYield', headerName: 'RecipeYield' },
+    { field: 'IngredientsCount', headerName: 'IngredientsCount' },
+  ]
+
+  return (
+    <Container>
+      {selectedRecipeId && <SongCard recipeID={selectedRecipeId} handleClose={() => selectedRecipeId(null)} />}
+      <h2>Search Recipes</h2>
+      <Grid container spacing={6}>
+        <Grid item xs={8}>
+          <TextField label='Name' value={title} onChange={(e) => setName(e.target.value)} style={{ width: "100%" }}/>
+        </Grid>
+        <Grid item xs={8}>
+          <TextField label='Description' value={title} onChange={(e) => setDescription(e.target.value)} style={{ width: "100%" }}/>
+        </Grid>
+        <Grid item xs={3}>
+          <p>CookTime</p>
+          <Slider
+            value={CookTime}
+            min={0}
+            max={11358720}
+            step={100}
+            onChange={(e, newValue) => setCookTime(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>PrepTime</p>
+          <Slider
+            value={PrepTime}
+            min={0}
+            max={525600}
+            step={100}
+            onChange={(e, newValue) => setPrepTime(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>TotalTime</p>
+          <Slider
+            value={TotalTime}
+            min={0}
+            max={11394720}
+            step={100}
+            onChange={(e, newValue) => setPrepTime(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        
+      </Grid>
+      <Button onClick={() => search() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
+        Search
+      </Button>
+      <DataGrid
+        rows={data}
+        columns={columns}
+        pageSize={pageSize}
+        rowsPerPageOptions={[5, 10, 25]}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        autoHeight
+      />
+    </Container>
+  );
+
 }
