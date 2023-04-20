@@ -10,7 +10,7 @@ const config = require('../config.json');
 // Typically, modals will conditionally appear (specified by the Modal's open property)
 // but in our implementation whether the Modal is open is handled by the parent component
 // (see HomePage.js for example), since it depends on the state (selectedSongId) of the parent
-export default function RecipeCard({ songId, handleClose }) {
+export default function RecipeCard({ recipeId, handleClose }) {
   const [songData, setSongData] = useState({});
   const [albumData, setAlbumData] = useState({});
 

@@ -10,20 +10,11 @@ const connection = mysql.createConnection({
 });
 connection.connect((err) => err && console.log(err));
 
-// GET /user/:type
+// GET /user
+// Will change this, just using for testing
 const user = async function(req, res) {
-  // TODO (TASK 1): replace the values of name and pennKey with your own
   const username = 'ryboyle';
-
-  // checks the value of type the request parameters
-  // note that parameters are required and are specified in server.js in the endpoint by a colon (e.g. /author/:type)
-  if (req.params.type === 'username') {
-    // res.send returns data back to the requester via an HTTP response
-    res.send(`Logged in as user: ${username}`);
-  } else {
-    // we can also send back an HTTP status code to indicate an improper request
-    res.status(400).send(`'${req.params.type}' is not a valid user type. Valid type is 'username'.`);
-  }
+  res.send(`Logged in as user: ${username}`);
 }
 
 const random = async function(req, res) {
