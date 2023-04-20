@@ -77,7 +77,67 @@ export default function SearchPage() {
     { field: 'ProteinContent', headerName: 'ProteinContent' },
     { field: 'RecipeServings', headerName: 'RecipeServings' },
     { field: 'RecipeYield', headerName: 'RecipeYield' },
-    { field: 'IngredientsCount', headerName: 'IngredientsCount' }
+    { field: 'IngredientsCount', headerName: 'IngredientsCount' },
   ]
+
+  return (
+    <Container>
+      {selectedRecipeId && <SongCard recipeID={selectedRecipeId} handleClose={() => selectedRecipeId(null)} />}
+      <h2>Search Recipes</h2>
+      <Grid container spacing={6}>
+        <Grid item xs={8}>
+          <TextField label='Name' value={title} onChange={(e) => setName(e.target.value)} style={{ width: "100%" }}/>
+        </Grid>
+        <Grid item xs={8}>
+          <TextField label='Description' value={title} onChange={(e) => setDescription(e.target.value)} style={{ width: "100%" }}/>
+        </Grid>
+        <Grid item xs={3}>
+          <p>CookTime</p>
+          <Slider
+            value={CookTime}
+            min={0}
+            max={11358720}
+            step={100}
+            onChange={(e, newValue) => setCookTime(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>PrepTime</p>
+          <Slider
+            value={PrepTime}
+            min={0}
+            max={525600}
+            step={100}
+            onChange={(e, newValue) => setPrepTime(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <p>TotalTime</p>
+          <Slider
+            value={TotalTime}
+            min={0}
+            max={11394720}
+            step={100}
+            onChange={(e, newValue) => setPrepTime(newValue)}
+            valueLabelDisplay='auto'
+          />
+        </Grid>
+        
+      </Grid>
+      <Button onClick={() => search() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
+        Search
+      </Button>
+      <DataGrid
+        rows={data}
+        columns={columns}
+        pageSize={pageSize}
+        rowsPerPageOptions={[5, 10, 25]}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        autoHeight
+      />
+    </Container>
+  );
 
 }
