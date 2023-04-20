@@ -61,17 +61,23 @@ export default function SearchPage() {
   }
 
   const columns = [
-    { field: 'title', headerName: 'Title', width: 300, renderCell: (params) => (
-        <Link onClick={() => setSelectedSongId(params.row.song_id)}>{params.value}</Link>
+    { field: 'Name', headerName: 'Name', width: 300, renderCell: (params) => (
+        <Link onClick={() => setSelectedRecipeId(params.row.recipeID)}>{params.value}</Link>
     ) },
-    { field: 'duration', headerName: 'Duration' },
-    { field: 'plays', headerName: 'Plays' },
-    { field: 'danceability', headerName: 'Danceability' },
-    { field: 'energy', headerName: 'Energy' },
-    { field: 'valence', headerName: 'Valence' },
-    { field: 'tempo', headerName: 'Tempo' },
-    { field: 'key_mode', headerName: 'Key' },
-    { field: 'explicit', headerName: 'Explicit' },
+    { field: 'Description', headerName: 'Description' },
+    { field: 'CookTime', headerName: 'CookTime' },
+    { field: 'PrepTime', headerName: 'PrepTime' },
+    { field: 'TotalTime', headerName: 'TotalTime' },
+    { field: 'SaturatedFatContent', headerName: 'SaturatedFatContent' },
+    { field: 'CholesterolContent', headerName: 'CholesterolContent' },
+    { field: 'SodiumContent', headerName: 'SodiumContent' },
+    { field: 'CarbohydrateContent', headerName: 'CarbohydrateContent' },
+    { field: 'FiberContent', headerName: 'FiberContent' },
+    { field: 'SugarContent', headerName: 'SugarContent' },
+    { field: 'ProteinContent', headerName: 'ProteinContent' },
+    { field: 'RecipeServings', headerName: 'RecipeServings' },
+    { field: 'RecipeYield', headerName: 'RecipeYield' },
+    { field: 'IngredientsCount', headerName: 'IngredientsCount' }
   ]
-  
+
 }
