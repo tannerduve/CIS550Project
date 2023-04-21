@@ -300,7 +300,7 @@ const author = async function(req, res) {
     JOIN recipe_likes rl ON r.RecipeId = rl.RecipeId
     JOIN recipe_ratings rr ON r.RecipeId = rr.RecipeId
     ORDER BY rr.AverageRating DESC, rl.TotalLikes DESC
-    WHERE AuthorId = '${req.params.AuthorID}
+    WHERE AuthorId = '${req.params.AuthorId}
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
