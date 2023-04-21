@@ -21,6 +21,8 @@ app.get('/recipe/:RecipeId', routes.recipe_recid);
 //app.post('/username/:newlikes', routes.user_likes);
 app.get('/top_authors', routes.top_authors);
 app.get('/user', routes.user);
+app.get('/author/:AuthorId', routes.author);
+
 
 
 
