@@ -61,10 +61,10 @@ export default function SearchPage() {
   }
 
   const columns = [
-    { field: 'Name', headerName: 'Name', width: 300, renderCell: (params) => (
+    { field: 'Name', headerName: 'Name', width: 250, renderCell: (params) => (
         <Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
     ) },
-    { field: 'Description', headerName: 'Description', width: 500},
+    { field: 'Description', headerName: 'Description', width: 400},
     { field: 'CookTime', headerName: 'Cook Time' },
     { field: 'PrepTime', headerName: 'Prep Time' },
     { field: 'TotalTime', headerName: 'Total Time' },
