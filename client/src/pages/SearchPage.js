@@ -29,14 +29,14 @@ export default function SearchPage() {
     fetch(`http://${config.server_host}:${config.server_port}/search`)
       .then(res => res.json())
       .then(resJson => {
-        const recipesWithId = resJson.map((recipe) => ({ id: recipe.recipeID, ...recipe}));
+        const recipesWithId = resJson.map((recipe) => ({ id: recipe.RecipeId, ...recipe }));
         setData(recipesWithId);
       });
   }, []);
 
   const search = () => {
     fetch(`http://${config.server_host}:${config.server_port}/search?Name=${Name}` +
-      `Description=${Description}` +
+      `&Description=${Description}` +
       `&CookTime_low=${CookTime[0]}&CookTime_high=${CookTime[11358720]}` +
       `&PrepTime_low=${PrepTime[0]}&PrepTime_high=${PrepTime[525600]}` +
       `&TotalTime_low=${TotalTime[0]}&TotalTime_high=${TotalTime[11394720]}` +
@@ -55,29 +55,29 @@ export default function SearchPage() {
       .then(resJson => {
         // DataGrid expects an array of objects with a unique id.
         // To accomplish this, we use a map with spread syntax (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
-        const recipesWithId = resJson.map((recipe) => ({ id: recipe.recipeID, ...recipe}));
+        const recipesWithId = resJson.map((recipe) => ({ id: recipe.RecipeId, ...recipe}));
         setData(recipesWithId);
       });
   }
 
   const columns = [
     { field: 'Name', headerName: 'Name', width: 300, renderCell: (params) => (
-        <Link onClick={() => setSelectedRecipeId(params.row.recipeID)}>{params.value}</Link>
+        <Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
     ) },
     { field: 'Description', headerName: 'Description' },
-    { field: 'CookTime', headerName: 'CookTime' },
-    { field: 'PrepTime', headerName: 'PrepTime' },
-    { field: 'TotalTime', headerName: 'TotalTime' },
-    { field: 'SaturatedFatContent', headerName: 'SaturatedFatContent' },
-    { field: 'CholesterolContent', headerName: 'CholesterolContent' },
-    { field: 'SodiumContent', headerName: 'SodiumContent' },
-    { field: 'CarbohydrateContent', headerName: 'CarbohydrateContent' },
-    { field: 'FiberContent', headerName: 'FiberContent' },
-    { field: 'SugarContent', headerName: 'SugarContent' },
-    { field: 'ProteinContent', headerName: 'ProteinContent' },
-    { field: 'RecipeServings', headerName: 'RecipeServings' },
-    { field: 'RecipeYield', headerName: 'RecipeYield' },
-    { field: 'IngredientsCount', headerName: 'IngredientsCount' },
+    { field: 'CookTime', headerName: 'Cook Time' },
+    { field: 'PrepTime', headerName: 'Prep Time' },
+    { field: 'TotalTime', headerName: 'Total Time' },
+    { field: 'SaturatedFatContent', headerName: 'Saturated Fat Content' },
+    { field: 'CholesterolContent', headerName: 'Cholesterol Content' },
+    { field: 'SodiumContent', headerName: 'Sodium Content' },
+    { field: 'CarbohydrateContent', headerName: 'Carbohydrate Content' },
+    { field: 'FiberContent', headerName: 'Fiber Content' },
+    { field: 'SugarContent', headerName: 'Sugar Content' },
+    { field: 'ProteinContent', headerName: 'Protein Content' },
+    { field: 'RecipeServings', headerName: 'Recipe Servings' },
+    { field: 'RecipeYield', headerName: 'Recipe Yield' },
+    { field: 'IngredientsCount', headerName: 'Ingredients Count' },
   ]
 
   return (
@@ -194,7 +194,7 @@ export default function SearchPage() {
           />
         </Grid>
         <Grid item xs={4}>
-          <p>IngredientsCount</p>
+          <p>Ingredients Count</p>
           <Slider
             value={IngredientsCount}
             min={0}
