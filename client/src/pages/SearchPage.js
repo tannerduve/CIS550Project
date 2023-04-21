@@ -11,9 +11,9 @@ export default function SearchPage() {
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [Name, setName] = useState('');
   const [Description, setDescription] = useState('');
-  const [CookTime, setCookTime] = useState([0, 11358720]);
-  const [PrepTime, setPrepTime] = useState([0, 525600]);
-  const [TotalTime, setTotalTime] = useState([0, 11394720]);
+  const [CookTime, setCookTime] = useState([0, 100]);
+  const [PrepTime, setPrepTime] = useState([0, 960]);
+  const [TotalTime, setTotalTime] = useState([0, 990]);
   const [SaturatedFatContent, setSaturatedFatContent] = useState([0, 841.9]);
   const [CholesterolContent, setCholesterolContent] = useState([0, 9167.2]);
   const [SodiumContent, setSodiumContent] = useState([0, 704129.6]);
@@ -21,7 +21,7 @@ export default function SearchPage() {
   const [FiberContent, setFiberContent] = useState([0, 835.7]);
   const [SugarContent, setSugarContent] = useState([0, 3623.9]);
   const [ProteinContent, setProteinContent] = useState([0, 1802.9]);
-  const [RecipeServings, setRecipeServings] = useState([0, 32767]);
+  const [RecipeServings, setRecipeServings] = useState([0, 360]);
   const [RecipeYield, setRecipeYield] = useState([0, 100]);
   const [IngredientsCount, setIngredientsCount] = useState([0, 39]);
 
@@ -47,7 +47,7 @@ export default function SearchPage() {
       `&FiberContent_low=${FiberContent[0]}&FiberContent_high=${FiberContent[835.7]}` +
       `&SugarContent_low=${SugarContent[0]}&SugarContent_high=${SugarContent[3623.9]}` +
       `&ProteinContent_low=${ProteinContent[0]}&ProteinContent_high=${ProteinContent[1802.9]}` +
-      `&RecipeServings_low=${RecipeServings[0]}&RecipeServings_high=${RecipeServings[32767]}` +
+      `&RecipeServings_low=${RecipeServings[0]}&RecipeServings_high=${RecipeServings[360]}` +
       `&RecipeYield_low=${RecipeYield[0]}&RecipeYield_high=${RecipeYield[100]}` +
       `&IngredientsCount_low=${IngredientsCount[0]}&IngredientsCount_high=${IngredientsCount[39]}` 
     )
@@ -96,8 +96,8 @@ export default function SearchPage() {
           <Slider
             value={CookTime}
             min={0}
-            max={11358720}
-            step={10000}
+            max={100}
+            step={10}
             onChange={(e, newValue) => setCookTime(newValue)}
             valueLabelDisplay='auto'
           />
@@ -107,8 +107,8 @@ export default function SearchPage() {
           <Slider
             value={PrepTime}
             min={0}
-            max={525600}
-            step={10000}
+            max={960}
+            step={50}
             onChange={(e, newValue) => setPrepTime(newValue)}
             valueLabelDisplay='auto'
           />
@@ -118,8 +118,8 @@ export default function SearchPage() {
           <Slider
             value={TotalTime}
             min={0}
-            max={11394720}
-            step={10000}
+            max={990}
+            step={50}
             onChange={(e, newValue) => setTotalTime(newValue)}
             valueLabelDisplay='auto'
           />
@@ -173,8 +173,8 @@ export default function SearchPage() {
           <Slider
             value={RecipeServings}
             min={0}
-            max={32767}
-            step={1000}
+            max={360}
+            step={50}
             onChange={(e, newValue) => setRecipeServings(newValue)}
             valueLabelDisplay='auto'
           />
