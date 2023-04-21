@@ -64,7 +64,7 @@ export default function SearchPage() {
     { field: 'Name', headerName: 'Name', width: 300, renderCell: (params) => (
         <Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
     ) },
-    { field: 'Description', headerName: 'Description' },
+    { field: 'Description', headerName: 'Description', width: 500},
     { field: 'CookTime', headerName: 'Cook Time' },
     { field: 'PrepTime', headerName: 'Prep Time' },
     { field: 'TotalTime', headerName: 'Total Time' },
@@ -97,7 +97,7 @@ export default function SearchPage() {
             value={CookTime}
             min={0}
             max={11358720}
-            step={100}
+            step={1000}
             onChange={(e, newValue) => setCookTime(newValue)}
             valueLabelDisplay='auto'
             valueLabelFormat={value => <div>{formatDuration(value/(60))}</div>}
@@ -109,7 +109,7 @@ export default function SearchPage() {
             value={PrepTime}
             min={0}
             max={525600}
-            step={100}
+            step={1000}
             onChange={(e, newValue) => setPrepTime(newValue)}
             valueLabelDisplay='auto'
             valueLabelFormat={value => <div>{formatDuration(value/(60))}</div>}
@@ -121,7 +121,7 @@ export default function SearchPage() {
             value={TotalTime}
             min={0}
             max={11394720}
-            step={100}
+            step={1000}
             onChange={(e, newValue) => setTotalTime(newValue)}
             valueLabelDisplay='auto'
             valueLabelFormat={value => <div>{formatDuration(value/(60))}</div>}
@@ -144,7 +144,7 @@ export default function SearchPage() {
             value={CarbohydrateContent}
             min={0}
             max={4320.9}
-            step={100}
+            step={300}
             onChange={(e, newValue) => setCarbohydrateContent(newValue)}
             valueLabelDisplay='auto'
           />
@@ -155,7 +155,7 @@ export default function SearchPage() {
             value={SugarContent}
             min={0}
             max={3623.9}
-            step={100}
+            step={300}
             onChange={(e, newValue) => setSugarContent(newValue)}
             valueLabelDisplay='auto'
           />
@@ -166,7 +166,7 @@ export default function SearchPage() {
             value={ProteinContent}
             min={0}
             max={1802.9}
-            step={100}
+            step={300}
             onChange={(e, newValue) => setProteinContent(newValue)}
             valueLabelDisplay='auto'
           />
@@ -177,7 +177,7 @@ export default function SearchPage() {
             value={RecipeServings}
             min={0}
             max={32767}
-            step={100}
+            step={1000}
             onChange={(e, newValue) => setRecipeServings(newValue)}
             valueLabelDisplay='auto'
           />
