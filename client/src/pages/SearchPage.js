@@ -85,14 +85,14 @@ export default function SearchPage() {
       {selectedRecipeId && <RecipeCard recipeID={selectedRecipeId} handleClose={() => selectedRecipeId(null)} />}
       <h2>Search Recipes</h2>
       <Grid container spacing={6}>
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <TextField label='Name' value={Name} onChange={(e) => setName(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <TextField label='Description' value={Description} onChange={(e) => setDescription(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
-        <Grid item xs={3}>
-          <p>CookTime</p>
+        <Grid item xs={4}>
+          <p>Cook Time</p>
           <Slider
             value={CookTime}
             min={0}
@@ -100,10 +100,11 @@ export default function SearchPage() {
             step={100}
             onChange={(e, newValue) => setCookTime(newValue)}
             valueLabelDisplay='auto'
+            valueLabelFormat={value => <div>{formatDuration(value/(60))}</div>}
           />
         </Grid>
-        <Grid item xs={3}>
-          <p>PrepTime</p>
+        <Grid item xs={4}>
+          <p>Prep Time</p>
           <Slider
             value={PrepTime}
             min={0}
@@ -111,10 +112,11 @@ export default function SearchPage() {
             step={100}
             onChange={(e, newValue) => setPrepTime(newValue)}
             valueLabelDisplay='auto'
+            valueLabelFormat={value => <div>{formatDuration(value/(60))}</div>}
           />
         </Grid>
-        <Grid item xs={3}>
-          <p>TotalTime</p>
+        <Grid item xs={4}>
+          <p>Total Time</p>
           <Slider
             value={TotalTime}
             min={0}
@@ -122,10 +124,11 @@ export default function SearchPage() {
             step={100}
             onChange={(e, newValue) => setTotalTime(newValue)}
             valueLabelDisplay='auto'
+            valueLabelFormat={value => <div>{formatDuration(value/(60))}</div>}
           />
         </Grid>
         <Grid item xs={3}>
-          <p>SaturatedFatContent</p>
+          <p>Saturated Fat Content</p>
           <Slider
             value={SaturatedFatContent}
             min={0}
@@ -136,29 +139,7 @@ export default function SearchPage() {
           />
         </Grid>
         <Grid item xs={3}>
-          <p>CholesterolContent</p>
-          <Slider
-            value={CholesterolContent}
-            min={0}
-            max={9167.2}
-            step={100}
-            onChange={(e, newValue) => setCholesterolContent(newValue)}
-            valueLabelDisplay='auto'
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <p>SodiumContent</p>
-          <Slider
-            value={SodiumContent}
-            min={0}
-            max={704129.6}
-            step={100}
-            onChange={(e, newValue) => setSodiumContent(newValue)}
-            valueLabelDisplay='auto'
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <p>CarbohydrateContent</p>
+          <p>Carbohydrate Content</p>
           <Slider
             value={CarbohydrateContent}
             min={0}
@@ -169,18 +150,7 @@ export default function SearchPage() {
           />
         </Grid>
         <Grid item xs={3}>
-          <p>FiberContent</p>
-          <Slider
-            value={FiberContent}
-            min={0}
-            max={835.7}
-            step={100}
-            onChange={(e, newValue) => setFiberContent(newValue)}
-            valueLabelDisplay='auto'
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <p>SugarContent</p>
+          <p>Sugar Content</p>
           <Slider
             value={SugarContent}
             min={0}
@@ -191,7 +161,7 @@ export default function SearchPage() {
           />
         </Grid>
         <Grid item xs={3}>
-          <p>ProteinContent</p>
+          <p>Protein Content</p>
           <Slider
             value={ProteinContent}
             min={0}
@@ -201,8 +171,8 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={3}>
-          <p>RecipeServings</p>
+        <Grid item xs={4}>
+          <p>Recipe Servings</p>
           <Slider
             value={RecipeServings}
             min={0}
@@ -212,8 +182,8 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={3}>
-          <p>RecipeYield</p>
+        <Grid item xs={4}>
+          <p>Recipe Yield</p>
           <Slider
             value={RecipeYield}
             min={0}
@@ -223,7 +193,7 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4}>
           <p>IngredientsCount</p>
           <Slider
             value={IngredientsCount}
