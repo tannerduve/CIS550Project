@@ -13,8 +13,8 @@ import SearchPage from './pages/SearchPage';
 // in this case, we only change the color scheme
 export const theme = createTheme({
   palette: {
-    primary: indigo,
-    secondary: amber,
+    primary: pink,
+    secondary: cyan,
   },
 });
 
