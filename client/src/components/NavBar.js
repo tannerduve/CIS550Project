@@ -10,7 +10,7 @@ const NavText = ({ href, text, isMain }) => {
       noWrap
       style={{
         marginRight: '30px',
-        fontFamily: 'didot',
+        fontFamily: 'serif',
         fontWeight: 700,
         letterSpacing: '.3rem',
       }}
