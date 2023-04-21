@@ -10,6 +10,8 @@ export default function HomePage() {
   const [recipeOfTheDay, setRecipeOfTheDay] = useState({});
   const [appUser, setAppUser] = useState('');
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
+  const [selectedAuthorId, setSelectedAuthorId] = useState(null);
+
 
   useEffect(() => {
     fetch(`http://${config.server_host}:${config.server_port}/random`)
@@ -29,13 +31,13 @@ export default function HomePage() {
     {
       field: 'Name',
       headerName: 'Recipe Name',
-      renderCell: (row) => <Link onClick={() => setSelectedRecipeId(row.RecipeId)}>{row.Name}</Link> // A Link component is used just for formatting purposes
-      //renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.RecipeName}</NavLink> // A NavLink component is used to create a link to the recipe page
+      //renderCell: (row) => <Link onClick={() => setSelectedRecipeId(row.RecipeId)}>{row.Name}</Link> // A Link component is used just for formatting purposes
+      renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.Name}</NavLink> // A NavLink component is used to create a link to the recipe page
     },
     {
       field: 'AuthorName',
       headerName: 'Author Name',
-      renderCell: (row) => <NavLink to={`/author/${row.AuthorId}`}>{row.AuthorName}</NavLink> // A NavLink component is used to create a link to the author page
+      renderCell: (row) => <Link onClick={() => setSelectedAuthorId(row.AuthorId)}>{row.AuthorName}</Link> // A Link component is used just for formatting purposes
     },
     {
       field: 'RecipeCategory',
@@ -55,12 +57,9 @@ export default function HomePage() {
   // Hint: this should be very similar to songColumns defined above, but has 2 columns instead of 3
   const authorColumns = [
     {
-      field: 'AuthorId',
-      headerName: 'Author ID',
-    },
-    {
       field: 'AuthorName',
-      headerName: 'Author Name'
+      headerName: 'Author Name',
+      renderCell: (row) => <Link onClick={() => setSelectedAuthorId(row.AuthorId)}>{row.AuthorName}</Link> // A Link component is used just for formatting purposes
     },
     {
       field: 'AverageRecipeRating',
@@ -75,9 +74,11 @@ export default function HomePage() {
   return (
     <Container>
       {/* SongCard is a custom component that we made. selectedSongId && <SongCard .../> makes use of short-circuit logic to only render the SongCard if a non-null song is selected */}
-      {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
-      <h2>Check out your recipe of the day:&nbsp;
-        <Link onClick={() => setSelectedRecipeId(recipeOfTheDay.RecipeId)}>{recipeOfTheDay.Name}</Link>
+      {/* {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />} */}
+      {selectedAuthorId && <RecipeCard recipeId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
+      <h2>Check out this featured recipe:&nbsp;
+        {/*<Link onClick={() => setSelectedRecipeId(recipeOfTheDay.RecipeId)}>{recipeOfTheDay.Name}</Link> */}
+        <NavLink to={`/recipe/${recipeOfTheDay.RecipeId}`}>{recipeOfTheDay.Name}</NavLink>
       </h2>
       <Divider />
       <h2>Top Recipes</h2>
