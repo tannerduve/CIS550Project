@@ -37,9 +37,9 @@ export default function SearchPage() {
   const search = () => {
     fetch(`http://${config.server_host}:${config.server_port}/search?Name=${Name}` +
       `&Description=${Description}` +
-      `&CookTime_low=${CookTime[0]}&CookTime_high=${CookTime[11358720]}` +
-      `&PrepTime_low=${PrepTime[0]}&PrepTime_high=${PrepTime[525600]}` +
-      `&TotalTime_low=${TotalTime[0]}&TotalTime_high=${TotalTime[11394720]}` +
+      `&CookTime_low=${CookTime[0]}&CookTime_high=${CookTime[100]}` +
+      `&PrepTime_low=${PrepTime[0]}&PrepTime_high=${PrepTime[960]}` +
+      `&TotalTime_low=${TotalTime[0]}&TotalTime_high=${TotalTime[990]}` +
       `&SaturatedFatContent_low=${SaturatedFatContent[0]}&SaturatedFatContent_high=${SaturatedFatContent[841.9]}` +
       `&CholesterolContent_low=${CholesterolContent[0]}&CookTime_high=${CholesterolContent[9167.2]}` +
       `&SodiumContent_low=${SodiumContent[0]}&SodiumContent_high=${SodiumContent[704129.6]}` +
@@ -92,7 +92,7 @@ export default function SearchPage() {
           <TextField label='Description' value={Description} onChange={(e) => setDescription(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
         <Grid item xs={4}>
-          <p>Cook Time</p>
+          <p>Cook Time (in minutes)</p>
           <Slider
             value={CookTime}
             min={0}
@@ -103,7 +103,7 @@ export default function SearchPage() {
           />
         </Grid>
         <Grid item xs={4}>
-          <p>Prep Time</p>
+          <p>Prep Tim (in minutes) </p>
           <Slider
             value={PrepTime}
             min={0}
@@ -114,7 +114,7 @@ export default function SearchPage() {
           />
         </Grid>
         <Grid item xs={4}>
-          <p>Total Time</p>
+          <p>Total Time (in minutes)</p>
           <Slider
             value={TotalTime}
             min={0}
