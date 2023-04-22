@@ -53,22 +53,6 @@ export default function HomePage() {
     },
   ];
 
-  const authorColumns = [
-    {
-      field: 'AuthorName',
-      headerName: 'Author Name',
-      renderCell: (row) => <Link onClick={() => setSelectedAuthorId(row.AuthorId)}>{row.AuthorName}</Link> // A Link component is used just for formatting purposes
-    },
-    {
-      field: 'AverageRecipeRating',
-      headerName: 'Average Recipe Rating'
-    },
-    {
-      field: 'TotalRecipeLikes',
-      headerName: 'Total Recipe Likes'
-    },
-  ];
-
   return (
     <Container>
       {/* SongCard is a custom component that we made. selectedSongId && <SongCard .../> makes use of short-circuit logic to only render the SongCard if a non-null song is selected */}
@@ -81,10 +65,6 @@ export default function HomePage() {
       <Divider />
       <h2>Top Recipes</h2>
       <LazyTable route={`http://${config.server_host}:${config.server_port}/top_recipes`} columns={recipeColumns} />
-      <Divider />
-      <h2>Top Authors</h2>
-      <LazyTable route={`http://${config.server_host}:${config.server_port}/top_authors`} columns={authorColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]} />
-      <Divider />
       <p>{appUser}</p>
     </Container>
   );

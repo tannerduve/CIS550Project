@@ -35,9 +35,9 @@ export default function ReviewsPage() {
   }
 
   const columns = [
-    {field: 'AuthorName', headerName: 'Author Name', width: 600},
+    {field: 'AuthorName', headerName: 'Author Name', width: 300},
     {field: 'Review', headerName: 'Review', width: 700},
-    {field: 'Rating', headerName: 'Rating', width: 200}
+    {field: 'Rating', headerName: 'Rating', width: 150}
   ];
 
   const authorColumns = [
