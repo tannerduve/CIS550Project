@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import RecipeCard from '../components/RecipeCard';
 import { Button, Checkbox, Container, FormControlLabel, Grid, Link, Slider, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import { formatDuration } from '../helpers/formatter';
 const config = require('../config.json');
 
 export default function SearchPage() {
@@ -85,13 +84,13 @@ export default function SearchPage() {
       {selectedRecipeId && <RecipeCard recipeID={selectedRecipeId} handleClose={() => selectedRecipeId(null)} />}
       <h2>Search Recipes</h2>
       <Grid container spacing={6}>
-        <Grid item xs={9}>
+        <Grid item xs={10}>
           <TextField label='Name' value={Name} onChange={(e) => setName(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={10}>
           <TextField label='Description' value={Description} onChange={(e) => setDescription(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={2.4}>
           <p>Cook Time (in minutes)</p>
           <Slider
             value={CookTime}
@@ -102,8 +101,8 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={4}>
-          <p>Prep Tim (in minutes) </p>
+        <Grid item xs={2.4}>
+          <p>Prep Time (in minutes) </p>
           <Slider
             value={PrepTime}
             min={0}
@@ -113,7 +112,7 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={2.4}>
           <p>Total Time (in minutes)</p>
           <Slider
             value={TotalTime}
@@ -124,7 +123,7 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2.4}>
           <p>Saturated Fat Content</p>
           <Slider
             value={SaturatedFatContent}
@@ -135,7 +134,7 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2.4}>
           <p>Carbohydrate Content</p>
           <Slider
             value={CarbohydrateContent}
@@ -146,7 +145,7 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2.4}>
           <p>Sugar Content</p>
           <Slider
             value={SugarContent}
@@ -157,7 +156,7 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={2.4}>
           <p>Protein Content</p>
           <Slider
             value={ProteinContent}
@@ -168,7 +167,7 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={2.4}>
           <p>Recipe Servings</p>
           <Slider
             value={RecipeServings}
@@ -179,7 +178,7 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={2.4}>
           <p>Recipe Yield</p>
           <Slider
             value={RecipeYield}
@@ -190,7 +189,7 @@ export default function SearchPage() {
             valueLabelDisplay='auto'
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={2.4}>
           <p>Ingredients Count</p>
           <Slider
             value={IngredientsCount}
