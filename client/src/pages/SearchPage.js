@@ -85,7 +85,7 @@ export default function SearchPage() {
     <Container>
       {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
       <h2>Search Recipes</h2>
-      <Grid container spacing={6}>
+      <Grid container spacing={3}>
         <Grid item xs={10}>
           <TextField label='Name' value={Name} onChange={(e) => setName(e.target.value)} style={{ width: "100%" }}/>
         </Grid>

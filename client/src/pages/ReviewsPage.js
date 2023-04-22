@@ -7,9 +7,9 @@ import { NavLink } from 'react-router-dom';
 const config = require('../config.json');
 
 export default function ReviewsPage() {
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
   const [data, setData] = useState([]);
-  const [selectedReviewId, setSelectedReviewId] = useState(null);
+  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [selectedAuthorId, setSelectedAuthorId] = useState(null);
   const [AuthorName, setAuthorName] = useState('');
   const [Review, setReview] = useState('');
@@ -35,15 +35,16 @@ export default function ReviewsPage() {
   }
 
   const columns = [
-    {field: 'AuthorName', headerName: 'Author Name', width: 300},
+    {field: 'AuthorName', headerName: 'Author Name', width: 300, renderCell: (params) => (
+        <Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
+    )},
     {field: 'Review', headerName: 'Review', width: 700},
     {field: 'Rating', headerName: 'Rating', width: 150}
   ];
 
   const authorColumns = [
     {
-      field: 'AuthorName',
-      headerName: 'Author Name',
+      field: 'AuthorName', headerName: 'Author Name', 
       renderCell: (row) => <Link onClick={() => setSelectedAuthorId(row.AuthorId)}>{row.AuthorName}</Link>
     },
     {
@@ -57,9 +58,10 @@ export default function ReviewsPage() {
   ];
 
   return (
-    <Container>
-        {selectedAuthorId && <RecipeCard recipeId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
+    <Container> 
+       {selectedAuthorId && selectedRecipeId && <RecipeCard recipeId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
         <h2>Reviews</h2>
+        <Grid container spacing={2}>
         <Grid item xs={10}>
           <TextField label='Author Name' value={AuthorName} onChange={(e) => setAuthorName(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
@@ -69,6 +71,7 @@ export default function ReviewsPage() {
         <Grid item xs={10}>
           <TextField label='Rating' value={Rating} onChange={(e) => setRating(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
+        </Grid>
         <Button onClick={() => review() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
         Find Reviews!
         </Button>
@@ -76,7 +79,7 @@ export default function ReviewsPage() {
         rows={data}
         columns={columns}
         pageSize={pageSize}
-        rowsPerPageOptions={[5, 10, 25]}
+        rowsPerPageOptions={[5, 10]}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         autoHeight
       />
