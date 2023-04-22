@@ -275,7 +275,7 @@ const reviews = async function(req, res) {
   const Review = req.query.Review ?? '';
   const Rating = req.query.Rating ?? '';
 
-  connection.query(`SELECT * FROM Recipes WHERE AuthorName LIKE '%${AuthorName}%' 
+  connection.query(`SELECT * FROM Reviews WHERE AuthorName LIKE '%${AuthorName}%' 
   AND Review LIKE '%${Review}%' AND Rating LIKE '%${Rating}%'`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);

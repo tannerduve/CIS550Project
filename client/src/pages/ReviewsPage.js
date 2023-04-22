@@ -9,6 +9,7 @@ const config = require('../config.json');
 export default function ReviewsPage() {
   const [pageSize, setPageSize] = useState(10);
   const [data, setData] = useState([]);
+  const [selectedReviewId, setSelectedReviewId] = useState(null);
   const [selectedAuthorId, setSelectedAuthorId] = useState(null);
   const [AuthorName, setAuthorName] = useState('');
   const [Review, setReview] = useState('');
@@ -34,8 +35,7 @@ export default function ReviewsPage() {
   }
 
   const columns = [
-    {field: 'AuthorName', headerName: 'Author Name',
-      renderCell: (row) => <Link onClick={() => setSelectedAuthorId(row.AuthorId)}>{row.AuthorName}</Link>, width: 300}, 
+    {field: 'AuthorName', headerName: 'Author Name', width: 600},
     {field: 'Review', headerName: 'Review', width: 700},
     {field: 'Rating', headerName: 'Rating', width: 200}
   ];
@@ -58,7 +58,8 @@ export default function ReviewsPage() {
 
   return (
     <Container>
-      <h2>Reviews</h2>
+        {selectedAuthorId && <RecipeCard recipeId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
+        <h2>Reviews</h2>
         <Grid item xs={10}>
           <TextField label='Author Name' value={AuthorName} onChange={(e) => setAuthorName(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
@@ -70,7 +71,7 @@ export default function ReviewsPage() {
         </Grid>
         <Button onClick={() => review() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
         Find Reviews!
-      </Button>
+        </Button>
       <DataGrid
         rows={data}
         columns={columns}
