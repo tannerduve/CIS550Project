@@ -13,6 +13,7 @@ app.use(cors({
 app.post('/newuser', routes.newuser);
 //app.get('/user/:username', routes.username);
 app.get('/search', routes.search);
+app.get('/reviews', routes.reviews);
 app.get('/random', routes.random);
 app.get('/recipes', routes.recipes);
 app.get('/top_recipes', routes.top_recipes);

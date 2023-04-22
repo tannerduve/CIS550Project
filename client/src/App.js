@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import HomePage from './pages/HomePage';
 import LikesPage from './pages/LikesPage';
 import SearchPage from './pages/SearchPage';
+import ReviewsPage from './pages/ReviewsPage';
 // import SignupPage from './pages/SignupPage'
 
 // createTheme enables you to customize the look and feel of your app past the default
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/user" element={<LikesPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

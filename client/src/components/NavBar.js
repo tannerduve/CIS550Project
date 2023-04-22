@@ -38,6 +38,7 @@ export default function NavBar() {
         <Toolbar disableGutters>
           <NavText href='/' text='FlavorFinder' isMain />
           <NavText href='/search' text='SEARCH' />
+          <NavText href='/reviews' text='REVIEWS'/>
           <NavText href='/likes' text='LIKES' />
         </Toolbar>
       </Container>

@@ -269,6 +269,23 @@ const top_authors = async function(req, res) {
   }
 }
 
+//reviews Route
+const reviews = async function(req, res) {
+  const AuthorName = req.query.AuthorName ?? '';
+  const Review = req.query.Review ?? '';
+  const Rating = req.query.Rating ?? '';
+
+  connection.query(`SELECT * FROM Recipes WHERE AuthorName LIKE '%${AuthorName}%' 
+  AND Review LIKE '%${Review}%' AND Rating LIKE '%${Rating}%'`, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 const recipe_recid = async function(req, res) {
   connection.query(`
     SELECT * 
@@ -316,6 +333,7 @@ module.exports = {
   newuser,
   signup_login,
   search,
+  reviews,
   random,
   recipes,
   top_recipes,

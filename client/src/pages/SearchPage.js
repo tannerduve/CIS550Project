@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import RecipeCard from '../components/RecipeCard';
 import { Button, Checkbox, Container, FormControlLabel, Grid, Link, Slider, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { NavLink } from 'react-router-dom';
+
 const config = require('../config.json');
 
 export default function SearchPage() {
@@ -202,7 +204,7 @@ export default function SearchPage() {
         </Grid>
       </Grid>
       <Button onClick={() => search() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
-        Search
+        Find Recipes!
       </Button>
       <DataGrid
         rows={data}
