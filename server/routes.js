@@ -55,8 +55,9 @@ const newuser = async function(req, res) {
 
 //ROUTE: POST /login
 const login = async function(req, res) {
+  console.log(req.body);
   const { username, password } = req.body;
-  connection.query(`SELECT * 
+  connection.query(`SELECT username, password 
     FROM User
     WHERE Username = '${username}'
   `, (err, data) => {
