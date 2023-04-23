@@ -53,19 +53,24 @@ const newuser = async function(req, res) {
 }
 
 
-//ROUTE: GET /user/:username
-const signup_login = async function(req, res) {
-  connection.query(`
-    SELECT *
+//ROUTE: POST /login
+const login = async function(req, res) {
+  const { username, password } = req.body;
+  connection.query(`SELECT * 
     FROM User
-    WHERE Username = '${req.params.Username}' AND Password = '${req.params.Password}'
+    WHERE username = '${username}'
   `, (err, data) => {
- (login)
-    if (err || data.length === 0) {
+    if (err) {
       console.log(err);
-      res.json({});
+      res.status(500).send('Server error');
+    } else if (data.length !== 1) {
+      res.status(401).send('Invalid username or password 1 length');
+    } else if (data[0].password !== password) {
+      res.status(401).send('Invalid username or password 2 password');
+    // } else if (data.length !== 1 || data[0].password !== password) {
+    //   res.status(401).send('Invalid username or password');
     } else {
-      res.json(data[0]);
+      res.status(200).json(data[0]);
     }
   });
 }
@@ -331,7 +336,7 @@ const author = async function(req, res) {
 module.exports = {
   user,
   newuser,
-  signup_login,
+  login,
   search,
   reviews,
   random,

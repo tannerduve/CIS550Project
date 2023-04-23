@@ -8,7 +8,7 @@ import HomePage from './pages/HomePage';
 import LikesPage from './pages/LikesPage';
 import SearchPage from './pages/SearchPage';
 import ReviewsPage from './pages/ReviewsPage';
-// import SignupPage from './pages/SignupPage'
+import LoginPage from './pages/LoginPage';
 
 // createTheme enables you to customize the look and feel of your app past the default
 // in this case, we only change the color scheme
@@ -34,6 +34,7 @@ export default function App() {
           <Route path="/user" element={<LikesPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/reviews" element={<ReviewsPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

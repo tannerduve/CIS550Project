@@ -40,6 +40,7 @@ export default function NavBar() {
           <NavText href='/search' text='SEARCH' />
           <NavText href='/reviews' text='REVIEWS'/>
           <NavText href='/likes' text='LIKES' />
+          <NavText href='/login' text='LOGIN'/>
         </Toolbar>
       </Container>
     </AppBar>
