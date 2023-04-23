@@ -58,17 +58,17 @@ const login = async function(req, res) {
   const { username, password } = req.body;
   connection.query(`SELECT * 
     FROM User
-    WHERE username = '${username}'
+    WHERE Username = '${username}'
   `, (err, data) => {
     if (err) {
       console.log(err);
       res.status(500).send('Server error');
     } else if (data.length !== 1) {
-      res.status(401).send('Invalid username or password 1 length');
+      console.log('Data Length Error');
+      res.status(401).send('Invalid username');
     } else if (data[0].password !== password) {
-      res.status(401).send('Invalid username or password 2 password');
-    // } else if (data.length !== 1 || data[0].password !== password) {
-    //   res.status(401).send('Invalid username or password');
+      console.log('Incorrect Password Error');
+      res.status(401).send('Invalid Password');
     } else {
       res.status(200).json(data[0]);
     }

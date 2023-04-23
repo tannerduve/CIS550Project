@@ -8,7 +8,7 @@ function LoginPage() {
   const [successMessage, setSuccessMessage] = useState("");
 
   //const history = useHistory();
-
+  const config = require('../config.json');
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -20,7 +20,7 @@ function LoginPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('/login', {
+      const response = await fetch(`http://${config.server_host}:${config.server_port}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -33,10 +33,10 @@ function LoginPage() {
         // history.push('/');
         
       } else {
-       // setLoginError('Invalid username or password');
-        const errorResponse = await response.json();
-        setLoginError(errorResponse.error);
-        console.log('Error:', errorResponse.error);
+       setLoginError('Invalid username or password');
+        // const errorResponse = await response.json();
+        // setLoginError(errorResponse.error);
+        // console.log('Error:', errorResponse.error);
       }
     } catch (error) {
       console.error(error);
