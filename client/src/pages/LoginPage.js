@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { Container, Typography, TextField, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+const config = require('../config.json');
 
-function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+export default function LoginPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  //const history = useHistory();
-  const config = require('../config.json');
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -19,47 +19,55 @@ function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch(`http://${config.server_host}:${config.server_port}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('username', data.username);
-        setSuccessMessage("Login successful!");
-        // history.push('/');
-        
-      } else {
-       setLoginError('Invalid username or password');
-        // const errorResponse = await response.json();
-        // setLoginError(errorResponse.error);
-        // console.log('Error:', errorResponse.error);
-      }
-    } catch (error) {
-      console.error(error);
+
+    const response = await fetch(`http://${config.server_host}:${config.server_port}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (response.ok) {
+      navigate('/');
+    } else {
+      const error = await response.text();
+      setError(error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input type="text" value={username} onChange={handleUsernameChange} />
-      </label>
-      <br />
-      <label>
-        Password:
-        <input type="password" value={password} onChange={handlePasswordChange} />
-      </label>
-      <br />
-      <button type="submit">Login</button>
-      {loginError && <p>{loginError}</p>}
-      {successMessage && <p>{successMessage}</p>}
-    </form>
+    <Container maxWidth="xs">
+      <Typography variant="h2" align="center" gutterBottom>
+        Login
+      </Typography>
+      {error && (
+        <Typography variant="body1" color="error" align="center" gutterBottom>
+          {error}
+        </Typography>
+      )}
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Username"
+          fullWidth
+          margin="normal"
+          value={username}
+          onChange={handleUsernameChange}
+          required
+        />
+        <TextField
+          label="Password"
+          fullWidth
+          margin="normal"
+          type="password"
+          value={password}
+          onChange={handlePasswordChange}
+          required
+        />
+        <Button variant="contained" color="primary" type="submit" fullWidth>
+          Login
+        </Button>
+      </form>
+    </Container>
   );
 }
-
-export default LoginPage;
