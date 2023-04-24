@@ -19,20 +19,28 @@ export default function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const response = await fetch(`http://${config.server_host}:${config.server_port}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, password })
-    });
-
-    if (response.ok) {
-      navigate('/');
-    } else {
-      const error = await response.text();
-      setError(error);
+  
+    try {
+      const response = await fetch(`http://${config.server_host}:${config.server_port}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username, password: password })
+      });
+      console.log(response);
+      console.log(username);
+      console.log(password);
+  
+      if (response && response.ok) {
+        navigate('/');
+      } else {
+        const error = await response.text();
+        setError(error);
+      }
+    } catch (error) {
+      console.log(error);
+      setError('Failed to fetch');
     }
   };
 
