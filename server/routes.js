@@ -53,19 +53,36 @@ const newuser = async function (req, res) {
 }
 
 
+<<<<<<< HEAD
 //ROUTE: GET /user/:username
 const signup_login = async function (req, res) {
   connection.query(`
     SELECT *
+=======
+//ROUTE: POST /login
+const login = async function(req, res) {
+  const { username, password } = req.body;
+  connection.query(`SELECT * 
+>>>>>>> 2696408aaabb8f62c61bfa228578014f4564dd7b
     FROM User
-    WHERE Username = '${req.params.Username}' AND Password = '${req.params.Password}'
+    WHERE Username = '${username}'
   `, (err, data) => {
+<<<<<<< HEAD
     (login)
     if (err || data.length === 0) {
+=======
+    if (err) {
+>>>>>>> 2696408aaabb8f62c61bfa228578014f4564dd7b
       console.log(err);
-      res.json({});
+      res.status(500).send('Server error');
+    } else if (data.length !== 1) {
+      console.log('Data Length Error');
+      res.status(401).send('Invalid username');
+    } else if (data[0].password !== password) {
+      console.log('Incorrect Password Error');
+      res.status(401).send('Invalid Password');
     } else {
-      res.json(data[0]);
+      res.status(200).json(data[0]);
     }
   });
 }
@@ -331,7 +348,7 @@ const author = async function (req, res) {
 module.exports = {
   user,
   newuser,
-  signup_login,
+  login,
   search,
   reviews,
   random,
