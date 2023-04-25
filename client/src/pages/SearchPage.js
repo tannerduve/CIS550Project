@@ -42,7 +42,7 @@ export default function SearchPage() {
       `&PrepTime_low=${PrepTime[0]}&PrepTime_high=${PrepTime[960]}` +
       `&TotalTime_low=${TotalTime[0]}&TotalTime_high=${TotalTime[990]}` +
       `&SaturatedFatContent_low=${SaturatedFatContent[0]}&SaturatedFatContent_high=${SaturatedFatContent[841.9]}` +
-      `&CholesterolContent_low=${CholesterolContent[0]}&CookTime_high=${CholesterolContent[9167.2]}` +
+      `&CholesterolContent_low=${CholesterolContent[0]}&CholesterolContent_high=${CholesterolContent[9167.2]}` +
       `&SodiumContent_low=${SodiumContent[0]}&SodiumContent_high=${SodiumContent[704129.6]}` +
       `&CarbohydrateContent_low=${CarbohydrateContent[0]}&CarbohydrateContent_high=${CarbohydrateContent[4320.9]}` +
       `&FiberContent_low=${FiberContent[0]}&FiberContent_high=${FiberContent[835.7]}` +
