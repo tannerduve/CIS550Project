@@ -12,12 +12,12 @@ connection.connect((err) => err && console.log(err));
 
 // GET /user
 // Will change this, just using for testing
-const user = async function(req, res) {
+const user = async function (req, res) {
   const username = 'ryboyle';
   res.send(`Logged in as user: ${username}`);
 }
 
-const random = async function(req, res) {
+const random = async function (req, res) {
   connection.query(`
     SELECT * 
     FROM Recipes 
@@ -38,7 +38,7 @@ const random = async function(req, res) {
 
 
 //Route : POST /newuser
-const newuser = async function(req, res) {
+const newuser = async function (req, res) {
   connection.query(`
     INSERT INTO User
     VALUES ('${req.params.Username}', '${req.params.Password}')
@@ -54,13 +54,13 @@ const newuser = async function(req, res) {
 
 
 //ROUTE: GET /user/:username
-const signup_login = async function(req, res) {
+const signup_login = async function (req, res) {
   connection.query(`
     SELECT *
     FROM User
     WHERE Username = '${req.params.Username}' AND Password = '${req.params.Password}'
   `, (err, data) => {
- (login)
+    (login)
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
@@ -70,16 +70,16 @@ const signup_login = async function(req, res) {
   });
 }
 
-const search = async function(req, res) {
+const search = async function (req, res) {
 
   const Name = req.query.Name ?? '';
   const Description = req.query.Description ?? '';
-  const CookTimeLow = req.query.CookTime_low ?? 0; 
-  const CookTimeHigh = req.query.CookTime_high ?? 100; 
-  const PrepTimeLow = req.query.PrepTime_low ?? 0; 
-  const PrepTimeHigh = req.query.PrepTime_high ?? 960; 
-  const TotalTimeLow = req.query.TotalTime_low ?? 0; 
-  const TotalTimeHigh = req.query.TotalTime_high ?? 990; 
+  const CookTimeLow = req.query.CookTime_low ?? 0;
+  const CookTimeHigh = req.query.CookTime_high ?? 100;
+  const PrepTimeLow = req.query.PrepTime_low ?? 0;
+  const PrepTimeHigh = req.query.PrepTime_high ?? 960;
+  const TotalTimeLow = req.query.TotalTime_low ?? 0;
+  const TotalTimeHigh = req.query.TotalTime_high ?? 990;
   const SaturatedFatContentLow = req.query.SaturatedFatContent_low ?? 0;
   const SaturatedFatContentHigh = req.query.SaturatedFatContent_high ?? 841.9;
   const CholesterolContentLow = req.query.CholesterolContent_low ?? 0;
@@ -124,7 +124,7 @@ const search = async function(req, res) {
   });
 }
 
-const user_likes = async function(req, res) {
+const user_likes = async function (req, res) {
   connection.query(`SELECT * 
     FROM Likes l 
     JOIN Recipes r ON l.RecipeId = r.RecipeID 
@@ -139,7 +139,7 @@ const user_likes = async function(req, res) {
   });
 }
 
-const recipes = async function(req, res) {
+const recipes = async function (req, res) {
   connection.query(`
     SELECT * 
     FROM Recipes
@@ -154,7 +154,7 @@ const recipes = async function(req, res) {
 }
 
 // Route: GET /top_recipes
-const top_recipes = async function(req, res) {
+const top_recipes = async function (req, res) {
   const page = req.query.page;
   const pageSize = req.query.page_size ?? 10;
 
@@ -215,7 +215,7 @@ const top_recipes = async function(req, res) {
 }
 
 // Route: GET /top_authors
-const top_authors = async function(req, res) {
+const top_authors = async function (req, res) {
   const page = req.query.page;
   const pageSize = req.query.page_size ?? 10;
 
@@ -270,7 +270,7 @@ const top_authors = async function(req, res) {
 }
 
 //reviews Route
-const reviews = async function(req, res) {
+const reviews = async function (req, res) {
   const AuthorName = req.query.AuthorName ?? '';
   const Review = req.query.Review ?? '';
   const Rating = req.query.Rating ?? '';
@@ -286,7 +286,7 @@ const reviews = async function(req, res) {
   });
 }
 
-const recipe_recid = async function(req, res) {
+const recipe_recid = async function (req, res) {
   connection.query(`
     SELECT * 
     FROM Recipes
@@ -301,7 +301,7 @@ const recipe_recid = async function(req, res) {
   });
 }
 
-const author = async function(req, res) {
+const author = async function (req, res) {
   connection.query(`
     WITH recipe_likes AS (
       SELECT RecipeId, COUNT(Username) AS TotalLikes
