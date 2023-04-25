@@ -38,7 +38,8 @@ export default function ReviewsPage() {
   const columns = [
     {
       field: 'Name', headerName: 'Recipe Name', width: 200, renderCell: (params) => (
-      <Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
+      <NavLink to={`/recipe/${params.row.RecipeId}`}>{params.value}</NavLink>
+      //<Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
     )},
     {
       field: 'AuthorName', headerName: 'Author Name', width: 150},
