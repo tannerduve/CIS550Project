@@ -343,9 +343,10 @@ const author = async function (req, res) {
 
 const author_reviews = async function (req, res) {
   connection.query(`
-  SELECT * 
-  FROM Reviews 
-  WHERE AuthorId = ${req.params.AuthorId}`
+  SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, a.Review, a.Rating
+  FROM Reviews a
+  JOIN Recipes r ON a.RecipeId = r.RecipeId
+  WHERE r.AuthorId = ${req.params.AuthorId}`
   , (err, data) => {
     if (err) {
       console.log(err);

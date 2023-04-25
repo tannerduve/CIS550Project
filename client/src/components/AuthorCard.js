@@ -19,10 +19,6 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
   const [reviewDisplay, setReviewDisplay] = useState(false);
   const [pageSize, setPageSize] = useState(5);
 
-
-  // TODO (TASK 20): fetch the song specified in songId and based on the fetched album_id also fetch the album data
-  // Hint: you need to both fill in the callback and the dependency array (what variable determines the information you need to fetch?)
-  // Hint: since the second fetch depends on the information from the first, try nesting the second fetch within the then block of the first (pseudocode is provided)
   useEffect(() => {
     fetch(`http://${config.server_host}:${config.server_port}/author/${authorId}`)
       .then(res => res.json())
