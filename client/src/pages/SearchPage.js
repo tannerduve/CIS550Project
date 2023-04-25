@@ -38,19 +38,19 @@ export default function SearchPage() {
   const search = () => {
     fetch(`http://${config.server_host}:${config.server_port}/search?Name=${Name}` +
       `&Description=${Description}` +
-      `&CookTime_low=${CookTime[0]}&CookTime_high=${CookTime[100]}` +
-      `&PrepTime_low=${PrepTime[0]}&PrepTime_high=${PrepTime[960]}` +
-      `&TotalTime_low=${TotalTime[0]}&TotalTime_high=${TotalTime[990]}` +
-      `&SaturatedFatContent_low=${SaturatedFatContent[0]}&SaturatedFatContent_high=${SaturatedFatContent[841.9]}` +
-      `&CholesterolContent_low=${CholesterolContent[0]}&CookTime_high=${CholesterolContent[9167.2]}` +
-      `&SodiumContent_low=${SodiumContent[0]}&SodiumContent_high=${SodiumContent[704129.6]}` +
-      `&CarbohydrateContent_low=${CarbohydrateContent[0]}&CarbohydrateContent_high=${CarbohydrateContent[4320.9]}` +
-      `&FiberContent_low=${FiberContent[0]}&FiberContent_high=${FiberContent[835.7]}` +
-      `&SugarContent_low=${SugarContent[0]}&SugarContent_high=${SugarContent[3623.9]}` +
-      `&ProteinContent_low=${ProteinContent[0]}&ProteinContent_high=${ProteinContent[1802.9]}` +
-      `&RecipeServings_low=${RecipeServings[0]}&RecipeServings_high=${RecipeServings[360]}` +
-      `&RecipeYield_low=${RecipeYield[0]}&RecipeYield_high=${RecipeYield[100]}` +
-      `&IngredientsCount_low=${IngredientsCount[0]}&IngredientsCount_high=${IngredientsCount[39]}` 
+      `&CookTime_low=${CookTime[0]}&CookTime_high=${CookTime[1]}` +
+      `&PrepTime_low=${PrepTime[0]}&PrepTime_high=${PrepTime[1]}` +
+      `&TotalTime_low=${TotalTime[0]}&TotalTime_high=${TotalTime[1]}` +
+      `&SaturatedFatContent_low=${SaturatedFatContent[0]}&SaturatedFatContent_high=${SaturatedFatContent[1]}` +
+      `&CholesterolContent_low=${CholesterolContent[0]}&CholesterolContent_high=${CholesterolContent[1]}` +
+      `&SodiumContent_low=${SodiumContent[0]}&SodiumContent_high=${SodiumContent[1]}` +
+      `&CarbohydrateContent_low=${CarbohydrateContent[0]}&CarbohydrateContent_high=${CarbohydrateContent[1]}` +
+      `&FiberContent_low=${FiberContent[0]}&FiberContent_high=${FiberContent[1]}` +
+      `&SugarContent_low=${SugarContent[0]}&SugarContent_high=${SugarContent[1]}` +
+      `&ProteinContent_low=${ProteinContent[0]}&ProteinContent_high=${ProteinContent[1]}` +
+      `&RecipeServings_low=${RecipeServings[0]}&RecipeServings_high=${RecipeServings[1]}` +
+      `&RecipeYield_low=${RecipeYield[0]}&RecipeYield_high=${RecipeYield[1]}` +
+      `&IngredientsCount_low=${IngredientsCount[0]}&IngredientsCount_high=${IngredientsCount[1]}` 
     )
       .then(res => res.json())
       .then(resJson => {
@@ -98,7 +98,7 @@ export default function SearchPage() {
             value={CookTime}
             min={0}
             max={100}
-            step={10}
+            step={5}
             onChange={(e, newValue) => setCookTime(newValue)}
             valueLabelDisplay='auto'
           />
@@ -109,7 +109,7 @@ export default function SearchPage() {
             value={PrepTime}
             min={0}
             max={960}
-            step={50}
+            step={5}
             onChange={(e, newValue) => setPrepTime(newValue)}
             valueLabelDisplay='auto'
           />
@@ -120,7 +120,7 @@ export default function SearchPage() {
             value={TotalTime}
             min={0}
             max={990}
-            step={50}
+            step={5}
             onChange={(e, newValue) => setTotalTime(newValue)}
             valueLabelDisplay='auto'
           />
@@ -131,7 +131,7 @@ export default function SearchPage() {
             value={SaturatedFatContent}
             min={0}
             max={841.9}
-            step={100}
+            step={10}
             onChange={(e, newValue) => setSaturatedFatContent(newValue)}
             valueLabelDisplay='auto'
           />
@@ -142,7 +142,7 @@ export default function SearchPage() {
             value={CarbohydrateContent}
             min={0}
             max={4320.9}
-            step={300}
+            step={100}
             onChange={(e, newValue) => setCarbohydrateContent(newValue)}
             valueLabelDisplay='auto'
           />
@@ -153,7 +153,7 @@ export default function SearchPage() {
             value={SugarContent}
             min={0}
             max={3623.9}
-            step={300}
+            step={100}
             onChange={(e, newValue) => setSugarContent(newValue)}
             valueLabelDisplay='auto'
           />
@@ -164,7 +164,7 @@ export default function SearchPage() {
             value={ProteinContent}
             min={0}
             max={1802.9}
-            step={300}
+            step={50}
             onChange={(e, newValue) => setProteinContent(newValue)}
             valueLabelDisplay='auto'
           />
@@ -175,7 +175,7 @@ export default function SearchPage() {
             value={RecipeServings}
             min={0}
             max={360}
-            step={50}
+            step={1}
             onChange={(e, newValue) => setRecipeServings(newValue)}
             valueLabelDisplay='auto'
           />
@@ -186,7 +186,7 @@ export default function SearchPage() {
             value={RecipeYield}
             min={0}
             max={100}
-            step={10}
+            step={1}
             onChange={(e, newValue) => setRecipeYield(newValue)}
             valueLabelDisplay='auto'
           />
@@ -197,7 +197,7 @@ export default function SearchPage() {
             value={IngredientsCount}
             min={0}
             max={39}
-            step={5}
+            step={1}
             onChange={(e, newValue) => setIngredientsCount(newValue)}
             valueLabelDisplay='auto'
           />

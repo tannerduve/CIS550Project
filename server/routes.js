@@ -12,12 +12,12 @@ connection.connect((err) => err && console.log(err));
 
 // GET /user
 // Will change this, just using for testing
-const user = async function(req, res) {
+const user = async function (req, res) {
   const username = 'ryboyle';
   res.send(`Logged in as user: ${username}`);
 }
 
-const random = async function(req, res) {
+const random = async function (req, res) {
   connection.query(`
     SELECT * 
     FROM Recipes 
@@ -38,7 +38,7 @@ const random = async function(req, res) {
 
 
 //Route : POST /newuser
-const newuser = async function(req, res) {
+const newuser = async function (req, res) {
   connection.query(`
     INSERT INTO Users
     VALUES ('${req.params.Username}', '${req.params.Password}')
@@ -66,7 +66,7 @@ const login = async function(req, res) {
       res.status(500).send('Server error');
     } else if (data.length !== 1) {
       console.log('Data Length Error');
-      res.status(401).send('Invalid username');
+      res.status(401).send('Invalid Username');
     } else if (data[0].password !== password) {
       console.log('Incorrect Password Error');
       res.status(401).send('Invalid Password');
@@ -76,16 +76,16 @@ const login = async function(req, res) {
   });
 }
 
-const search = async function(req, res) {
+const search = async function (req, res) {
 
   const Name = req.query.Name ?? '';
   const Description = req.query.Description ?? '';
-  const CookTimeLow = req.query.CookTime_low ?? 0; 
-  const CookTimeHigh = req.query.CookTime_high ?? 100; 
-  const PrepTimeLow = req.query.PrepTime_low ?? 0; 
-  const PrepTimeHigh = req.query.PrepTime_high ?? 960; 
-  const TotalTimeLow = req.query.TotalTime_low ?? 0; 
-  const TotalTimeHigh = req.query.TotalTime_high ?? 990; 
+  const CookTimeLow = req.query.CookTime_low ?? 0;
+  const CookTimeHigh = req.query.CookTime_high ?? 100;
+  const PrepTimeLow = req.query.PrepTime_low ?? 0;
+  const PrepTimeHigh = req.query.PrepTime_high ?? 960;
+  const TotalTimeLow = req.query.TotalTime_low ?? 0;
+  const TotalTimeHigh = req.query.TotalTime_high ?? 990;
   const SaturatedFatContentLow = req.query.SaturatedFatContent_low ?? 0;
   const SaturatedFatContentHigh = req.query.SaturatedFatContent_high ?? 841.9;
   const CholesterolContentLow = req.query.CholesterolContent_low ?? 0;
@@ -98,8 +98,8 @@ const search = async function(req, res) {
   const FiberContentHigh = req.query.FiberContent_high ?? 835.7;
   const SugarContentLow = req.query.SugarContent_low ?? 0;
   const SugarContentHigh = req.query.SugarContent_high ?? 3623.9;
-  const ProteinContentLow = req.query.SugarContent_low ?? 0;
-  const ProteinContentHigh = req.query.SugarContent_high ?? 1802.9;
+  const ProteinContentLow = req.query.ProteinContent_low ?? 0;
+  const ProteinContentHigh = req.query.ProteinContent_high ?? 1802.9;
   const RecipeServingsLow = req.query.RecipeServings_low ?? 0;
   const RecipeServingsHigh = req.query.RecipeServings_high ?? 360;
   const RecipeYieldLow = req.query.RecipeYield_low ?? 0;
@@ -110,16 +110,16 @@ const search = async function(req, res) {
   connection.query(`SELECT * FROM Recipes WHERE Name LIKE '%${Name}%' AND Description LIKE '%${Description}%' 
   AND CookTime >= ${CookTimeLow} AND CookTime <= ${CookTimeHigh} 
   AND PrepTime >= ${PrepTimeLow} AND PrepTime <= ${PrepTimeHigh} 
-  AND TotalTime >= ${TotalTimeLow} AND TotalTime <= ${TotalTimeHigh}
+  AND TotalTime >= ${TotalTimeLow} AND TotalTime <= ${TotalTimeHigh} 
   AND SaturatedFatContent >= ${SaturatedFatContentLow} AND SaturatedFatContent <= ${SaturatedFatContentHigh} 
-  AND CholesterolContent >= ${CholesterolContentLow} AND CholesterolContent <= ${CholesterolContentHigh}
-  AND SodiumContent >= ${SodiumContentLow} AND SodiumContent <= ${SodiumContentHigh}
-  AND CarbohydrateContent >= ${CarbohydrateContentLow} AND CarbohydrateContent <= ${CarbohydrateContentHigh}
-  AND FiberContent >= ${FiberContentLow} AND FiberContent <= ${FiberContentHigh}
-  AND SugarContent >= ${SugarContentLow} AND SugarContent <= ${SugarContentHigh}
-  AND ProteinContent >= ${ProteinContentLow} AND ProteinContent <= ${ProteinContentHigh}
-  AND RecipeServings >= ${RecipeServingsLow} AND RecipeServings <= ${RecipeServingsHigh}
-  AND RecipeYield >= ${RecipeYieldLow} AND RecipeYield <= ${RecipeYieldHigh}
+  AND CholesterolContent >= ${CholesterolContentLow} AND CholesterolContent <= ${CholesterolContentHigh} 
+  AND SodiumContent >= ${SodiumContentLow} AND SodiumContent <= ${SodiumContentHigh} 
+  AND CarbohydrateContent >= ${CarbohydrateContentLow} AND CarbohydrateContent <= ${CarbohydrateContentHigh} 
+  AND FiberContent >= ${FiberContentLow} AND FiberContent <= ${FiberContentHigh} 
+  AND SugarContent >= ${SugarContentLow} AND SugarContent <= ${SugarContentHigh} 
+  AND ProteinContent >= ${ProteinContentLow} AND ProteinContent <= ${ProteinContentHigh} 
+  AND RecipeServings >= ${RecipeServingsLow} AND RecipeServings <= ${RecipeServingsHigh} 
+  AND RecipeYield >= ${RecipeYieldLow} AND RecipeYield <= ${RecipeYieldHigh} 
   AND IngredientsCount >= ${IngredientsCountLow} AND IngredientsCount <= ${IngredientsCountHigh}`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -130,7 +130,7 @@ const search = async function(req, res) {
   });
 }
 
-const user_likes = async function(req, res) {
+const user_likes = async function (req, res) {
   connection.query(`SELECT * 
     FROM Likes l 
     JOIN Recipes r ON l.RecipeId = r.RecipeID 
@@ -145,7 +145,7 @@ const user_likes = async function(req, res) {
   });
 }
 
-const recipes = async function(req, res) {
+const recipes = async function (req, res) {
   connection.query(`
     SELECT * 
     FROM Recipes
@@ -160,7 +160,7 @@ const recipes = async function(req, res) {
 }
 
 // Route: GET /top_recipes
-const top_recipes = async function(req, res) {
+const top_recipes = async function (req, res) {
   const page = req.query.page;
   const pageSize = req.query.page_size ?? 10;
 
@@ -221,7 +221,7 @@ const top_recipes = async function(req, res) {
 }
 
 // Route: GET /top_authors
-const top_authors = async function(req, res) {
+const top_authors = async function (req, res) {
   const page = req.query.page;
   const pageSize = req.query.page_size ?? 10;
 
@@ -276,13 +276,20 @@ const top_authors = async function(req, res) {
 }
 
 //reviews Route
-const reviews = async function(req, res) {
+const reviews = async function (req, res) {
+  const RecipeName = req.query.RecipeName ?? '';
   const AuthorName = req.query.AuthorName ?? '';
   const Review = req.query.Review ?? '';
   const Rating = req.query.Rating ?? '';
 
-  connection.query(`SELECT * FROM Reviews WHERE AuthorName LIKE '%${AuthorName}%' 
-  AND Review LIKE '%${Review}%' AND Rating LIKE '%${Rating}%'`, (err, data) => {
+  connection.query(`
+  SELECT * 
+  FROM Reviews 
+  JOIN Recipes ON Reviews.RecipeId = Recipes.RecipeId
+  WHERE Recipes.Name LIKE '%${RecipeName}%' 
+  AND Reviews.AuthorName LIKE '%${AuthorName}%' 
+  AND Reviews.Review LIKE '%${Review}%' 
+  AND Reviews.Rating LIKE '%${Rating}%'`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
@@ -292,7 +299,7 @@ const reviews = async function(req, res) {
   });
 }
 
-const recipe_recid = async function(req, res) {
+const recipe_recid = async function (req, res) {
   connection.query(`
     SELECT * 
     FROM Recipes
@@ -307,7 +314,7 @@ const recipe_recid = async function(req, res) {
   });
 }
 
-const author = async function(req, res) {
+const author = async function (req, res) {
   connection.query(`
     WITH recipe_likes AS (
       SELECT RecipeId, COUNT(Username) AS TotalLikes

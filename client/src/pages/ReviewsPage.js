@@ -11,6 +11,7 @@ export default function ReviewsPage() {
   const [data, setData] = useState([]);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [selectedAuthorId, setSelectedAuthorId] = useState(null);
+  const [RecipeName, setRecipeName] = useState('');
   const [AuthorName, setAuthorName] = useState('');
   const [Review, setReview] = useState('');
   const [Rating, setRating] = useState('');
@@ -25,8 +26,8 @@ export default function ReviewsPage() {
   }, []);
 
   const review = () => {
-    fetch(`http://${config.server_host}:${config.server_port}/reviews?AuthorName=${AuthorName}` +
-      `&Review=${Review}` + `&Rating=${Rating}`)
+    fetch(`http://${config.server_host}:${config.server_port}/reviews?RecipeName=${RecipeName}` + 
+    `&AuthorName=${AuthorName}&Review=${Review}&Rating=${Rating}`)
       .then(res => res.json())
       .then(resJson => {
         const reviewsWithId = resJson.map((review) => ({ id: review.ReviewId, ...review}));
@@ -35,9 +36,12 @@ export default function ReviewsPage() {
   }
 
   const columns = [
-    {field: 'AuthorName', headerName: 'Author Name', width: 300, renderCell: (params) => (
-        <Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
+    {
+      field: 'Name', headerName: 'Recipe Name', width: 200, renderCell: (params) => (
+      <Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
     )},
+    {
+      field: 'AuthorName', headerName: 'Author Name', width: 150},
     {field: 'Review', headerName: 'Review', width: 700},
     {field: 'Rating', headerName: 'Rating', width: 150}
   ];
@@ -62,6 +66,9 @@ export default function ReviewsPage() {
        {selectedAuthorId && selectedRecipeId && <RecipeCard recipeId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
         <h2>Reviews</h2>
         <Grid container spacing={2}>
+        <Grid item xs={10}>
+          <TextField label='Recipe Name' value={RecipeName} onChange={(e) => setRecipeName(e.target.value)} style={{ width: "100%" }}/>
+        </Grid>
         <Grid item xs={10}>
           <TextField label='Author Name' value={AuthorName} onChange={(e) => setAuthorName(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
