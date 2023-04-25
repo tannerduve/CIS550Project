@@ -54,8 +54,6 @@ export default function SearchPage() {
     )
       .then(res => res.json())
       .then(resJson => {
-        // DataGrid expects an array of objects with a unique id.
-        // To accomplish this, we use a map with spread syntax (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
         const recipesWithId = resJson.map((recipe) => ({ id: recipe.RecipeId, ...recipe}));
         setData(recipesWithId);
       });
@@ -216,5 +214,4 @@ export default function SearchPage() {
       />
     </Container>
   );
-
 }
