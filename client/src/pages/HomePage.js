@@ -11,6 +11,7 @@ export default function HomePage() {
   const [appUser, setAppUser] = useState('');
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [selectedAuthorId, setSelectedAuthorId] = useState(null);
+  const [selectedAuthorName, setSelectedAuthorName] = useState(null);
 
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function HomePage() {
     {
       field: 'AuthorName',
       headerName: 'Author Name',
-      renderCell: (row) => <Link onClick={() => setSelectedAuthorId(row.AuthorId)}>{row.AuthorName}</Link> // A Link component is used just for formatting purposes
+      renderCell: (row) => <Link onClick={() => [setSelectedAuthorId(row.AuthorId), setSelectedAuthorName(row.AuthorName)]} >{row.AuthorName}</Link> // A Link component is used just for formatting purposes
     },
     {
       field: 'RecipeCategory',
@@ -57,7 +58,7 @@ export default function HomePage() {
     <Container>
       {/* SongCard is a custom component that we made. selectedSongId && <SongCard .../> makes use of short-circuit logic to only render the SongCard if a non-null song is selected */}
       {/* {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />} */}
-      {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
+      {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => setSelectedAuthorId(null)} />}
       <h2>Check out this featured recipe:&nbsp;
         {/*<Link onClick={() => setSelectedRecipeId(recipeOfTheDay.RecipeId)}>{recipeOfTheDay.Name}</Link> */}
         <NavLink to={`/recipe/${recipeOfTheDay.RecipeId}`}>{recipeOfTheDay.Name}</NavLink>

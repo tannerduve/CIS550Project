@@ -25,6 +25,8 @@ app.get('/recipe/:RecipeId', routes.recipe_recid);
 app.get('/top_authors', routes.top_authors);
 app.get('/user', routes.user);
 app.get('/author/:AuthorId', routes.author);
+app.get('/author_reviews/:AuthorId', routes.author_reviews);
+
 
 
 

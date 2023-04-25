@@ -341,6 +341,21 @@ const author = async function (req, res) {
   });
 }
 
+const author_reviews = async function (req, res) {
+  connection.query(`
+  SELECT * 
+  FROM Reviews 
+  WHERE AuthorId = ${req.params.AuthorId}`
+  , (err, data) => {
+    if (err) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 
 module.exports = {
   user,
@@ -354,5 +369,6 @@ module.exports = {
   user_likes,
   recipe_recid,
   top_authors,
-  author
+  author,
+  author_reviews
 }
