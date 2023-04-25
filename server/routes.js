@@ -40,7 +40,7 @@ const random = async function (req, res) {
 //Route : POST /newuser
 const newuser = async function (req, res) {
   connection.query(`
-    INSERT INTO User
+    INSERT INTO Users
     VALUES ('${req.params.Username}', '${req.params.Password}')
   `, (err, data) => {
     if (err || data.length === 0) {
@@ -55,9 +55,10 @@ const newuser = async function (req, res) {
 
 //ROUTE: POST /login
 const login = async function(req, res) {
+  console.log(req.body);
   const { username, password } = req.body;
-  connection.query(`SELECT * 
-    FROM User
+  connection.query(`SELECT Username, Password 
+    FROM Users
     WHERE Username = '${username}'
   `, (err, data) => {
     if (err) {
