@@ -276,12 +276,19 @@ const top_authors = async function (req, res) {
 
 //reviews Route
 const reviews = async function (req, res) {
+  const RecipeName = req.query.RecipeName ?? '';
   const AuthorName = req.query.AuthorName ?? '';
   const Review = req.query.Review ?? '';
   const Rating = req.query.Rating ?? '';
 
-  connection.query(`SELECT * FROM Reviews WHERE AuthorName LIKE '%${AuthorName}%' 
-  AND Review LIKE '%${Review}%' AND Rating LIKE '%${Rating}%'`, (err, data) => {
+  connection.query(`
+  SELECT * 
+  FROM Reviews 
+  JOIN Recipes ON Reviews.RecipeId = Recipes.RecipeId
+  WHERE Recipes.Name LIKE '%${RecipeName}%' 
+  AND Reviews.AuthorName LIKE '%${AuthorName}%' 
+  AND Reviews.Review LIKE '%${Review}%' 
+  AND Reviews.Rating LIKE '%${Rating}%'`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
