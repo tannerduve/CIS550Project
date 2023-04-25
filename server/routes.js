@@ -329,17 +329,18 @@ const author = async function (req, res) {
     FROM Recipes r
     JOIN recipe_likes rl ON r.RecipeId = rl.RecipeId
     JOIN recipe_ratings rr ON r.RecipeId = rr.RecipeId
-    WHERE AuthorId = '${req.params.AuthorId}
+    WHERE r.AuthorId = ${req.params.AuthorId}
     ORDER BY rr.AverageRating DESC, rl.TotalLikes DESC
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
       res.json({});
     } else {
-      res.json(data[0]);
+      res.json(data);
     }
   });
 }
+
 
 module.exports = {
   user,

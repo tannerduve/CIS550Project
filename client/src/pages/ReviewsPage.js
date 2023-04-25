@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import RecipeCard from '../components/RecipeCard';
+import AuthorCard from '../components/AuthorCard';
 import LazyTable from '../components/LazyTable';
 import { Button, Divider, Container, Grid, Link, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
@@ -64,7 +64,7 @@ export default function ReviewsPage() {
 
   return (
     <Container> 
-       {selectedAuthorId && selectedRecipeId && <RecipeCard recipeId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
+       {selectedAuthorId && selectedRecipeId && <AuthorCard authorId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
         <h2>Reviews</h2>
         <Grid container spacing={2}>
         <Grid item xs={10}>

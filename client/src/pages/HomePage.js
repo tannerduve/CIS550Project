@@ -3,7 +3,7 @@ import { Container, Divider, Link } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 import LazyTable from '../components/LazyTable';
-import RecipeCard from '../components/RecipeCard';
+import AuthorCard from '../components/AuthorCard';
 const config = require('../config.json');
 
 export default function HomePage() {
@@ -57,7 +57,7 @@ export default function HomePage() {
     <Container>
       {/* SongCard is a custom component that we made. selectedSongId && <SongCard .../> makes use of short-circuit logic to only render the SongCard if a non-null song is selected */}
       {/* {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />} */}
-      {selectedAuthorId && <RecipeCard recipeId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
+      {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
       <h2>Check out this featured recipe:&nbsp;
         {/*<Link onClick={() => setSelectedRecipeId(recipeOfTheDay.RecipeId)}>{recipeOfTheDay.Name}</Link> */}
         <NavLink to={`/recipe/${recipeOfTheDay.RecipeId}`}>{recipeOfTheDay.Name}</NavLink>
