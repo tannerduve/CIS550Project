@@ -67,8 +67,9 @@ const login = async function(req, res) {
     } else if (data.length !== 1) {
       console.log('Data Length Error');
       res.status(401).send('Invalid Username');
-    } else if (data[0].password !== password) {
+    } else if (data[0].Password !== password) {
       console.log('Incorrect Password Error');
+      console.log(data[0]);
       res.status(401).send('Invalid Password');
     } else {
       res.status(200).json(data[0]);
