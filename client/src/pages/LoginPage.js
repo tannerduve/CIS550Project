@@ -46,7 +46,10 @@ export default function LoginPage() {
   };
 
   return (
-    <Container maxWidth="xs">
+    <Container maxWidth="xl">
+      <Typography variant="h1" align="center" >
+        Welcome to FlavorFinder!
+      </Typography>
       <Typography variant="h2" align="center" gutterBottom>
         Login
       </Typography>
