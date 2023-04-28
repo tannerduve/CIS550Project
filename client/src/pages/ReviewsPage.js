@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import RecipeCard from '../components/RecipeCard';
+import AuthorCard from '../components/AuthorCard';
 import LazyTable from '../components/LazyTable';
 import { Button, Divider, Container, Grid, Link, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
@@ -38,10 +38,13 @@ export default function ReviewsPage() {
   const columns = [
     {
       field: 'Name', headerName: 'Recipe Name', width: 200, renderCell: (params) => (
-      <Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
+      <NavLink to={`/recipe/${params.row.RecipeId}`}>{params.value}</NavLink>
+      //<Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
     )},
     {
-      field: 'AuthorName', headerName: 'Author Name', width: 150},
+      field: 'AuthorName', headerName: 'Author Name', width: 150,
+      renderCell: (params) => (<Link onClick={() => setSelectedAuthorId(params.row.AuthorId)}>{params.value}</Link>)
+    },
     {field: 'Review', headerName: 'Review', width: 700},
     {field: 'Rating', headerName: 'Rating', width: 150}
   ];
@@ -63,7 +66,7 @@ export default function ReviewsPage() {
 
   return (
     <Container> 
-       {selectedAuthorId && selectedRecipeId && <RecipeCard recipeId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
+       {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
         <h2>Reviews</h2>
         <Grid container spacing={2}>
         <Grid item xs={10}>

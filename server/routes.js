@@ -40,7 +40,7 @@ const random = async function (req, res) {
 //Route : POST /newuser
 const newuser = async function (req, res) {
   connection.query(`
-    INSERT INTO User
+    INSERT INTO Users
     VALUES ('${req.params.Username}', '${req.params.Password}')
   `, (err, data) => {
     if (err || data.length === 0) {
@@ -55,9 +55,10 @@ const newuser = async function (req, res) {
 
 //ROUTE: POST /login
 const login = async function(req, res) {
+  console.log(req.body);
   const { username, password } = req.body;
-  connection.query(`SELECT * 
-    FROM User
+  connection.query(`SELECT Username, Password 
+    FROM Users
     WHERE Username = '${username}'
   `, (err, data) => {
     if (err) {
@@ -66,8 +67,9 @@ const login = async function(req, res) {
     } else if (data.length !== 1) {
       console.log('Data Length Error');
       res.status(401).send('Invalid Username');
-    } else if (data[0].password !== password) {
+    } else if (data[0].Password !== password) {
       console.log('Incorrect Password Error');
+      console.log(data[0]);
       res.status(401).send('Invalid Password');
     } else {
       res.status(200).json(data[0]);
@@ -289,7 +291,7 @@ const reviews = async function (req, res) {
   AND Reviews.AuthorName LIKE '%${AuthorName}%' 
   AND Reviews.Review LIKE '%${Review}%' 
   AND Reviews.Rating LIKE '%${Rating}%'`, (err, data) => {
-    if (err || data.length === 0) {
+    if (err) {
       console.log(err);
       res.json({});
     } else {
@@ -315,30 +317,35 @@ const recipe_recid = async function (req, res) {
 
 const author = async function (req, res) {
   connection.query(`
-    WITH recipe_likes AS (
-      SELECT RecipeId, COUNT(Username) AS TotalLikes
-      FROM Likes
-      GROUP BY RecipeId
-    ), recipe_ratings AS (
-      SELECT RecipeId, AVG(Rating) AS AverageRating
-      FROM Reviews
-      GROUP BY RecipeId
-    ) 
-    SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, rr.AverageRating, rl.TotalLikes
+    SELECT RecipeId, Name, AuthorId, AuthorName, RecipeCategory
     FROM Recipes r
-    JOIN recipe_likes rl ON r.RecipeId = rl.RecipeId
-    JOIN recipe_ratings rr ON r.RecipeId = rr.RecipeId
-    ORDER BY rr.AverageRating DESC, rl.TotalLikes DESC
-    WHERE AuthorId = '${req.params.AuthorId}
+    WHERE AuthorId = ${req.params.AuthorId}
   `, (err, data) => {
-    if (err || data.length === 0) {
+    if (err) {
       console.log(err);
       res.json({});
     } else {
-      res.json(data[0]);
+      res.json(data);
     }
   });
 }
+
+const author_reviews = async function (req, res) {
+  connection.query(`
+  SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, a.Review, a.Rating
+  FROM Reviews a
+  JOIN Recipes r ON a.RecipeId = r.RecipeId
+  WHERE r.AuthorId = ${req.params.AuthorId}`
+  , (err, data) => {
+    if (err) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
 
 module.exports = {
   user,
@@ -352,5 +359,6 @@ module.exports = {
   user_likes,
   recipe_recid,
   top_authors,
-  author
+  author,
+  author_reviews
 }

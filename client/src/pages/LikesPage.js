@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import RecipeCard from '../components/RecipeCard';
+import AuthorCard from '../components/AuthorCard';
 import LazyTable from '../components/LazyTable';
 import { Container, Divider } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
@@ -32,7 +32,7 @@ export default function LikesPage(props) {
 
   return (
     <Container>
-      {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
+      {selectedRecipeId && <AuthorCard authorId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
       <h2>Likes</h2>
       <DataGrid
         rows={data}

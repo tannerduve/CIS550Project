@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import RecipeCard from '../components/RecipeCard';
+import AuthorCard from '../components/AuthorCard';
 import { Button, Checkbox, Container, FormControlLabel, Grid, Link, Slider, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { NavLink } from 'react-router-dom';
@@ -81,7 +81,7 @@ export default function SearchPage() {
 
   return (
     <Container>
-      {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
+      {selectedRecipeId && <AuthorCard authorId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
       <h2>Search Recipes</h2>
       <Grid container spacing={3}>
         <Grid item xs={10}>
