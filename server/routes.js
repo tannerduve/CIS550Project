@@ -175,10 +175,10 @@ const user_likes = async function (req, res) {
 
 // Route: GET /recipes
 const recipes = async function (req, res) {
-  connection.query(`SELECT * FROM Recipes`, (err, data) => {
+  connection.query(`SELECT * FROM Recipes ORDER BY Name DESC`, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
-      res.json({});
+      res.json([]);
     } else {
       res.json(data);
     }

@@ -49,7 +49,7 @@ export default function LoginPage() {
   return (
     <Container maxWidth="xl">
       <Typography variant="h1" align="center" >
-        Welcome to FlavorFinder!
+        Welcome to Flavor Finder!
       </Typography>
       <Typography variant="h2" align="center" gutterBottom>
         Login

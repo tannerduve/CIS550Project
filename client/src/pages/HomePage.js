@@ -58,8 +58,6 @@ export default function HomePage() {
 
   return (
     <Container>
-      {/* SongCard is a custom component that we made. selectedSongId && <SongCard .../> makes use of short-circuit logic to only render the SongCard if a non-null song is selected */}
-      {/* {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />} */}
       {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => setSelectedAuthorId(null)} />}
       <header>
         {<img style={{ width: 1150, height: 200 }} src={header}/>}
