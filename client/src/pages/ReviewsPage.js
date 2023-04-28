@@ -83,9 +83,11 @@ export default function ReviewsPage() {
           <TextField label='Rating' value={Rating} onChange={(e) => setRating(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
         </Grid>
-        <Button onClick={() => review() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
+        <p></p>
+        <Button variant="contained" color="primary" onClick={() => review() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
         Find Reviews!
         </Button>
+        <p></p>
       <DataGrid
         rows={data}
         columns={columns}

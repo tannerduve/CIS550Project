@@ -88,7 +88,7 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
                 )
             }
           </div>
-          <Button onClick={handleClose} style={{ left: '50%', transform: 'translateX(-50%)' }} >
+          <Button variant="contained" color="primary" onClick={handleClose} style={{ left: '50%', transform: 'translateX(-50%)' }} >
             Close
           </Button>
         </Typography>
