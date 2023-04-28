@@ -28,11 +28,8 @@ export default function LoginPage() {
         },
         body: JSON.stringify({ username: username, password: password })
       });
-      console.log(response);
-      console.log(username);
-      console.log(password);
-  
       if (response && response.ok) {
+        window.localStorage.setItem('Username', username);
         navigate('/');
       } else {
         const error = await response.text();

@@ -4,6 +4,7 @@ import LazyTable from '../components/LazyTable';
 import { Container, Divider } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { NavLink } from 'react-router-dom';
+import LoginPage from './LoginPage';
 const config = require('../config.json');
 
 export default function LikesPage(props) {
@@ -12,7 +13,7 @@ export default function LikesPage(props) {
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
 
   useEffect(() => {
-    fetch(`http://${config.server_host}:${config.server_port}/users/${props.match.params.Username}/likes`)
+    fetch(`http://${config.server_host}:${config.server_port}/users/${props.match.params.Username}/user_likes`)
       .then(res => res.json())
       .then(resJson => {
         const recipesWithId = resJson.map((recipe) => ({ id: recipe.RecipeId, ...recipe }));
