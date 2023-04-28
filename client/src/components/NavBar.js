@@ -36,12 +36,12 @@ export default function NavBar() {
     <AppBar position='static'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          <NavText href='/' text='FlavorFinder' isMain />
+          <NavText href='/home' text='FlavorFinder' isMain />
           <NavText href='/search' text='SEARCH' />
           <NavText href='/recipes' text='RECIPES'/>
           <NavText href='/reviews' text='REVIEWS'/>
           <NavText href='/likes' text='LIKES' />
-          <NavText href='/login' text='LOGIN'/>
+          <NavText href='/' text='LOGIN'/>
         </Toolbar>
       </Container>
     </AppBar>

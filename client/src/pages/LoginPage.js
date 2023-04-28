@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 const config = require('../config.json');
 
 export default function LoginPage() {
@@ -34,7 +35,7 @@ export default function LoginPage() {
   
       if (response && response.ok) {
         window.sessionStorage.setItem("username", username);
-        navigate('/');
+        navigate('/home');
       } else {
         const error = await response.text();
         setError(error);
@@ -80,6 +81,10 @@ export default function LoginPage() {
           Login
         </Button>
       </form>
+      <p>
+        Don't have an account? 
+        <NavLink to={`/signup`}> Sign up here</NavLink>
+      </p>
     </Container>
   );
 }

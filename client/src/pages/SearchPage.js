@@ -61,7 +61,7 @@ export default function SearchPage() {
 
   const columns = [
     { field: 'Name', headerName: 'Name', width: 250, renderCell: (params) => (
-        <Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
+        <NavLink to={`/recipe/${params.row.RecipeId}`}>{params.value}</NavLink>
     ) },
     { field: 'Description', headerName: 'Description', width: 400},
     { field: 'CookTime', headerName: 'Cook Time' },
@@ -81,7 +81,7 @@ export default function SearchPage() {
 
   return (
     <Container>
-      {selectedRecipeId && <AuthorCard authorId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
+      {/* {selectedRecipeId && <AuthorCard authorId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />} */}
       <h2>Search Recipes</h2>
       <Grid container spacing={3}>
         <Grid item xs={10}>
@@ -201,9 +201,11 @@ export default function SearchPage() {
           />
         </Grid>
       </Grid>
-      <Button onClick={() => search() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
+      <p></p>
+      <Button variant="contained" color="primary" onClick={() => search() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
         Find Recipes!
       </Button>
+      <p></p>
       <DataGrid
         rows={data}
         columns={columns}
