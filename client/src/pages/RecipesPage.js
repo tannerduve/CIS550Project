@@ -9,25 +9,15 @@ export default function RecipesPage() {
   const [pageSize, setPageSize] = useState(10);
   const [data, setData] = useState([]);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
-  const [Name, setName] = useState('');
   const [selectedAuthorId, setSelectedAuthorId] = useState(null);
   const [selectedAuthorName, setSelectedAuthorName] = useState(null);
-  const [Description, setDescription] = useState('');
-
-  useEffect(() => {
-    fetch(`http://${config.server_host}:${config.server_port}/recipes`)
-      .then(res => res.json())
-      .then(resJson => setSelectedRecipeId(resJson));
-  }, []);
 
   const columns = [
-    {field: 'Name',
-      headerName: 'Recipe Name',
+    {field: 'Name', headerName: 'Recipe Name',
       renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.Name}</NavLink> // A NavLink component is used to create a link to the recipe page
     },
     {
-      field: 'AuthorName',
-      headerName: 'Author Name',
+      field: 'AuthorName', headerName: 'Author Name',
       renderCell: (row) => <Link onClick={() => [setSelectedAuthorId(row.AuthorId), setSelectedAuthorName(row.AuthorName)]} >{row.AuthorName}</Link> // A Link component is used just for formatting purposes
     },
     { field: 'Description', headerName: 'Description' },
