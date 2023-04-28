@@ -54,6 +54,8 @@ export default function HomePage() {
     },
   ];
 
+  const username = window.sessionStorage.getItem("username");
+
   return (
     <Container>
       {/* SongCard is a custom component that we made. selectedSongId && <SongCard .../> makes use of short-circuit logic to only render the SongCard if a non-null song is selected */}
@@ -66,7 +68,7 @@ export default function HomePage() {
       <Divider />
       <h2>Top Recipes</h2>
       <LazyTable route={`http://${config.server_host}:${config.server_port}/top_recipes`} columns={recipeColumns} />
-      <p>{appUser}</p>
+      <p>Logged in as user: {username}</p>
     </Container>
   );
 };

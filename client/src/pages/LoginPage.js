@@ -33,6 +33,7 @@ export default function LoginPage() {
       console.log(password);
   
       if (response && response.ok) {
+        window.sessionStorage.setItem("username", username);
         navigate('/');
       } else {
         const error = await response.text();
