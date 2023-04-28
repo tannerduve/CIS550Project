@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container, Divider, Link } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import header from './header.png';
+import header from './header-herbs.png';
 
 import LazyTable from '../components/LazyTable';
 import AuthorCard from '../components/AuthorCard';
