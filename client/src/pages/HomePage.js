@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Container, Divider, Link } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import header from './header.png';
 
 import LazyTable from '../components/LazyTable';
 import AuthorCard from '../components/AuthorCard';
@@ -12,7 +13,6 @@ export default function HomePage() {
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [selectedAuthorId, setSelectedAuthorId] = useState(null);
   const [selectedAuthorName, setSelectedAuthorName] = useState(null);
-
 
   useEffect(() => {
     fetch(`http://${config.server_host}:${config.server_port}/random`)
@@ -59,6 +59,9 @@ export default function HomePage() {
       {/* SongCard is a custom component that we made. selectedSongId && <SongCard .../> makes use of short-circuit logic to only render the SongCard if a non-null song is selected */}
       {/* {selectedRecipeId && <RecipeCard recipeId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />} */}
       {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => setSelectedAuthorId(null)} />}
+      <header>
+        {<img style={{ width: 1150, height: 200 }} src={header}/>}
+      </header>
       <h2>Check out this featured recipe:&nbsp;
         {/*<Link onClick={() => setSelectedRecipeId(recipeOfTheDay.RecipeId)}>{recipeOfTheDay.Name}</Link> */}
         <NavLink to={`/recipe/${recipeOfTheDay.RecipeId}`}>{recipeOfTheDay.Name}</NavLink>
