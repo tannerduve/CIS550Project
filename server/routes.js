@@ -291,7 +291,7 @@ const reviews = async function (req, res) {
   AND Reviews.AuthorName LIKE '%${AuthorName}%' 
   AND Reviews.Review LIKE '%${Review}%' 
   AND Reviews.Rating LIKE '%${Rating}%'`, (err, data) => {
-    if (err || data.length === 0) {
+    if (err) {
       console.log(err);
       res.json({});
     } else {
@@ -317,23 +317,11 @@ const recipe_recid = async function (req, res) {
 
 const author = async function (req, res) {
   connection.query(`
-    WITH recipe_likes AS (
-      SELECT RecipeId, COUNT(Username) AS TotalLikes
-      FROM Likes
-      GROUP BY RecipeId
-    ), recipe_ratings AS (
-      SELECT RecipeId, AVG(Rating) AS AverageRating
-      FROM Reviews
-      GROUP BY RecipeId
-    ) 
-    SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, rr.AverageRating, rl.TotalLikes
+    SELECT RecipeId, Name, AuthorId, AuthorName, RecipeCategory
     FROM Recipes r
-    JOIN recipe_likes rl ON r.RecipeId = rl.RecipeId
-    JOIN recipe_ratings rr ON r.RecipeId = rr.RecipeId
-    WHERE r.AuthorId = ${req.params.AuthorId}
-    ORDER BY rr.AverageRating DESC, rl.TotalLikes DESC
+    WHERE AuthorId = ${req.params.AuthorId}
   `, (err, data) => {
-    if (err || data.length === 0) {
+    if (err) {
       console.log(err);
       res.json({});
     } else {

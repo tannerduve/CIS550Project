@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, ButtonGroup, Link, Modal, Divider } from '@mui/material';
+import { Box, Button, ButtonGroup, Link, Modal, Divider, Dialog } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 import { NavLink } from 'react-router-dom';
@@ -44,15 +44,7 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
     {
       field: 'RecipeCategory',
       headerName: 'Recipe Category'
-    },
-    {
-      field: 'AverageRating',
-      headerName: 'Average Rating'
-    },
-    {
-      field: 'TotalLikes',
-      headerName: 'Total User Likes'
-    },
+    }
   ];
 
   const reviewColumns = [
@@ -65,14 +57,15 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
   ];
 
   return (
-    <Modal
+    <Dialog
       open={true}
       onClose={handleClose}
       style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+      fullScreen={true}
     >
       <Box
         p={3}
-        style={{ background: 'white', borderRadius: '16px', border: '2px solid #000', width: 1000 }}
+        style={{ background: 'white', width: 1000, height: 500 }}
       >
         <h1>Author Name: {authorName}</h1>
         <ButtonGroup>
@@ -84,10 +77,10 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
             recipeDisplay
               ? (
                 [<h2>All recipes posted by this author:</h2>,
-                <LazyTable route={`http://${config.server_host}:${config.server_port}/author/${authorId}`} columns={recipeColumns} />]
+                <LazyTable route={`http://${config.server_host}:${config.server_port}/author/${authorId}`} columns={recipeColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]}/>]
               ) : (
                 [<h2>All reviews posted about this author's recipes:</h2>,
-                <LazyTable route={`http://${config.server_host}:${config.server_port}/author_reviews/${authorId}`} columns={reviewColumns} />]
+                <LazyTable route={`http://${config.server_host}:${config.server_port}/author_reviews/${authorId}`} columns={reviewColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]}/>]
               )
           }
         </div>
@@ -95,6 +88,6 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
           Close
         </Button>
       </Box>
-    </Modal>
+    </Dialog>
   );
 }
