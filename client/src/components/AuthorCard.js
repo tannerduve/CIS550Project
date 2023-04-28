@@ -81,10 +81,10 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
               recipeDisplay
                 ? (
                   [<h2>All recipes posted by this author:</h2>,
-                  <LazyTable route={`http://${config.server_host}:${config.server_port}/author/${authorId}`} columns={recipeColumns} defaultPageSize={10} rowsPerPageOptions={[5, 10]}/>]
+                  <LazyTable route={`http://${config.server_host}:${config.server_port}/author/${authorId}`} columns={recipeColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]}/>]
                 ) : (
                   [<h2>All reviews posted about this author's recipes:</h2>,
-                  <LazyTable route={`http://${config.server_host}:${config.server_port}/author_reviews/${authorId}`} columns={reviewColumns} defaultPageSize={10} rowsPerPageOptions={[5, 10]}/>]
+                  <LazyTable route={`http://${config.server_host}:${config.server_port}/author_reviews/${authorId}`} columns={reviewColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]}/>]
                 )
             }
           </div>

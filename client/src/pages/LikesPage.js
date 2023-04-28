@@ -1,28 +1,30 @@
 import { useEffect, useState } from 'react';
 import AuthorCard from '../components/AuthorCard';
 import LazyTable from '../components/LazyTable';
-import { Container, Divider } from '@mui/material';
+import { Container, Divider, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { NavLink } from 'react-router-dom';
 const config = require('../config.json');
 
-export default function LikesPage(props) {
+export default function LikesPage() {
   const [pageSize, setPageSize] = useState(5);
   const [data, setData] = useState([]);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
 
+  const username = window.sessionStorage.getItem("username");
+
   useEffect(() => {
-    fetch(`http://${config.server_host}:${config.server_port}/users/${props.match.params.Username}/likes`)
+   fetch(`http://${config.server_host}:${config.server_port}/likes?Username=${username}`)
       .then(res => res.json())
       .then(resJson => {
         const recipesWithId = resJson.map((recipe) => ({ id: recipe.RecipeId, ...recipe }));
         setData(recipesWithId);
       });
-  }, [props.match.params.Username]);
+  }, [username]);
 
   const columns = [
     {
-      field: 'Name', headerName: 'Name', width: 300, renderCell: (params) => (
+      field: 'Name', headerName: 'Recipe Name', width: 300, renderCell: (params) => (
         <NavLink to={`/recipes/${params.row.RecipeId}`}>{params.value}</NavLink>
       )
     },
@@ -32,8 +34,8 @@ export default function LikesPage(props) {
 
   return (
     <Container>
-      {selectedRecipeId && <AuthorCard authorId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />}
       <h2>Likes</h2>
+      <Divider />
       <DataGrid
         rows={data}
         columns={columns}
@@ -42,7 +44,6 @@ export default function LikesPage(props) {
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         autoHeight
       />
-      <Divider />
     </Container>
   );
 }

@@ -31,7 +31,7 @@ export default function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/user" element={<LikesPage />} />
+          <Route path="/likes" element={<LikesPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/reviews" element={<ReviewsPage />} />
           <Route path="/login" element={<LoginPage />} />

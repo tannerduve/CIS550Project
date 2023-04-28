@@ -132,18 +132,45 @@ const search = async function (req, res) {
 }
 
 const user_likes = async function (req, res) {
-  connection.query(`SELECT * 
-    FROM Likes l 
-    JOIN Recipes r ON l.RecipeId = r.RecipeID 
-    WHERE l.Username = '${req.params.Username}
-  `, (err, data) => {
-    if (err || data.length === 0) {
-      console.log(err);
-      res.json({});
-    } else {
-      res.json(data[0]);
-    }
-  });
+  const Username = req.query.Username ?? '';
+  const page = req.query.page;
+  const pageSize = req.query.page_size ?? 10;
+
+  if (!page) {
+    connection.query(`
+      SELECT * 
+      FROM Likes l 
+      JOIN Recipes r ON l.RecipeId = r.RecipeId 
+      WHERE l.Username = '${Username}'
+    `, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  } else {
+    // reimplement with pagination
+    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
+    const offset = pageSize * (page - 1);
+    connection.query(`
+      SELECT * 
+      FROM Likes l 
+      JOIN Recipes r ON l.RecipeId = r.RecipeId 
+      WHERE l.Username = '${Username}'
+      LIMIT ${pageSize}
+      OFFSET ${offset}
+    `, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  }
+
 }
 
 const recipes = async function (req, res) {
@@ -316,36 +343,82 @@ const recipe_recid = async function (req, res) {
 }
 
 const author = async function (req, res) {
-  connection.query(`
-    SELECT RecipeId, Name, AuthorId, AuthorName, RecipeCategory
-    FROM Recipes r
-    WHERE AuthorId = ${req.params.AuthorId}
-  `, (err, data) => {
-    if (err) {
-      console.log(err);
-      res.json({});
-    } else {
-      res.json(data);
-    }
-  });
+  const page = req.query.page;
+  const pageSize = req.query.page_size ?? 10;
+
+  if (!page) {
+    connection.query(`
+      SELECT RecipeId, Name, AuthorId, AuthorName, RecipeCategory
+      FROM Recipes r
+      WHERE AuthorId = ${req.params.AuthorId}
+    `, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  } else {
+    // reimplement with pagination
+    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
+    const offset = pageSize * (page - 1);
+    connection.query(`
+      SELECT RecipeId, Name, AuthorId, AuthorName, RecipeCategory
+      FROM Recipes r
+      WHERE AuthorId = ${req.params.AuthorId}
+      LIMIT ${pageSize}
+      OFFSET ${offset}
+    `, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  }
 }
 
 const author_reviews = async function (req, res) {
-  connection.query(`
-  SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, a.Review, a.Rating
-  FROM Reviews a
-  JOIN Recipes r ON a.RecipeId = r.RecipeId
-  WHERE r.AuthorId = ${req.params.AuthorId}`
-  , (err, data) => {
-    if (err) {
-      console.log(err);
-      res.json({});
-    } else {
-      res.json(data);
-    }
-  });
-}
+  const page = req.query.page;
+  const pageSize = req.query.page_size ?? 10;
 
+  if (!page) {
+    connection.query(`
+      SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, a.Review, a.Rating
+      FROM Reviews a
+      JOIN Recipes r ON a.RecipeId = r.RecipeId
+      WHERE r.AuthorId = ${req.params.AuthorId}
+    `, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  } else {
+    // reimplement with pagination
+    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
+    const offset = pageSize * (page - 1);
+    connection.query(`
+      SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, a.Review, a.Rating
+      FROM Reviews a
+      JOIN Recipes r ON a.RecipeId = r.RecipeId
+      WHERE r.AuthorId = ${req.params.AuthorId}
+      LIMIT ${pageSize}
+      OFFSET ${offset}
+    `, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.json({});
+      } else {
+        res.json(data);
+      }
+    });
+  }
+}
 
 module.exports = {
   user,

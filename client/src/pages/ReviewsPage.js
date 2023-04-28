@@ -11,6 +11,7 @@ export default function ReviewsPage() {
   const [data, setData] = useState([]);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [selectedAuthorId, setSelectedAuthorId] = useState(null);
+  const [selectedAuthorName, setSelectedAuthorName] = useState(null);
   const [RecipeName, setRecipeName] = useState('');
   const [AuthorName, setAuthorName] = useState('');
   const [Review, setReview] = useState('');
@@ -43,7 +44,7 @@ export default function ReviewsPage() {
     )},
     {
       field: 'AuthorName', headerName: 'Author Name', width: 150,
-      renderCell: (params) => (<Link onClick={() => setSelectedAuthorId(params.row.AuthorId)}>{params.value}</Link>)
+      renderCell: (params) => (<Link onClick={() => [setSelectedAuthorId(params.row.AuthorId), setSelectedAuthorName(params.row.AuthorName)]}>{params.value}</Link>)
     },
     {field: 'Review', headerName: 'Review', width: 700},
     {field: 'Rating', headerName: 'Rating', width: 150}
@@ -52,7 +53,7 @@ export default function ReviewsPage() {
   const authorColumns = [
     {
       field: 'AuthorName', headerName: 'Author Name', 
-      renderCell: (row) => <Link onClick={() => setSelectedAuthorId(row.AuthorId)}>{row.AuthorName}</Link>
+      renderCell: (row) => <Link onClick={() => [setSelectedAuthorId(row.AuthorId), setSelectedAuthorName(row.AuthorName)]}>{row.AuthorName}</Link>
     },
     {
       field: 'AverageRecipeRating',
@@ -66,7 +67,7 @@ export default function ReviewsPage() {
 
   return (
     <Container> 
-       {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} handleClose={() => setSelectedAuthorId(null)} />}
+       {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => setSelectedAuthorId(null)} />}
         <h2>Reviews</h2>
         <Grid container spacing={2}>
         <Grid item xs={10}>

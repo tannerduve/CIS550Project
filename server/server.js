@@ -20,6 +20,7 @@ app.get('/random', routes.random);
 app.get('/recipes', routes.recipes);
 app.get('/top_recipes', routes.top_recipes);
 //app.get('/user/:username/:likes', routes.user_likes);
+app.get('/likes', routes.user_likes);
 app.get('/recipe/:RecipeId', routes.recipe_recid);
 //app.post('/username/:newlikes', routes.user_likes);
 app.get('/top_authors', routes.top_authors);
