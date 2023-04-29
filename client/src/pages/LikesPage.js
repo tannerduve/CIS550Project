@@ -24,8 +24,9 @@ export default function LikesPage() {
 
   const columns = [
     {
-      field: 'Name', headerName: 'Recipe Name', width: 300, renderCell: (params) => (
-        <NavLink to={`/recipes/${params.row.RecipeId}`}>{params.value}</NavLink>
+      field: 'Name', headerName: 'Recipe Name', width: 300, 
+      renderCell: (params) => (
+        <NavLink to={`/recipe/${params.row.RecipeId}`}>{params.value}</NavLink>
       )
     },
     { field: 'TotalTime', headerName: 'Total Time (minutes)', width: 200 },
