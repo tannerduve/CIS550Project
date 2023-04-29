@@ -43,11 +43,11 @@ const newuser = async function (req, res) {
     INSERT INTO Users
     VALUES ('${req.params.Username}', '${req.params.Password}')
   `, (err, data) => {
-    if (err || data.length === 0) {
+    if (err) {
       console.log(err);
-      res.json({});
+      res.send(`Username "${req.params.Username}" is already in use, please try another.`);
     } else {
-      res.json(data[0]);
+      res.send(`Account successfully created for user "${req.params.Username}"!`);
     }
   });
 }
