@@ -60,21 +60,23 @@ export default function SearchPage() {
   }
 
   const addLike = (recipeId) => {
-    const username = "some-username"; // replace with the actual username
-    fetch(`http://${config.server_host}:${config.server_port}/newlikes`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, RecipeID: recipeId })
-    })
-      .then(res => res.text())
-      .then(data => {
-        console.log(data);
-        // reload the data after adding the like
-        search();
+    const username = window.sessionStorage.getItem("username");
+    if (username != null) {
+      fetch(`http://${config.server_host}:${config.server_port}/newlikes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+       },
+        body: JSON.stringify({ username, RecipeID: recipeId })
       })
+        .then(res => res.text())
+        .then(data => {
+          console.log(data);
+          // reload the data after adding the like
+          search();
+        })
       .catch(err => console.error(err));
+    }
   }
 
   const columns = [

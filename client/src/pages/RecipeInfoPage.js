@@ -45,8 +45,8 @@ export default function RecipeInfoPage() {
 
   const flexFormat = { display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly' };
   const instructionsObj = recipeData.RecipeInstructions;
-  const length = instructionsObj.length - 2;
-  const instructingsStr = instructionsObj.substring(3);
+  //const length = instructionsObj.length - 2;
+  const instructionsStr = instructionsObj.substring(1);
 
   return (
     <Container>
@@ -115,7 +115,7 @@ export default function RecipeInfoPage() {
         </div>
         <Divider/>
         <h3>Instructions: </h3>
-        <p>{instructingsStr}</p>
+        <p>{instructionsStr}</p>
     </Container>
   );
 }

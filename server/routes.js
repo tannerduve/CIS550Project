@@ -90,7 +90,7 @@ const newlikes = async function(req, res) {
   `, (err, data) => {
     if (err) {
       console.log(err);
-      res.status(401).send(`Username "${username}" is unavailable, please try another.`);
+      res.status(401).send(`Recipe has already been added to likes.`);
     } else {
       res.send(`${RecipeID} added to likes!`);
     }
