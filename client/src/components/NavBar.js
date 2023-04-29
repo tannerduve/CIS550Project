@@ -46,11 +46,9 @@ export default function NavBar() {
         <Toolbar disableGutters>
           <NavText href='/home' text='FlavorFinder' isMain />
           <NavText href='/search' text='SEARCH' />
-          <NavText href='/recipes' text='RECIPES'/>
           <NavText href='/reviews' text='REVIEWS'/>
           <NavText href='/likes' text='LIKES' />
           <NavText href='/' text='LOGIN'/>
-
           <Button variant="contained" color="secondary"  onClick={() => logout() } >
             LOGOUT
           </Button>

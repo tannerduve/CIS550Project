@@ -67,7 +67,7 @@ export default function ReviewsPage() {
 
   return (
     <Container> 
-       {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => setSelectedAuthorId(null)} />}
+       {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => [setSelectedAuthorId(null), setSelectedAuthorName(null)]} />}
         <h2>Reviews</h2>
         <Grid container spacing={2}>
         <Grid item xs={10}>

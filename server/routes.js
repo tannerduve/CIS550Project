@@ -348,7 +348,7 @@ const recipe_recid = async function (req, res) {
   connection.query(`
     SELECT * 
     FROM Recipes
-    WHERE RecipeID = '${req.params.RecipeID}
+    WHERE RecipeID = ${req.params.RecipeId}
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -437,6 +437,22 @@ const author_reviews = async function (req, res) {
   }
 }
 
+const recipe_reviews = async function (req, res) {
+  connection.query(`
+    SELECT * 
+    FROM Reviews
+    WHERE RecipeID = ${req.params.RecipeId}
+  `, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
+
 module.exports = {
   user,
   newuser,
@@ -451,5 +467,6 @@ module.exports = {
   recipe_recid,
   top_authors,
   author,
-  author_reviews
+  author_reviews,
+  recipe_reviews
 }
