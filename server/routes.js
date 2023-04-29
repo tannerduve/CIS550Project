@@ -48,7 +48,7 @@ const newuser = async function (req, res) {
   `, (err, data) => {
     if (err) {
       console.log(err);
-      res.status(401).send(`Username "${username}" is already in use, please try another.`);
+      res.status(401).send(`Username "${username}" is unavailable, please try another.`);
     } else {
       res.send(`Account successfully created for user "${username}"!`);
     }
