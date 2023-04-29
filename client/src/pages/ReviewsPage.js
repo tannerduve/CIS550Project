@@ -17,6 +17,8 @@ export default function ReviewsPage() {
   const [Review, setReview] = useState('');
   const [Rating, setRating] = useState('');
 
+  const username = window.sessionStorage.getItem("username");
+
   useEffect(() => {
     fetch(`http://${config.server_host}:${config.server_port}/reviews`)
       .then(res => res.json())
@@ -100,6 +102,7 @@ export default function ReviewsPage() {
       <h2>Top Authors</h2>
       <LazyTable route={`http://${config.server_host}:${config.server_port}/top_authors`} columns={authorColumns} defaultPageSize={5} rowsPerPageOptions={[5, 10]} />
     <Divider />
+    <p>Logged in as user: {username}</p>
      </Container>
   );
 

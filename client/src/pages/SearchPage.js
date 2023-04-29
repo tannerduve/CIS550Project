@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import AuthorCard from '../components/AuthorCard';
-import { Button, Checkbox, Container, FormControlLabel, Grid, Link, Slider, TextField } from '@mui/material';
+import { Button, Typography, Checkbox, Container, FormControlLabel, Grid, Link, Slider, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const config = require('../config.json');
 
@@ -25,6 +27,10 @@ export default function SearchPage() {
   const [RecipeServings, setRecipeServings] = useState([0, 360]);
   const [RecipeYield, setRecipeYield] = useState([0, 100]);
   const [IngredientsCount, setIngredientsCount] = useState([0, 39]);
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
+  const username = window.sessionStorage.getItem("username");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://${config.server_host}:${config.server_port}/search`)
@@ -59,23 +65,38 @@ export default function SearchPage() {
       });
   }
 
-  const addLike = (recipeId) => {
+  const addLike = async (recipeId) => {
     const username = window.sessionStorage.getItem("username");
     if (username != null) {
-      fetch(`http://${config.server_host}:${config.server_port}/newlikes`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-       },
-        body: JSON.stringify({ username, RecipeID: recipeId })
-      })
-        .then(res => res.text())
-        .then(data => {
-          console.log(data);
-          // reload the data after adding the like
-          search();
-        })
-      .catch(err => console.error(err));
+      try {
+        const response = await fetch(`http://${config.server_host}:${config.server_port}/newlike`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, RecipeID: recipeId })
+        });
+        console.log(response);
+        console.log(username);
+
+        if (response && response.ok) {
+          window.sessionStorage.setItem("username", username);
+          const message = await response.text();
+          setError(null);
+          setMessage(message);
+          setTimeout(() => setMessage(null), 3000);
+          //navigate('/likes');
+        } else {
+          const error = await response.text();
+          setMessage(null);
+          setError(error);
+          setTimeout(() => setError(null), 3000);
+        }
+      } catch (error) {
+        console.log(error);
+        setError('Failed to fetch');
+      }
+
     }
   }
 
@@ -234,6 +255,18 @@ export default function SearchPage() {
         Find Recipes!
       </Button>
       <p></p>
+      {error && (
+          <Typography variant="body1" color="error" align="center" gutterBottom>
+            {error}
+          </Typography>
+      )}
+      {
+        message && (
+          <Typography variant="body1" color="green" align="center" gutterBottom>
+            {message}
+          </Typography>
+      )}
+      <p></p>
       <DataGrid
         rows={data}
         columns={columns}
@@ -242,6 +275,7 @@ export default function SearchPage() {
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         autoHeight
       />
+      <p>Logged in as user: {username}</p>
     </Container>
   );
 }
