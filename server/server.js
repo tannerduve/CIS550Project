@@ -33,8 +33,6 @@ app.get('/recipe_reviews/:RecipeId', routes.recipe_reviews);
 
 
 
-
-
 app.listen(config.server_port, () => {
   console.log(`Server running at http://${config.server_host}:${config.server_port}/`)
 });
