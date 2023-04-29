@@ -44,22 +44,28 @@ export default function RecipeInfoPage() {
   ];
 
   const flexFormat = { display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly' };
+  const instructionsObj = recipeData.RecipeInstructions;
+  const length = instructionsObj.length - 2;
+  const instructingsStr = instructionsObj.substring(3);
 
   return (
     <Container>
         {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => [setSelectedAuthorId(null), setSelectedAuthorName(null)]} />}
         <h1 style={{ fontSize: 40 }}>{recipeData.Name}</h1>
-        <h2>Author:&nbsp;
+        <p>{recipeData.Description}</p>
+        <Divider/>
+        <h3>Author:&nbsp;
             <Link onClick={() => [setSelectedAuthorId(recipeData.AuthorId), setSelectedAuthorName(recipeData.AuthorName)]} >{recipeData.AuthorName}</Link>
-        </h2>
+        </h3>
         <h3>Released: {formatReleaseDate(recipeData.DatePublished)}</h3>
         <h3>Recipe Category: {recipeData.RecipeCategory}</h3>
-        <h3>Nutritional Content: </h3>
+        <Divider/>
         <p></p>
         <ButtonGroup>
             <Button disabled={barRadar} onClick={handleGraphChange}>Bar</Button>
             <Button disabled={!barRadar} onClick={handleGraphChange}>Radar</Button>
         </ButtonGroup>
+        <h3>Nutritional Content: </h3>
         <div style={{ margin: 30 }}>
             { // This ternary statement returns a BarChart if barRadar is true, and a RadarChart otherwise
             barRadar
@@ -91,9 +97,25 @@ export default function RecipeInfoPage() {
             )
             }
         </div>
-        <p>Prep Time: {recipeData.PrepTime} minutes</p>
-        <p>Cook Time: {recipeData.CookTime} minutes</p>
-        <p>Total Time: {recipeData.TotalTime} minutes</p>
+        <Divider/>
+        <div style={flexFormat}>
+            <div>
+                <p>Prep Time: {recipeData.PrepTime} minutes</p>
+                <p>Cook Time: {recipeData.CookTime} minutes</p>
+                <p>Total Time: {recipeData.TotalTime} minutes</p>
+            </div>
+            <div>
+                <p>Calories: {recipeData.Calories}</p>
+                <p>Recipe Servings: {recipeData.RecipeServings}</p>
+                <p>Recipe Yield: {recipeData.RecipeYield}</p>
+            </div>
+            <div>
+                <p>Ingredients: {recipeData.IngredientsList}</p>
+            </div>
+        </div>
+        <Divider/>
+        <h3>Instructions: </h3>
+        <p>{instructingsStr}</p>
     </Container>
   );
 }
