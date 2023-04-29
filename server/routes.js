@@ -39,15 +39,18 @@ const random = async function (req, res) {
 
 //Route : POST /newuser
 const newuser = async function (req, res) {
+  console.log(req.body);
+  const { username, password } = req.body;
+
   connection.query(`
     INSERT INTO Users
-    VALUES ('${req.params.Username}', '${req.params.Password}')
+    VALUES ('${username}', '${password}')
   `, (err, data) => {
     if (err) {
       console.log(err);
-      res.send(`Username "${req.params.Username}" is already in use, please try another.`);
+      res.send(`Username "${username}" is already in use, please try another.`);
     } else {
-      res.send(`Account successfully created for user "${req.params.Username}"!`);
+      res.send(`Account successfully created for user "${username}"!`);
     }
   });
 }
@@ -57,7 +60,8 @@ const newuser = async function (req, res) {
 const login = async function(req, res) {
   console.log(req.body);
   const { username, password } = req.body;
-  connection.query(`SELECT Username, Password 
+  connection.query(`
+    SELECT Username, Password 
     FROM Users
     WHERE Username = '${username}'
   `, (err, data) => {

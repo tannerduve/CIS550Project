@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, Box } from '@mui/material';
+import { Container, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import logo from './favicon.ico';
@@ -89,8 +89,8 @@ export default function LoginPage() {
         </Button>
       </form>
       <p>
-        Don't have an account? 
-        <NavLink to={`/signup`}> Sign up here</NavLink>
+        Don't have an account yet? 
+        <NavLink to={`/signup`}> Sign Up</NavLink>
       </p>
     </Container>
   );
