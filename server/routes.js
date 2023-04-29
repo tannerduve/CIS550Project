@@ -80,7 +80,22 @@ const login = async function(req, res) {
     }
   });
 }
-
+//ROUTE: POST /newlikes
+const newlikes = async function(req, res) {
+  console.log(req.body);
+  const { username, RecipeID } = req.body;
+  connection.query(`
+    INSERT INTO Likes
+    VALUES ('${username}', '${RecipeID}')
+  `, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(401).send(`Username "${username}" is unavailable, please try another.`);
+    } else {
+      res.send(`${RecipeID} added to likes!`);
+    }
+  });
+}
 const search = async function (req, res) {
 
   const Name = req.query.Name ?? '';
@@ -432,6 +447,7 @@ module.exports = {
   recipes,
   top_recipes,
   user_likes,
+  newlikes,
   recipe_recid,
   top_authors,
   author,
