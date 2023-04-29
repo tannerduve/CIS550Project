@@ -44,6 +44,7 @@ export default function LikesPage() {
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         autoHeight
       />
+      <p>Logged in as user: {username}</p>
     </Container>
   );
 }
