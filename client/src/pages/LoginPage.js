@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import logo from './favicon.ico';
 const config = require('../config.json');
 
 export default function LoginPage() {
@@ -47,11 +48,17 @@ export default function LoginPage() {
   };
 
   return (
-    <Container maxWidth="xl">
-      <Typography variant="h1" align="center" >
-        Welcome to Flavor Finder!
-      </Typography>
-      <Typography variant="h2" align="center" gutterBottom>
+    <Container maxWidth="xs">
+      <p></p>
+      <div style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}> 
+        {<img style={{ width: 300, height: 300 }} src={logo} alt={''}/>}
+      </div>
+      <p></p>
+      <Typography variant="h3" fontFamily='serif' align="center">
         Login
       </Typography>
       {error && (
@@ -82,8 +89,8 @@ export default function LoginPage() {
         </Button>
       </form>
       <p>
-        Don't have an account? 
-        <NavLink to={`/signup`}> Sign up here</NavLink>
+        Don't have an account yet? 
+        <NavLink to={`/signup`}> Sign Up</NavLink>
       </p>
     </Container>
   );

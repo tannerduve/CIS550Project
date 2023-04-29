@@ -39,15 +39,18 @@ const random = async function (req, res) {
 
 //Route : POST /newuser
 const newuser = async function (req, res) {
+  console.log(req.body);
+  const { username, password } = req.body;
+
   connection.query(`
     INSERT INTO Users
-    VALUES ('${req.params.Username}', '${req.params.Password}')
+    VALUES ('${username}', '${password}')
   `, (err, data) => {
-    if (err || data.length === 0) {
+    if (err) {
       console.log(err);
-      res.json({});
+      res.status(401).send(`Username "${username}" is unavailable, please try another.`);
     } else {
-      res.json(data[0]);
+      res.send(`Account successfully created for user "${username}"!`);
     }
   });
 }
@@ -57,7 +60,8 @@ const newuser = async function (req, res) {
 const login = async function(req, res) {
   console.log(req.body);
   const { username, password } = req.body;
-  connection.query(`SELECT Username, Password 
+  connection.query(`
+    SELECT Username, Password 
     FROM Users
     WHERE Username = '${username}'
   `, (err, data) => {
@@ -76,7 +80,22 @@ const login = async function(req, res) {
     }
   });
 }
-
+//ROUTE: POST /newlikes
+const newlikes = async function(req, res) {
+  console.log(req.body);
+  const { username, RecipeID } = req.body;
+  connection.query(`
+    INSERT INTO Likes
+    VALUES ('${username}', '${RecipeID}')
+  `, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(401).send(`Username "${username}" is unavailable, please try another.`);
+    } else {
+      res.send(`${RecipeID} added to likes!`);
+    }
+  });
+}
 const search = async function (req, res) {
 
   const Name = req.query.Name ?? '';
@@ -329,7 +348,7 @@ const recipe_recid = async function (req, res) {
   connection.query(`
     SELECT * 
     FROM Recipes
-    WHERE RecipeID = '${req.params.RecipeID}
+    WHERE RecipeID = ${req.params.RecipeId}
   `, (err, data) => {
     if (err || data.length === 0) {
       console.log(err);
@@ -418,6 +437,22 @@ const author_reviews = async function (req, res) {
   }
 }
 
+const recipe_reviews = async function (req, res) {
+  connection.query(`
+    SELECT * 
+    FROM Reviews
+    WHERE RecipeID = ${req.params.RecipeId}
+  `, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+}
+
+
 module.exports = {
   user,
   newuser,
@@ -428,8 +463,10 @@ module.exports = {
   recipes,
   top_recipes,
   user_likes,
+  newlikes,
   recipe_recid,
   top_authors,
   author,
-  author_reviews
+  author_reviews,
+  recipe_reviews
 }

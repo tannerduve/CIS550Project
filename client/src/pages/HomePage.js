@@ -58,7 +58,7 @@ export default function HomePage() {
 
   return (
     <Container>
-      {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => setSelectedAuthorId(null)} />}
+      {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => [setSelectedAuthorId(null), setSelectedAuthorName(null)]} />}
       <header>
         {<img style={{ width: 1150, height: 200 }} src={header}/>}
       </header>

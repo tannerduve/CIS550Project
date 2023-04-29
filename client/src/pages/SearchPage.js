@@ -59,7 +59,33 @@ export default function SearchPage() {
       });
   }
 
+  const addLike = (recipeId) => {
+    const username = "some-username"; // replace with the actual username
+    fetch(`http://${config.server_host}:${config.server_port}/newlikes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, RecipeID: recipeId })
+    })
+      .then(res => res.text())
+      .then(data => {
+        console.log(data);
+        // reload the data after adding the like
+        search();
+      })
+      .catch(err => console.error(err));
+  }
+
   const columns = [
+    {
+      field: 'like',
+      headerName: 'Like',
+      width: 100,
+      renderCell: (params) => (
+        <Button variant="outlined" onClick={() => addLike(params.row.RecipeId)}>Like</Button>
+      ),
+    },
     { field: 'Name', headerName: 'Name', width: 250, renderCell: (params) => (
         <NavLink to={`/recipe/${params.row.RecipeId}`}>{params.value}</NavLink>
     ) },

@@ -1,59 +1,87 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Container, Typography, TextField, Button, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { formatDuration, formatReleaseDate } from '../helpers/formatter';
+import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 const config = require('../config.json');
 
 export default function SignupPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    useEffect(() => {
-        fetch(`http://${config.server_host}:${config.server_port}/user`)
-          .then(res => res.json())
-          .then(resJson => setUsername(username))
-          .then(resJson => setPassword(password));
-      }, []);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+  
+    const handleUsernameChange = (event) => {
+      setUsername(event.target.value);
+    };
+  
+    const handlePasswordChange = (event) => {
+      setPassword(event.target.value);
+    };
+  
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+    
+      try {
+        const response = await fetch(`http://${config.server_host}:${config.server_port}/newuser`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username: username, password: password })
+        });
+        console.log(response);
+        console.log(username);
+        console.log(password);
+    
+        if (response && response.ok) {
+          window.sessionStorage.setItem("username", username);
+          navigate('/home');
+        } else {
+          const error = await response.text();
+          setError(error);
+        }
+      } catch (error) {
+        console.log(error);
+        setError('Failed to fetch');
+      }
+    };
+  
+    return (
+      <Container maxWidth="xs">
+        <p></p>
+        <Typography variant="h3" fontFamily='serif' align="center">
+          Sign Up
+        </Typography>
+        {error && (
+          <Typography variant="body1" color="error" align="center" gutterBottom>
+            {error}
+          </Typography>
+        )}
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Username"
+            fullWidth
+            margin="normal"
+            value={username}
+            onChange={handleUsernameChange}
+            required
+          />
+          <TextField
+            label="Password"
+            fullWidth
+            margin="normal"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            required
+          />
+          <Button variant="contained" color="primary" type="submit" fullWidth>
+            Sign Up
+          </Button>
+        </form>
+      </Container>
+    );
 
 }
-
-
-// import React, { useState } from 'react';
-
-// function Login() {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     console.log('username:', username);
-//     console.log('password:', password);
-//     // You can add your login logic here
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <label>
-//         Username:
-//         <input
-//           type="text"
-//           value={username}
-//           onChange={(event) => setUsername(event.target.value)}
-//         />
-//       </label>
-//       <br />
-//       <label>
-//         Password:
-//         <input
-//           type="password"
-//           value={password}
-//           onChange={(event) => setPassword(event.target.value)}
-//         />
-//       </label>
-//       <br />
-//       <button type="submit">Log In</button>
-//     </form>
-//   );
-// }
-
-// export default Login;
