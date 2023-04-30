@@ -16,6 +16,7 @@ export default function ReviewsPage() {
   const [AuthorName, setAuthorName] = useState('');
   const [Review, setReview] = useState('');
   const [Rating, setRating] = useState('');
+  const [All, setAll] = useState(false);
 
   const username = window.sessionStorage.getItem("username");
 
@@ -30,7 +31,7 @@ export default function ReviewsPage() {
 
   const review = () => {
     fetch(`http://${config.server_host}:${config.server_port}/reviews?RecipeName=${RecipeName}` + 
-    `&AuthorName=${AuthorName}&Review=${Review}&Rating=${Rating}`)
+    `&AuthorName=${AuthorName}&Review=${Review}&Rating=${Rating}&All=${All}`)
       .then(res => res.json())
       .then(resJson => {
         const reviewsWithId = resJson.map((review) => ({ id: review.ReviewId, ...review}));
@@ -72,24 +73,29 @@ export default function ReviewsPage() {
        {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => [setSelectedAuthorId(null), setSelectedAuthorName(null)]} />}
         <h2>Reviews</h2>
         <Grid container spacing={2}>
-        <Grid item xs={10}>
-          <TextField label='Recipe Name' value={RecipeName} onChange={(e) => setRecipeName(e.target.value)} style={{ width: "100%" }}/>
-        </Grid>
-        <Grid item xs={10}>
-          <TextField label='Author Name' value={AuthorName} onChange={(e) => setAuthorName(e.target.value)} style={{ width: "100%" }}/>
-        </Grid>
-        <Grid item xs={10}>
-          <TextField label='Review Keyword(s)' value={Review} onChange={(e) => setReview(e.target.value)} style={{ width: "100%" }}/>
-        </Grid>
-        <Grid item xs={10}>
-          <TextField label='Rating' value={Rating} onChange={(e) => setRating(e.target.value)} style={{ width: "100%" }}/>
-        </Grid>
-        </Grid>
-        <p></p>
-        <Button variant="contained" color="primary" onClick={() => review() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
-        Find Reviews!
-        </Button>
-        <p></p>
+  <Grid item xs={6}>
+    <TextField label='Recipe Name' value={RecipeName} onChange={(e) => setRecipeName(e.target.value)} style={{ width: "100%" }}/>
+  </Grid>
+  <Grid item xs={6}>
+    <TextField label='Author Name' value={AuthorName} onChange={(e) => setAuthorName(e.target.value)} style={{ width: "100%" }}/>
+  </Grid>
+  <Grid item xs={6}>
+    <TextField label='Review Keyword(s)' value={Review} onChange={(e) => setReview(e.target.value)} style={{ width: "100%" }}/>
+  </Grid>
+  <Grid item xs={6}>
+    <TextField label='Rating' value={Rating} onChange={(e) => setRating(e.target.value)} style={{ width: "100%" }}/>
+  </Grid>
+  <Grid item xs={12}>
+    <div style={{ display: "flex", justifyContent: "space-between" }}>
+    <Button variant="contained" color="primary" onClick={() => review()} style={{ display: 'flex', justifyContent: 'center' }}>
+  Find Reviews!
+</Button>
+<Button variant="contained" color="primary" onClick={() => {setAll(true); review();}} style={{ display: 'flex', justifyContent: 'center' }}>
+  Find Reviews ALL!
+</Button>
+    </div>
+  </Grid>
+</Grid>
       <DataGrid
         rows={data}
         columns={columns}
