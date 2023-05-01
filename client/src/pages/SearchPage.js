@@ -28,6 +28,7 @@ export default function SearchPage() {
   const [RecipeYield, setRecipeYield] = useState([0, 100]);
   const [IngredientsCount, setIngredientsCount] = useState([0, 39]);
   const [error, setError] = useState(null);
+  const [MinAvgRating, setMinAvgRating] = useState(null);
   const [message, setMessage] = useState(null);
   const username = window.sessionStorage.getItem("username");
   const navigate = useNavigate();
@@ -42,8 +43,11 @@ export default function SearchPage() {
   }, []);
 
   const search = () => {
+    const Rating = (MinAvgRating == null) ? 0 :
+                   (MinAvgRating == '') ? 0 : MinAvgRating;
+
     fetch(`http://${config.server_host}:${config.server_port}/search?Name=${Name}` +
-      `&Description=${Description}` +
+      `&Description=${Description}&MinAverageRating=${Rating}` +
       `&CookTime_low=${CookTime[0]}&CookTime_high=${CookTime[1]}` +
       `&PrepTime_low=${PrepTime[0]}&PrepTime_high=${PrepTime[1]}` +
       `&TotalTime_low=${TotalTime[0]}&TotalTime_high=${TotalTime[1]}` +
@@ -126,6 +130,8 @@ export default function SearchPage() {
     { field: 'RecipeServings', headerName: 'Recipe Servings' },
     { field: 'RecipeYield', headerName: 'Recipe Yield' },
     { field: 'IngredientsCount', headerName: 'Ingredients Count' },
+    { field: 'AverageRating', headerName: 'Average Rating' },
+
   ]
 
   return (
@@ -138,6 +144,9 @@ export default function SearchPage() {
         </Grid>
         <Grid item xs={10}>
           <TextField label='Description' value={Description} onChange={(e) => setDescription(e.target.value)} style={{ width: "100%" }}/>
+        </Grid>
+        <Grid item xs={10}>
+          <TextField label='Minimum Average Rating' value={MinAvgRating} onChange={(e) => setMinAvgRating(e.target.value)} style={{ width: "100%" }}/>
         </Grid>
         <Grid item xs={2.4}>
           <p>Cook Time (in minutes)</p>
