@@ -4,6 +4,7 @@ import { Container, Typography, TextField, Button, Link, Stack, Table, TableBody
 import { formatDuration, formatReleaseDate } from '../helpers/formatter';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import logo from './favicon.ico';
 const config = require('../config.json');
 
 export default function SignupPage() {
@@ -50,6 +51,14 @@ export default function SignupPage() {
   
     return (
       <Container maxWidth="xs">
+        <p></p>
+        <div style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}> 
+          {<img style={{ width: 300, height: 300 }} src={logo} alt={''}/>}
+        </div>
         <p></p>
         <Typography variant="h3" fontFamily='serif' align="center">
           Sign Up
