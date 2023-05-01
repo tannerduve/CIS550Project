@@ -337,17 +337,22 @@ const reviews = async function (req, res) {
   const AuthorName = req.query.AuthorName ?? '';
   const Review = req.query.Review ?? '';
   const Rating = req.query.Rating ?? 0 ;
-  const All = req.query.All ?? false;
-  console.log(All);
-  if (!All) {
-    connection.query(`
-  SELECT * 
-  FROM Reviews 
-  JOIN Recipes ON Reviews.RecipeId = Recipes.RecipeId
-  WHERE Recipes.Name LIKE '%${RecipeName}%' 
-  AND Reviews.AuthorName LIKE '%${AuthorName}%' 
-  AND Reviews.Review LIKE '%${Review}%' 
-  AND Reviews.Rating >= ${Rating}`, (err, data) => {
+  //const All = req.query.All ?? false;
+
+  connection.query(`
+    WITH Highly_Rated AS (
+      SELECT RecipeId, MIN(Rating)
+      FROM Reviews
+      GROUP BY RecipeId
+      HAVING MIN(Rating) >= ${Rating}
+    )
+    SELECT *
+    FROM Reviews rev
+    JOIN Highly_Rated h ON rev.RecipeId = h.RecipeId
+    JOIN Recipes rec ON rev.RecipeId = rec.RecipeId
+    WHERE rec.Name LIKE '%${RecipeName}%'
+    AND rev.AuthorName LIKE '%${AuthorName}%'
+    AND rev.Review LIKE '%${Review}%'`, (err, data) => {
     if (err) {
       console.log(err);
       res.json({});
@@ -355,29 +360,6 @@ const reviews = async function (req, res) {
       res.json(data);
     }
   });
-  } else {
-    connection.query(`
-    WITH Highly_Rated AS (
-      SELECT RecipeId, MIN(Rating)
-      FROM Reviews
-      GROUP BY RecipeId
-      HAVING MIN(Rating) >= ${Rating}
-      )
-      SELECT *
-          FROM Reviews rev
-          JOIN Highly_Rated h ON rev.RecipeId = h.RecipeId
-          JOIN Recipes rec ON rev.RecipeId = rec.RecipeId
-          WHERE rec.Name LIKE '%${RecipeName}%'
-          AND rev.AuthorName LIKE '%${AuthorName}%'
-          AND rev.Review LIKE '%${Review}%'`, (err, data) => {
-      if (err) {
-        console.log(err);
-        res.json({});
-      } else {
-        res.json(data);
-      }
-    });
-  }
 }
 
 const recipe_recid = async function (req, res) {

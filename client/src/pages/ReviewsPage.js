@@ -30,8 +30,11 @@ export default function ReviewsPage() {
   }, []);
 
   const review = () => {
+    const MinRating = (Rating === null) ? 0 :
+                      (Rating === '') ? 0 : Rating;
+
     fetch(`http://${config.server_host}:${config.server_port}/reviews?RecipeName=${RecipeName}` + 
-    `&AuthorName=${AuthorName}&Review=${Review}&Rating=${Rating}&All=${All}`)
+    `&AuthorName=${AuthorName}&Review=${Review}&Rating=${MinRating}&All=${All}`)
       .then(res => res.json())
       .then(resJson => {
         const reviewsWithId = resJson.map((review) => ({ id: review.ReviewId, ...review}));
@@ -83,19 +86,15 @@ export default function ReviewsPage() {
     <TextField label='Review Keyword(s)' value={Review} onChange={(e) => setReview(e.target.value)} style={{ width: "100%" }}/>
   </Grid>
   <Grid item xs={6}>
-    <TextField label='Rating' value={Rating} onChange={(e) => setRating(e.target.value)} style={{ width: "100%" }}/>
+    <TextField label='Minimum Rating (across all recipe reviews)' value={Rating} onChange={(e) => setRating(e.target.value)} style={{ width: "100%" }}/>
   </Grid>
-  <Grid item xs={12}>
-    <div style={{ display: "flex", justifyContent: "space-between" }}>
-    <Button variant="contained" color="primary" onClick={() => review()} style={{ display: 'flex', justifyContent: 'center' }}>
-  Find Reviews!
-</Button>
-<Button variant="contained" color="primary" onClick={() => {setAll(true); review();}} style={{ display: 'flex', justifyContent: 'center' }}>
-  Find Reviews ALL!
-</Button>
-    </div>
   </Grid>
-</Grid>
+  <p></p>
+  <Button variant="contained" color="primary" onClick={() => {setAll(true); review();}} style={{ left: '50%', transform: 'translateX(-50%)' }}>
+    Find Reviews!
+  </Button>
+  <p></p>
+
       <DataGrid
         rows={data}
         columns={columns}

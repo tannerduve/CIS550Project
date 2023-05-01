@@ -43,8 +43,8 @@ export default function SearchPage() {
   }, []);
 
   const search = () => {
-    const Rating = (MinAvgRating == null) ? 0 :
-                   (MinAvgRating == '') ? 0 : MinAvgRating;
+    const Rating = (MinAvgRating === null) ? 0 :
+                   (MinAvgRating === '') ? 0 : MinAvgRating;
 
     fetch(`http://${config.server_host}:${config.server_port}/search?Name=${Name}` +
       `&Description=${Description}&MinAverageRating=${Rating}` +
