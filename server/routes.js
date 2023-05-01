@@ -127,9 +127,9 @@ const search = async function (req, res) {
   const IngredientsCountLow = req.query.IngredientsCount_low ?? 0;
   const IngredientsCountHigh = req.query.IngredientsCount_high ?? 39;
   const MinAverageRating = req.query.MinAverageRating ?? 0;
-  const veganAuthor = req.query.vegan ?? false;
+  const Vegan = req.query.Vegan ?? false;
 
-  if (!veganAuthor) {
+  if (Vegan != 'true') {
     connection.query(`
       WITH Highly_Rated AS (
         SELECT RecipeId, AVG(Rating) AS AverageRating

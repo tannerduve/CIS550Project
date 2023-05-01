@@ -31,12 +31,12 @@ export default function SearchPage() {
   const [error, setError] = useState(null);
   const [MinAvgRating, setMinAvgRating] = useState(null);
   const [message, setMessage] = useState(null);
-  const [vegan, setVegan] = useState(false);
+  const [checked, setChecked] = useState(false);
   const username = window.sessionStorage.getItem("username");
   const navigate = useNavigate();
   
-  const handleChange = () => {
-    setVegan(!vegan);
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
   };
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function SearchPage() {
       `&RecipeServings_low=${RecipeServings[0]}&RecipeServings_high=${RecipeServings[1]}` +
       `&RecipeYield_low=${RecipeYield[0]}&RecipeYield_high=${RecipeYield[1]}` +
       `&IngredientsCount_low=${IngredientsCount[0]}&IngredientsCount_high=${IngredientsCount[1]}` +
-      `&vegan=${vegan}` 
+      `&Vegan=${checked}`
     )
       .then(res => res.json())
       .then(resJson => {
@@ -279,7 +279,7 @@ export default function SearchPage() {
           color: '#1976d2',
         },
       }}
-      checked={vegan}
+      checked={checked}
       onChange={handleChange}
     />
   }
