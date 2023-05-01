@@ -34,10 +34,10 @@ export default function SearchPage() {
   const [vegan, setVegan] = useState(false);
   const username = window.sessionStorage.getItem("username");
   const navigate = useNavigate();
+  
   const handleChange = () => {
     setVegan(!vegan);
   };
-
 
   useEffect(() => {
     fetch(`http://${config.server_host}:${config.server_port}/search`)
@@ -67,7 +67,7 @@ export default function SearchPage() {
       `&RecipeServings_low=${RecipeServings[0]}&RecipeServings_high=${RecipeServings[1]}` +
       `&RecipeYield_low=${RecipeYield[0]}&RecipeYield_high=${RecipeYield[1]}` +
       `&IngredientsCount_low=${IngredientsCount[0]}&IngredientsCount_high=${IngredientsCount[1]}` +
-      `&vegan=${vegan} ` 
+      `&vegan=${vegan}` 
     )
       .then(res => res.json())
       .then(resJson => {
