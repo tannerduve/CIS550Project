@@ -4,6 +4,7 @@ import { Button, Typography, Checkbox, Container, FormControlLabel, Grid, Link, 
 import { DataGrid } from '@mui/x-data-grid';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Switch } from '@material-ui/core';
 
 
 const config = require('../config.json');
@@ -29,8 +30,13 @@ export default function SearchPage() {
   const [IngredientsCount, setIngredientsCount] = useState([0, 39]);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
+  const [vegan, setVegan] = useState(false);
   const username = window.sessionStorage.getItem("username");
   const navigate = useNavigate();
+  const handleChange = () => {
+    setVegan(!vegan);
+  };
+
 
   useEffect(() => {
     fetch(`http://${config.server_host}:${config.server_port}/search`)
@@ -56,7 +62,8 @@ export default function SearchPage() {
       `&ProteinContent_low=${ProteinContent[0]}&ProteinContent_high=${ProteinContent[1]}` +
       `&RecipeServings_low=${RecipeServings[0]}&RecipeServings_high=${RecipeServings[1]}` +
       `&RecipeYield_low=${RecipeYield[0]}&RecipeYield_high=${RecipeYield[1]}` +
-      `&IngredientsCount_low=${IngredientsCount[0]}&IngredientsCount_high=${IngredientsCount[1]}` 
+      `&IngredientsCount_low=${IngredientsCount[0]}&IngredientsCount_high=${IngredientsCount[1]}` +
+      `&vegan=${vegan} ` 
     )
       .then(res => res.json())
       .then(resJson => {
@@ -254,6 +261,21 @@ export default function SearchPage() {
       <Button variant="contained" color="primary" onClick={() => search() } style={{ left: '50%', transform: 'translateX(-50%)' }}>
         Find Recipes!
       </Button>
+      <FormControlLabel
+  control={
+    <Checkbox
+      sx={{
+        color: '#1976d2', // set the color of the checkbox
+        '&.Mui-checked': { // change the styles when the checkbox is checked
+          color: '#1976d2',
+        },
+      }}
+      checked={vegan}
+      onChange={handleChange}
+    />
+  }
+  label="Vegan Authors"
+/>
       <p></p>
       {error && (
           <Typography variant="body1" color="error" align="center" gutterBottom>

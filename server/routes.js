@@ -125,9 +125,12 @@ const search = async function (req, res) {
   const RecipeYieldLow = req.query.RecipeYield_low ?? 0;
   const RecipeYieldHigh = req.query.RecipeYield_high ?? 100;
   const IngredientsCountLow = req.query.IngredientsCount_low ?? 0;
-  const IngredientsCountHigh = req.query.IngredientsCount_high ?? 39;
+  const IngredientsCountHigh = req.query.IngredientsCount_high ?? 39
+  const veganAuthor = req.query.vegan ?? false;
+//vegan slider
+  if (!veganAuthor) {
 
-  connection.query(`SELECT * FROM Recipes WHERE Name LIKE '%${Name}%' AND Description LIKE '%${Description}%' 
+    connection.query(`SELECT * FROM Recipes WHERE Name LIKE '%${Name}%' AND Description LIKE '%${Description}%' 
   AND CookTime >= ${CookTimeLow} AND CookTime <= ${CookTimeHigh} 
   AND PrepTime >= ${PrepTimeLow} AND PrepTime <= ${PrepTimeHigh} 
   AND TotalTime >= ${TotalTimeLow} AND TotalTime <= ${TotalTimeHigh} 
@@ -148,6 +151,51 @@ const search = async function (req, res) {
       res.json(data);
     }
   });
+  } else {
+    connection.query(`WITH Vegan_Recipes AS (
+      SELECT RecipeId
+      FROM Recipes
+      WHERE Name LIKE '%vegan%'
+         OR Description LIKE '%vegan%'
+         OR Keywords LIKE '%vegan%'
+      ),
+      Vegan_Authors AS (SELECT DISTINCT AuthorName
+                        FROM Recipes
+                        WHERE NOT EXISTS(
+                                SELECT *
+                                FROM Recipes AS r
+                                WHERE r.AuthorName = Recipes.AuthorName
+                                  AND NOT EXISTS(
+                                        SELECT *
+                                        FROM Vegan_Recipes v
+                                        WHERE v.RecipeId = r.RecipeId
+                                    )
+                            ))
+      SELECT * FROM Recipes
+      JOIN Vegan_Authors v ON v.AuthorName = Recipes.AuthorName
+  WHERE Name LIKE '%${Name}%' AND Description LIKE '%${Description}%' 
+  AND CookTime >= ${CookTimeLow} AND CookTime <= ${CookTimeHigh} 
+  AND PrepTime >= ${PrepTimeLow} AND PrepTime <= ${PrepTimeHigh} 
+  AND TotalTime >= ${TotalTimeLow} AND TotalTime <= ${TotalTimeHigh} 
+  AND SaturatedFatContent >= ${SaturatedFatContentLow} AND SaturatedFatContent <= ${SaturatedFatContentHigh} 
+  AND CholesterolContent >= ${CholesterolContentLow} AND CholesterolContent <= ${CholesterolContentHigh} 
+  AND SodiumContent >= ${SodiumContentLow} AND SodiumContent <= ${SodiumContentHigh} 
+  AND CarbohydrateContent >= ${CarbohydrateContentLow} AND CarbohydrateContent <= ${CarbohydrateContentHigh} 
+  AND FiberContent >= ${FiberContentLow} AND FiberContent <= ${FiberContentHigh} 
+  AND SugarContent >= ${SugarContentLow} AND SugarContent <= ${SugarContentHigh} 
+  AND ProteinContent >= ${ProteinContentLow} AND ProteinContent <= ${ProteinContentHigh} 
+  AND RecipeServings >= ${RecipeServingsLow} AND RecipeServings <= ${RecipeServingsHigh} 
+  AND RecipeYield >= ${RecipeYieldLow} AND RecipeYield <= ${RecipeYieldHigh} 
+  AND IngredientsCount >= ${IngredientsCountLow} AND IngredientsCount <= ${IngredientsCountHigh}`, (err, data) => {
+    if (err || data.length === 0) {
+      console.log(err);
+      res.json({});
+    } else {
+      res.json(data);
+    }
+  });
+
+  }
 }
 
 const user_likes = async function (req, res) {
@@ -358,7 +406,7 @@ const reviews = async function (req, res) {
           JOIN Recipes rec ON rev.RecipeId = rec.RecipeId
           WHERE rec.Name LIKE '%${RecipeName}%'
           AND rev.AuthorName LIKE '%${AuthorName}%'
-          AND rev.Review LIKE '%${Review}%';`, (err, data) => {
+          AND rev.Review LIKE '%${Review}%'`, (err, data) => {
       if (err) {
         console.log(err);
         res.json({});
