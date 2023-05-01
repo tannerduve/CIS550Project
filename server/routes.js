@@ -129,33 +129,31 @@ const search = async function (req, res) {
   const MinAverageRating = req.query.MinAverageRating ?? 0;
   const veganAuthor = req.query.vegan ?? false;
 
-  console.log(veganAuthor);
-
   if (!veganAuthor) {
     connection.query(`
-    WITH Highly_Rated AS (
-      SELECT RecipeId, AVG(Rating) AS AverageRating
-      FROM Reviews
-      GROUP BY RecipeId
-      HAVING AVG(Rating) >= ${MinAverageRating}
-    )
-    SELECT * 
-    FROM Recipes 
-    JOIN Highly_Rated ON Recipes.RecipeId = Highly_Rated.RecipeId
-    WHERE Name LIKE '%${Name}%' AND Description LIKE '%${Description}%' 
-    AND CookTime >= ${CookTimeLow} AND CookTime <= ${CookTimeHigh} 
-    AND PrepTime >= ${PrepTimeLow} AND PrepTime <= ${PrepTimeHigh} 
-    AND TotalTime >= ${TotalTimeLow} AND TotalTime <= ${TotalTimeHigh} 
-    AND SaturatedFatContent >= ${SaturatedFatContentLow} AND SaturatedFatContent <= ${SaturatedFatContentHigh} 
-    AND CholesterolContent >= ${CholesterolContentLow} AND CholesterolContent <= ${CholesterolContentHigh} 
-    AND SodiumContent >= ${SodiumContentLow} AND SodiumContent <= ${SodiumContentHigh} 
-    AND CarbohydrateContent >= ${CarbohydrateContentLow} AND CarbohydrateContent <= ${CarbohydrateContentHigh} 
-    AND FiberContent >= ${FiberContentLow} AND FiberContent <= ${FiberContentHigh} 
-    AND SugarContent >= ${SugarContentLow} AND SugarContent <= ${SugarContentHigh} 
-    AND ProteinContent >= ${ProteinContentLow} AND ProteinContent <= ${ProteinContentHigh} 
-    AND RecipeServings >= ${RecipeServingsLow} AND RecipeServings <= ${RecipeServingsHigh} 
-    AND RecipeYield >= ${RecipeYieldLow} AND RecipeYield <= ${RecipeYieldHigh} 
-    AND IngredientsCount >= ${IngredientsCountLow} AND IngredientsCount <= ${IngredientsCountHigh}`, (err, data) => {
+      WITH Highly_Rated AS (
+        SELECT RecipeId, AVG(Rating) AS AverageRating
+        FROM Reviews
+        GROUP BY RecipeId
+        HAVING AVG(Rating) >= ${MinAverageRating}
+      )
+      SELECT * 
+      FROM Recipes 
+      JOIN Highly_Rated ON Recipes.RecipeId = Highly_Rated.RecipeId
+      WHERE Name LIKE '%${Name}%' AND Description LIKE '%${Description}%' 
+      AND CookTime >= ${CookTimeLow} AND CookTime <= ${CookTimeHigh} 
+      AND PrepTime >= ${PrepTimeLow} AND PrepTime <= ${PrepTimeHigh} 
+      AND TotalTime >= ${TotalTimeLow} AND TotalTime <= ${TotalTimeHigh} 
+      AND SaturatedFatContent >= ${SaturatedFatContentLow} AND SaturatedFatContent <= ${SaturatedFatContentHigh} 
+      AND CholesterolContent >= ${CholesterolContentLow} AND CholesterolContent <= ${CholesterolContentHigh} 
+      AND SodiumContent >= ${SodiumContentLow} AND SodiumContent <= ${SodiumContentHigh} 
+      AND CarbohydrateContent >= ${CarbohydrateContentLow} AND CarbohydrateContent <= ${CarbohydrateContentHigh} 
+      AND FiberContent >= ${FiberContentLow} AND FiberContent <= ${FiberContentHigh} 
+      AND SugarContent >= ${SugarContentLow} AND SugarContent <= ${SugarContentHigh} 
+      AND ProteinContent >= ${ProteinContentLow} AND ProteinContent <= ${ProteinContentHigh} 
+      AND RecipeServings >= ${RecipeServingsLow} AND RecipeServings <= ${RecipeServingsHigh} 
+      AND RecipeYield >= ${RecipeYieldLow} AND RecipeYield <= ${RecipeYieldHigh} 
+      AND IngredientsCount >= ${IngredientsCountLow} AND IngredientsCount <= ${IngredientsCountHigh}`, (err, data) => {
     if (err) {
       console.log(err);
       res.json({});
@@ -214,7 +212,7 @@ const search = async function (req, res) {
     } else {
       res.json(data);
     }
-  });
+    });
 
   }
 }
