@@ -125,12 +125,22 @@ const search = async function (req, res) {
   const RecipeYieldLow = req.query.RecipeYield_low ?? 0;
   const RecipeYieldHigh = req.query.RecipeYield_high ?? 100;
   const IngredientsCountLow = req.query.IngredientsCount_low ?? 0;
+
   const IngredientsCountHigh = req.query.IngredientsCount_high ?? 39
   const veganAuthor = req.query.vegan ?? false;
 //vegan slider
   if (!veganAuthor) {
-
-    connection.query(`SELECT * FROM Recipes WHERE Name LIKE '%${Name}%' AND Description LIKE '%${Description}%' 
+  connection.query(`
+  WITH Highly_Rated AS (
+    SELECT RecipeId, AVG(Rating) AS AverageRating
+    FROM Reviews
+    GROUP BY RecipeId
+    HAVING AVG(Rating) >= ${MinAverageRating}
+  )
+  SELECT * 
+  FROM Recipes 
+  JOIN Highly_Rated ON Recipes.RecipeId = Highly_Rated.RecipeId
+  WHERE Name LIKE '%${Name}%' AND Description LIKE '%${Description}%' 
   AND CookTime >= ${CookTimeLow} AND CookTime <= ${CookTimeHigh} 
   AND PrepTime >= ${PrepTimeLow} AND PrepTime <= ${PrepTimeHigh} 
   AND TotalTime >= ${TotalTimeLow} AND TotalTime <= ${TotalTimeHigh} 
@@ -144,7 +154,7 @@ const search = async function (req, res) {
   AND RecipeServings >= ${RecipeServingsLow} AND RecipeServings <= ${RecipeServingsHigh} 
   AND RecipeYield >= ${RecipeYieldLow} AND RecipeYield <= ${RecipeYieldHigh} 
   AND IngredientsCount >= ${IngredientsCountLow} AND IngredientsCount <= ${IngredientsCountHigh}`, (err, data) => {
-    if (err || data.length === 0) {
+    if (err) {
       console.log(err);
       res.json({});
     } else {
@@ -170,9 +180,16 @@ const search = async function (req, res) {
                                         FROM Vegan_Recipes v
                                         WHERE v.RecipeId = r.RecipeId
                                     )
-                            ))
+                            )),
+      Highly_Rated AS (
+    SELECT RecipeId, AVG(Rating) AS AverageRating
+    FROM Reviews
+    GROUP BY RecipeId
+    HAVING AVG(Rating) >= ${MinAverageRating}
+  )
       SELECT * FROM Recipes
       JOIN Vegan_Authors v ON v.AuthorName = Recipes.AuthorName
+      JOIN Highly_Rated ON Recipes.RecipeId = Highly_Rated.RecipeId
   WHERE Name LIKE '%${Name}%' AND Description LIKE '%${Description}%' 
   AND CookTime >= ${CookTimeLow} AND CookTime <= ${CookTimeHigh} 
   AND PrepTime >= ${PrepTimeLow} AND PrepTime <= ${PrepTimeHigh} 
