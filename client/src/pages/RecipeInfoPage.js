@@ -128,7 +128,7 @@ export default function RecipeInfoPage() {
                     >
                         <XAxis type='number' domain={[0, 1]} />
                         <YAxis type='category' dataKey='name' />
-                        <Bar dataKey='value' stroke='#8884d8' fill='#8884d8' />
+                        <Bar dataKey='value' stroke='#FFC0CB' fill='#FFC0CB' />
                     </BarChart>
                 </ResponsiveContainer>
             ) : (
@@ -141,7 +141,7 @@ export default function RecipeInfoPage() {
                         <PolarGrid />
                         <PolarAngleAxis dataKey='name' />
                         <PolarRadiusAxis angle={90} domain={[0, 1]} />
-                        <Radar dataKey='value' stroke='#8884d8' fill='#8884d8' fillOpacity={0.6} />
+                        <Radar dataKey='value' stroke='#FFC0CB' fill='#FFC0CB' fillOpacity={0.6} />
                     </RadarChart>
                 </ResponsiveContainer>
             )
