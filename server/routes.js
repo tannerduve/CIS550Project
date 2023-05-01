@@ -358,7 +358,7 @@ const reviews = async function (req, res) {
           JOIN Recipes rec ON rev.RecipeId = rec.RecipeId
           WHERE rec.Name LIKE '%${RecipeName}%'
           AND rev.AuthorName LIKE '%${AuthorName}%'
-          AND rev.Review LIKE '%${Review}%';`, (err, data) => {
+          AND rev.Review LIKE '%${Review}%'`, (err, data) => {
       if (err) {
         console.log(err);
         res.json({});
