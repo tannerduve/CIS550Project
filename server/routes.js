@@ -44,7 +44,7 @@ const newuser = async function (req, res) {
 
   connection.query(`
     INSERT INTO Users
-    VALUES ('${username}', '${password}')
+    VALUES ('${username}', '${password}', 1530)
   `, (err, data) => {
     if (err) {
       console.log(err);
