@@ -25,10 +25,6 @@ export default function RecipeInfoPage() {
     fetch(`http://${config.server_host}:${config.server_port}/recipe/${RecipeId}`)
       .then(res => res.json())
       .then(resJson => setRecipeData(resJson));
-
-    //fetch(`http://${config.server_host}:${config.server_port}/recipe_reviews/${RecipeId}`)
-      //.then(res => res.json())
-      //.then(resJson => setReviewData(resJson));
   }, [RecipeId]);
 
   const handleGraphChange = () => {
@@ -55,7 +51,6 @@ export default function RecipeInfoPage() {
           setError(null);
           setMessage(message);
           setTimeout(() => setMessage(null), 3000);
-          //navigate('/likes');
         } else {
           const error = await response.text();
           setMessage(null);
@@ -82,8 +77,6 @@ export default function RecipeInfoPage() {
 
   const flexFormat = { display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly' };
   const instructionsObj = recipeData.RecipeInstructions;
-  //const length = instructionsObj.length - 2;
-  //const instructionsStr = instructionsObj.substring(1);
 
   return (
     <Container>
@@ -133,10 +126,7 @@ export default function RecipeInfoPage() {
                 </ResponsiveContainer>
             ) : (
                 <ResponsiveContainer height={250}>
-                {/* TODO (TASK 21): display the same data as the bar chart using a radar chart */}
-                {/* Hint: refer to documentation at https://recharts.org/en-US/api/RadarChart */}
-                {/* Hint: note you can omit the <Legend /> element and only need one Radar element, as compared to the sample in the docs */}
-                {/*<div>Replace Me</div>*/}
+                {/*display the same data as the bar chart using a radar chart */}
                     <RadarChart outerRadius={100} width={730} height={250} data={chartData}>
                         <PolarGrid />
                         <PolarAngleAxis dataKey='name' />

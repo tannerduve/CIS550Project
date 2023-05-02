@@ -62,7 +62,6 @@ export default function HomePage() {
         {<img style={{ width: 1150, height: 200 }} src={header}/>}
       </header>
       <h2>Check out this featured recipe:&nbsp;
-        {/*<Link onClick={() => setSelectedRecipeId(recipeOfTheDay.RecipeId)}>{recipeOfTheDay.Name}</Link> */}
         <NavLink to={`/recipe/${recipeOfTheDay.RecipeId}`}>{recipeOfTheDay.Name}</NavLink>
       </h2>
       <Divider />

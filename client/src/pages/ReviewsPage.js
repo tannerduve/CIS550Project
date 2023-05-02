@@ -46,7 +46,6 @@ export default function ReviewsPage() {
     {
       field: 'Name', headerName: 'Recipe Name', width: 200, renderCell: (params) => (
       <NavLink to={`/recipe/${params.row.RecipeId}`}>{params.value}</NavLink>
-      //<Link onClick={() => setSelectedRecipeId(params.row.RecipeId)}>{params.value}</Link>
     )},
     {
       field: 'AuthorName', headerName: 'Author Name', width: 150,

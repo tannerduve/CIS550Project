@@ -96,7 +96,6 @@ export default function SearchPage() {
           setError(null);
           setMessage(message);
           setTimeout(() => setMessage(null), 3000);
-          //navigate('/likes');
         } else {
           const error = await response.text();
           setMessage(null);
@@ -274,9 +273,9 @@ export default function SearchPage() {
   control={
     <Checkbox
       sx={{
-        color: 'magenta', // set the color of the checkbox
+        color: "magenta", // set the color of the checkbox
         '&.Mui-checked': { // change the styles when the checkbox is checked
-          color: 'magenta',
+          color: "magenta",
         },
       }}
       checked={checked}

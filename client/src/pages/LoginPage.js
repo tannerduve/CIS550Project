@@ -89,8 +89,7 @@ export default function LoginPage() {
         </Button>
       </form>
       <p>
-        Don't have an account yet? 
-        <NavLink to={`/signup`}> Sign Up</NavLink>
+        Don't have an account yet? <NavLink to={`/signup`}>Sign Up</NavLink>
       </p>
     </Container>
   );
