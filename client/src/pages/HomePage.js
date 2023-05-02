@@ -32,7 +32,6 @@ export default function HomePage() {
     {
       field: 'Name',
       headerName: 'Recipe Name',
-      //renderCell: (row) => <Link onClick={() => setSelectedRecipeId(row.RecipeId)}>{row.Name}</Link> // A Link component is used just for formatting purposes
       renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.Name}</NavLink> // A NavLink component is used to create a link to the recipe page
     },
     {

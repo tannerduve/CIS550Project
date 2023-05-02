@@ -274,9 +274,9 @@ export default function SearchPage() {
   control={
     <Checkbox
       sx={{
-        color: '#1976d2', // set the color of the checkbox
+        color: 'magenta', // set the color of the checkbox
         '&.Mui-checked': { // change the styles when the checkbox is checked
-          color: '#1976d2',
+          color: 'magenta',
         },
       }}
       checked={checked}

@@ -8,10 +8,10 @@ import LazyTable from '../components/LazyTable';
 import { formatDuration } from '../helpers/formatter';
 const config = require('../config.json');
 
-// SongCard is a modal (a common example of a modal is a dialog window).
+// Authorcard is a modal (a common example of a modal is a dialog window).
 // Typically, modals will conditionally appear (specified by the Modal's open property)
 // but in our implementation whether the Modal is open is handled by the parent component
-// (see HomePage.js for example), since it depends on the state (selectedSongId) of the parent
+// (see HomePage.js for example), since it depends on the state (selectedAuthorId) of the parent
 export default function RecipeCard({ authorId, authorName, handleClose }) {
   const [recipeData, setRecipeData] = useState({});
   const [authorData, setAuthorData] = useState({});
@@ -25,12 +25,6 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
       .then(resJson => setAuthorData(resJson));
   }, [authorId, authorName]);
 
-  //const chartData = [
-    //{ name: 'Danceability', value: recipeData.danceability },
-    //{ name: 'Energy', value: recipeData.energy },
-    //{ name: 'Valence', value: recipeData.valence },
-  //];
-
   const handleDisplayChange = () => {
     setRecipeDisplay(!recipeDisplay);
   };
@@ -39,7 +33,6 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
     {
       field: 'Name',
       headerName: 'Recipe Name',
-      //renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.Name}</NavLink> 
     },
     {
       field: 'RecipeCategory',
@@ -50,7 +43,6 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
   const reviewColumns = [
     {
       field: 'Name', headerName: 'Recipe Name'
-      //renderCell: (row) => <NavLink to={`/recipe/${row.RecipeId}`}>{row.Name}</NavLink>
     },
     {field: 'Review', headerName: 'Review'},
     {field: 'Rating', headerName: 'Rating'}
@@ -61,7 +53,6 @@ export default function RecipeCard({ authorId, authorName, handleClose }) {
       open={true}
       onClose={handleClose}
       style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-      //fullScreen={true}
     >
       <Box
         p={3}

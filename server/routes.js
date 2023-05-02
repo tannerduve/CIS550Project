@@ -10,13 +10,13 @@ const connection = mysql.createConnection({
 });
 connection.connect((err) => err && console.log(err));
 
-// GET /user
-// Will change this, just using for testing
+// GET /user -- for testing
 const user = async function (req, res) {
   const username = 'ryboyle';
   res.send(`Logged in as user: ${username}`);
 }
 
+// GET /random -- route for the random recipe
 const random = async function (req, res) {
   connection.query(`
     SELECT * 
@@ -80,6 +80,7 @@ const login = async function(req, res) {
     }
   });
 }
+
 //ROUTE: POST /newlike
 const newlike = async function(req, res) {
   console.log(req.body);
@@ -96,8 +97,9 @@ const newlike = async function(req, res) {
     }
   });
 }
-const search = async function (req, res) {
 
+// GET /search -- route for the search page
+const search = async function (req, res) {
   const Name = req.query.Name ?? '';
   const Description = req.query.Description ?? '';
   const CookTimeLow = req.query.CookTime_low ?? 0;
@@ -162,6 +164,7 @@ const search = async function (req, res) {
     }
     });
   } else {
+    // reimplement with pagination
     connection.query(`
       WITH Vegan_Recipes AS (
       SELECT RecipeId
@@ -217,6 +220,7 @@ const search = async function (req, res) {
   }
 }
 
+// GET /likes -- route for the likes of a user
 const user_likes = async function (req, res) {
   const Username = req.query.Username ?? '';
   const page = req.query.page;
@@ -238,7 +242,6 @@ const user_likes = async function (req, res) {
     });
   } else {
     // reimplement with pagination
-    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
     const offset = pageSize * (page - 1);
     connection.query(`
       SELECT * 
@@ -259,7 +262,7 @@ const user_likes = async function (req, res) {
 
 }
 
-// Route: GET /recipes
+// Route: GET /recipes -- gets all the info about a recipe
 const recipes = async function (req, res) {
   connection.query(`SELECT * FROM Recipes ORDER BY Name DESC`, (err, data) => {
     if (err || data.length === 0) {
@@ -271,7 +274,7 @@ const recipes = async function (req, res) {
   });
 }
 
-// Route: GET /top_recipes
+// Route: GET /top_recipes -- used on home page and gets the top recipes based on rating and then total likes
 const top_recipes = async function (req, res) {
   const page = req.query.page;
   const pageSize = req.query.page_size ?? 10;
@@ -302,7 +305,6 @@ const top_recipes = async function (req, res) {
     });
   } else {
     // reimplement with pagination
-    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
     const offset = pageSize * (page - 1);
     connection.query(`
       WITH recipe_likes AS (
@@ -332,7 +334,7 @@ const top_recipes = async function (req, res) {
   }
 }
 
-// Route: GET /top_authors
+// Route: GET /top_authors -- used on reviews page and gets the top reviews based on rating and then total likes
 const top_authors = async function (req, res) {
   const page = req.query.page;
   const pageSize = req.query.page_size ?? 10;
@@ -360,7 +362,6 @@ const top_authors = async function (req, res) {
     });
   } else {
     // reimplement with pagination
-    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
     const offset = pageSize * (page - 1);
     connection.query(`
       WITH recipe_likes AS (
@@ -387,13 +388,12 @@ const top_authors = async function (req, res) {
   }
 }
 
-//reviews Route
+// route: /reviews -- query used for reviews page
 const reviews = async function (req, res) {
   const RecipeName = req.query.RecipeName ?? '';
   const AuthorName = req.query.AuthorName ?? '';
   const Review = req.query.Review ?? '';
   const Rating = req.query.Rating ?? 0 ;
-  //const All = req.query.All ?? false;
 
   connection.query(`
     WITH Highly_Rated AS (
@@ -418,6 +418,7 @@ const reviews = async function (req, res) {
   });
 }
 
+// route: /recipe/:RecipeId -- query used for recipe info page
 const recipe_recid = async function (req, res) {
   connection.query(`
     SELECT * 
@@ -433,6 +434,7 @@ const recipe_recid = async function (req, res) {
   });
 }
 
+// route: /author/:AuthorId -- query used for author card
 const author = async function (req, res) {
   const page = req.query.page;
   const pageSize = req.query.page_size ?? 10;
@@ -452,7 +454,6 @@ const author = async function (req, res) {
     });
   } else {
     // reimplement with pagination
-    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
     const offset = pageSize * (page - 1);
     connection.query(`
       SELECT RecipeId, Name, AuthorId, AuthorName, RecipeCategory
@@ -471,6 +472,7 @@ const author = async function (req, res) {
   }
 }
 
+// route: /author_reviews/:AuthorId -- query used for author card
 const author_reviews = async function (req, res) {
   const page = req.query.page;
   const pageSize = req.query.page_size ?? 10;
@@ -491,7 +493,6 @@ const author_reviews = async function (req, res) {
     });
   } else {
     // reimplement with pagination
-    // Hint: use LIMIT and OFFSET (see https://www.w3schools.com/php/php_mysql_select_limit.asp)
     const offset = pageSize * (page - 1);
     connection.query(`
       SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, r.RecipeCategory, a.Review, a.Rating
@@ -511,6 +512,7 @@ const author_reviews = async function (req, res) {
   }
 }
 
+// route: /recipe_reviews/:RecipeId 
 const recipe_reviews = async function (req, res) {
   connection.query(`
     SELECT * 
