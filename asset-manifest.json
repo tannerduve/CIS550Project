@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/static/js/main.a4f93b7d.js",
+    "static/media/header-herbs.png": "/static/media/header-herbs.50c9e1bd55e51b8bc816.png",
+    "static/media/favicon.ico": "/static/media/favicon.cf02ce6ce4103fafbdf9.ico",
+    "index.html": "/index.html",
+    "main.a4f93b7d.js.map": "/static/js/main.a4f93b7d.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.a4f93b7d.js"
+  ]
+}
