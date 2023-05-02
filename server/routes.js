@@ -512,7 +512,7 @@ const author_reviews = async function (req, res) {
   }
 }
 
-// route: /recipe_reviews/:RecipeId 
+// route: /recipe_reviews/:RecipeId -- gets all reviews about a specific recipe
 const recipe_reviews = async function (req, res) {
   connection.query(`
     SELECT * 
