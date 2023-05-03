@@ -1,0 +1,75 @@
+Query 1: Route: GET /top_authors. The purpose of this query was to find the authors with the most favorable reviews. We looked for the authors that had the highest average rating among all of their recipes, separating tie breakers with the total number of user-likes the author received. We implemented the following query both with and without pagination to populate the ReviewsPage.js.
+SELECT a.AuthorId, a.AuthorName,
+    (SELECT AVG(r.Rating) FROM Reviews r WHERE r.RecipeId = a.RecipeId) AS AverageRecipeRating,
+    (SELECT COUNT(*) FROM Likes l WHERE l.RecipeId = a.RecipeId) AS TotalRecipeLikes
+FROM Recipes a
+GROUP BY a.AuthorId, a.AuthorName
+ORDER BY AverageRecipeRating DESC, TotalRecipeLikes DESC;
+
+Query 2: Route: GET /top_recipes The purpose of this query was to find the recipes with the most favorable reviews. We looked for the recipes that had the highest average rating among their reviews, separating tie breakers with the total number of user-likes the recipe received. We implemented the following query both with and without pagination to populate the HomePage.js.
+WITH recipe_likes AS (
+  SELECT RecipeId, COUNT(Username) AS TotalLikes
+  FROM Likes
+  GROUP BY RecipeId
+), recipe_ratings AS (
+  SELECT RecipeId, AVG(Rating) AS AverageRating
+  FROM Reviews
+  GROUP BY RecipeId
+), recipe_categories AS (
+  SELECT DISTINCT RecipeCategory
+  FROM Recipes
+)
+SELECT r.RecipeId, r.Name, r.AuthorId, r.AuthorName, rc.RecipeCategory, rr.AverageRating, rl.TotalLikes
+FROM Recipes r
+JOIN recipe_likes rl ON r.RecipeId = rl.RecipeId
+JOIN recipe_ratings rr ON r.RecipeId = rr.RecipeId
+JOIN recipe_categories rc ON r.RecipeCategory = rc.RecipeCategory
+ORDER BY rr.AverageRating DESC, rl.TotalLikes DESC;
+
+Query 3: Route: GET /reviews. The purpose of this query was to find the recipes where every reviewer gave them a review greater or equal to the user's rating input. We implemented the following query with universality positive reviews to populate ReviewsPage.js. We used e, e, e, and 3 as dummy values for testing purposes. 
+SELECT *
+FROM Reviews rev
+JOIN Recipes rec ON rev.RecipeId = rec.RecipeId
+WHERE rec.Name LIKE '%e%'
+AND rev.AuthorName LIKE '%e%'
+AND rev.Review LIKE '%e%'
+AND rev.Rating >= (
+  SELECT MIN(Rating)
+  FROM Reviews rev2
+  WHERE rev2.RecipeId = rev.RecipeId
+  GROUP BY rev2.RecipeId
+  HAVING MIN(Rating) >= 3
+);
+
+Query 4: 
+Route: /search. The purpose of this query is to allow the user to search for different recipes based on a number of criteria (cooking time, amount of ingredients, etc). For brevity, we will obscure those simple filters and highlight our two main features : searching by average rating and searching by vegan authors. We used this query to populate our search results, testing with minimum rating at 3.
+SELECT *
+FROM Recipes
+WHERE AuthorName IN (
+  SELECT DISTINCT AuthorName
+  FROM Recipes AS r1
+  WHERE NOT EXISTS (
+    SELECT *
+    FROM Recipes AS r2
+    WHERE r2.AuthorName = r1.AuthorName
+      AND NOT EXISTS (
+        SELECT *
+        FROM Recipes AS r3
+        WHERE r3.RecipeId = r2.RecipeId
+          AND (r3.Name LIKE '%vegan%'
+               OR r3.Description LIKE '%vegan%'
+               OR r3.Keywords LIKE '%vegan%')
+      )
+  )
+)
+  AND RecipeId IN (
+    SELECT RecipeId
+    FROM (
+      SELECT RecipeId, AVG(Rating) AS AverageRating
+      FROM Reviews
+      GROUP BY RecipeId
+    ) AS avg_ratings
+    WHERE AverageRating >= 3
+  );
+
+
