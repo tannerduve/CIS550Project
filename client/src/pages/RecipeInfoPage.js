@@ -11,7 +11,7 @@ const config = require('../config.json');
 export default function RecipeInfoPage() {
   const { RecipeId } = useParams();
 
-  const [recipeData, setRecipeData] = useState([]); // default should actually just be [], but empty object element added to avoid error in template code
+  const [recipeData, setRecipeData] = useState([]); 
   const [reviewData, setReviewData] = useState([]);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
   const [selectedAuthorId, setSelectedAuthorId] = useState(null);
