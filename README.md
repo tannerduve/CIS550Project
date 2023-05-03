@@ -4,4 +4,6 @@ Welcome to FlavorFinder! FlavorFinder is designed to help alleviate the pain poi
 
 To launch FlavorFinder, cd into the server and run 'npm start' in the terminal and then cd into the client and run 'npm start' this will allow for the client to open up which is hosted at: http://localhost:3000/.
 
+The code used for cleaning the data can be found in the cis_550_project_cleaning.py and cis_550_project_cleaning.ipynb files.
+
 Due to large file limitations on github, we are storing the cleaned datasets on our personal google drives as opposed to github.
