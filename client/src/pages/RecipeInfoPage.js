@@ -31,6 +31,7 @@ export default function RecipeInfoPage() {
     setBarRadar(!barRadar);
   };
 
+  // let's a user add a like for that speciifc recipe on the recipe info page 
   const addLike = async (recipeId) => {
     const username = window.sessionStorage.getItem("username");
     if (username != null) {
@@ -65,6 +66,7 @@ export default function RecipeInfoPage() {
     }
   }
 
+  // attrbiutes found in the graphs
   const chartData = [
     { name: 'Saturated Fat', value: recipeData.SaturatedFatContent },
     { name: 'Carbs', value: recipeData.CarbohydrateContent },
@@ -78,6 +80,7 @@ export default function RecipeInfoPage() {
   const flexFormat = { display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly' };
   const instructionsObj = recipeData.RecipeInstructions;
 
+  // output -- graphs, buttons, dividers, etc
   return (
     <Container>
         {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => [setSelectedAuthorId(null), setSelectedAuthorName(null)]} />}

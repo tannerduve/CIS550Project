@@ -42,6 +42,7 @@ export default function ReviewsPage() {
       });
   }
 
+  // what appears in table below search parameters
   const columns = [
     {
       field: 'Name', headerName: 'Recipe Name', width: 200, renderCell: (params) => (
@@ -55,6 +56,7 @@ export default function ReviewsPage() {
     {field: 'Rating', headerName: 'Rating', width: 150}
   ];
 
+  // what appears in bottom table for top authors 
   const authorColumns = [
     {
       field: 'AuthorName', headerName: 'Author Name', 
@@ -70,6 +72,7 @@ export default function ReviewsPage() {
     },
   ];
 
+  // output onto page -- headers, button, etc
   return (
     <Container> 
        {selectedAuthorId && <AuthorCard authorId={selectedAuthorId} authorName={selectedAuthorName} handleClose={() => [setSelectedAuthorId(null), setSelectedAuthorName(null)]} />}

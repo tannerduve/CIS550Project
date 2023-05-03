@@ -22,6 +22,7 @@ export default function LikesPage() {
       });
   }, [username]);
 
+  // columns that appear in table on page
   const columns = [
     {
       field: 'Name', headerName: 'Recipe Name', width: 300, 
@@ -33,6 +34,7 @@ export default function LikesPage() {
     { field: 'Description', headerName: 'Description', width: 700 }
   ];
 
+  // output onto page -- header and table
   return (
     <Container>
       <h2>Likes</h2>

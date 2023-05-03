@@ -48,6 +48,7 @@ export default function SearchPage() {
       });
   }, []);
 
+  // function called once clicked
   const search = () => {
     const Rating = (MinAvgRating === null) ? 0 :
                    (MinAvgRating === '') ? 0 : MinAvgRating;
@@ -76,6 +77,7 @@ export default function SearchPage() {
       });
   }
 
+  // function called once recipe from search is liked and then puts it onto user liked page
   const addLike = async (recipeId) => {
     const username = window.sessionStorage.getItem("username");
     if (username != null) {
@@ -110,6 +112,7 @@ export default function SearchPage() {
     }
   }
 
+  // what appears in table below search parameters
   const columns = [
     {
       field: 'like',
@@ -140,6 +143,7 @@ export default function SearchPage() {
 
   ]
 
+  // output onto page -- headers, sliders, etc
   return (
     <Container>
       {/* {selectedRecipeId && <AuthorCard authorId={selectedRecipeId} handleClose={() => setSelectedRecipeId(null)} />} */}

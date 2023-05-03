@@ -21,6 +21,7 @@ export default function SignupPage() {
       setPassword(event.target.value);
     };
   
+    // called once button hit
     const handleSubmit = async (event) => {
       event.preventDefault();
     
@@ -49,6 +50,7 @@ export default function SignupPage() {
       }
     };
   
+    // output/what user sees on their end for log-in
     return (
       <Container maxWidth="xs">
         <p></p>

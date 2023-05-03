@@ -19,6 +19,7 @@ export default function LoginPage() {
     setPassword(event.target.value);
   };
 
+  // called once button hit
   const handleSubmit = async (event) => {
     event.preventDefault();
   
@@ -47,6 +48,7 @@ export default function LoginPage() {
     }
   };
 
+  // output/what user sees on their end for log-in
   return (
     <Container maxWidth="xs">
       <p></p>
